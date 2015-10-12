@@ -1,0 +1,10 @@
+CREATE TABLE users_naaber(
+	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	email VARCHAR(255) NOT NULL,
+	password VARCHAR(128),
+	first_name VARCHAR(100),
+	last_name VARCHAR(100),
+	organisation VARCHAR(100),
+	created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	UNIQUE(email)
+);
