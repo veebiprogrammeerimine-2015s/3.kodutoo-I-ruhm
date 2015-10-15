@@ -1,4 +1,4 @@
-<h3>Menüü</h3>
+<h3>MenÃ¼Ã¼</h3>
 <ul>
     <?php
         if($page_file_name != "home.php"){ ?>
