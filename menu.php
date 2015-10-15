@@ -16,4 +16,15 @@
             echo '<li>Logi sisse</li>';
         } 
     ?>
+    
+    
+    
+    <?php
+        if($page_file_name != "create.php"){ 
+            echo '<li><a href="create.php">Loo kasutaja</a></li>';
+        } else{ 
+            echo '<li>Loo Kasutaja</li>';
+        } 
+    ?>
+	
 </ul>
