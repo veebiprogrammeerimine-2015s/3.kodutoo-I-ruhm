@@ -1,25 +1,25 @@
-# 3. kodutoo (I rühm)
+# 3. kodutoo (I rÃ¼hm)
 
 ## Kirjeldus
 
-1. Lähtu ülesannete puhul alati oma ideest ning ole loominguline
-  * loo vähemalt 1 tabel andmete hoidmiseks (lisa table.txt fail tabeli kirjeldusega)
+1. LÃ¤htu Ã¼lesannete puhul alati oma ideest ning ole loominguline
+  * loo vÃ¤hemalt 1 tabel andmete hoidmiseks (lisa table.txt fail tabeli kirjeldusega)
   * ainult sisseloginud kasutaja saab kirjeid tabelisse lisada
   * kirjeid saab muuta
-  * kõik või ainult kasutaja ise saab enda lisatud kirjeid vaadata (oleneb rakendusest)
+  * kÃµik vÃµi ainult kasutaja ise saab enda lisatud kirjeid vaadata (oleneb rakendusest)
   * otsing
-  * abi saad tunnitöödest 5, 6 ja 7
+  * abi saad tunnitÃ¶Ã¶dest 5, 6 ja 7
 
-1. **OLULINE! ÄRA POSTITA GITHUBI GREENY MYSQL PAROOLE.** Selleks toimi järgmiselt:
-  * loo eraldi fail `config.php`. Lisa sinna kasutaja ja parool ning tõsta see enda koduse töö kaustast ühe taseme võrra väljapoole
+1. **OLULINE! Ã„RA POSTITA GITHUBI GREENY MYSQL PAROOLE.** Selleks toimi jÃ¤rgmiselt:
+  * loo eraldi fail `config.php`. Lisa sinna kasutaja ja parool ning tÃµsta see enda koduse tÃ¶Ã¶ kaustast Ã¼he taseme vÃµrra vÃ¤ljapoole
   ```PHP
   $servername = "localhost";
   $username = "username";
   $password = "password";
   ```
-  * Andmebaasi nimi lisa aga kindlasti enda faili ja `require_once` käsuga küsi parool ja kasutajanimi `config.php` failist, siis saan kodust tööd lihtsamini kontrollida
+  * Andmebaasi nimi lisa aga kindlasti enda faili ja `require_once` kÃ¤suga kÃ¼si parool ja kasutajanimi `config.php` failist, siis saan kodust tÃ¶Ã¶d lihtsamini kontrollida
   ```PHP
-  // ühenduse loomiseks kasuta
+  // Ã¼henduse loomiseks kasuta
   require_once("../../config_global.php");
   $database = "database";
   $mysqli = new mysqli($servername, $username, $password, $database);
@@ -41,4 +41,3 @@ CREATE TABLE notes (
   done VARCHAR(3),
   FOREIGN KEY (user_id) REFERENCES mvp(id)
 );
-
