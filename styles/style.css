@@ -1,6 +1,8 @@
 
 body {
-	
+	background: url(https://newevolutiondesigns.com/images/freebies/abstract-background-14.jpg);
+	background-repeat: no-repeat;
+	background-size: cover;
 }
 
 header {
@@ -19,7 +21,13 @@ nav {
 	
 }
 
-#logoback {
+#login {
+	position: absolute;
+	background-color: #fff;
+	right: 100px;
+}
+
+/*#logoback {
   margin-left: -2px;
 	width: 350px;
 	height: 150px;
@@ -28,15 +36,27 @@ nav {
   -webkit-transform: rotate(2deg);
 }
 
-#logo {
+.logo {
   height: 150px;
   width: 150px;
   border-radius: 75px;
   margin-left: 200px;
 	
-}
+}*/
 
 #content {
 	margin-top: 175px;
 	
 }
+
+
+
+
+
+
+
+
+
+
+
+
