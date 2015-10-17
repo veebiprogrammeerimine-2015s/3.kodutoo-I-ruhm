@@ -1,0 +1,42 @@
+
+body {
+	
+}
+
+header {
+	position: absolute;
+	height: 150px;
+	width: 100%;
+	background-color: rgba(0, 0, 0, 0.6);
+	left: 0px;
+	top: 0px;
+}
+
+nav {
+	position: absolute;
+    left: 325px;
+    top: 50px;
+	
+}
+
+#logoback {
+  margin-left: -2px;
+	width: 350px;
+	height: 150px;
+	background-color: #551551;
+	box-shadow: 1px 1px 4px #000;
+  -webkit-transform: rotate(2deg);
+}
+
+#logo {
+  height: 150px;
+  width: 150px;
+  border-radius: 75px;
+  margin-left: 200px;
+	
+}
+
+#content {
+	margin-top: 175px;
+	
+}
