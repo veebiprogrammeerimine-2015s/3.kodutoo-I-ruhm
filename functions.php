@@ -11,6 +11,7 @@
 	require_once("../config_global.php");
 	$database = "if15_kelllep";
 
+	
 	session_start();
 	
 	function logInUser($email, $username, $hash){
@@ -77,12 +78,22 @@
         
     }
 
-	function getAllData(){
+	
+	function getAllData($keyword=""){
+        
+        if($keyword == ""){
+            //ei otsi
+            $search = "%%";
+        }else{
+            //otsime
+            $search = "%".$keyword."%";
+        }
           
         $mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["server_username"], $GLOBALS["server_password"], $GLOBALS["database"]);
         // deleted IS NULL - ei ole kustutatud
-        $stmt = $mysqli->prepare("SELECT id, user_id, postitus FROM postitus WHERE deleted IS NULL");
-        $stmt->bind_result($id_from_db, $user_id_from_db, $postitus_from_db);
+        $stmt = $mysqli->prepare("SELECT id, user_id, postitus FROM postitus WHERE deleted IS NULL AND (postitus LIKE ?)");
+        $stmt->bind_param("s", $search);
+		$stmt->bind_result($id_from_db, $user_id_from_db, $postitus_from_db);
         $stmt->execute();
         // massiiv kus hoiame autosid
         $array = array();
@@ -99,7 +110,7 @@
             $post->postitus = $postitus_from_db; 
             $post->user_id = $user_id_from_db; 
             
-            //lisan massiivi (auto lisan massiivi)
+
             array_push($array, $post);
             //echo "<pre>";
             //var_dump($array);

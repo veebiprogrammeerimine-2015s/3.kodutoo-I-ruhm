@@ -11,17 +11,30 @@
     
     //Kasutaja muudab andmeid
     if(isset($_GET["update"])){
-        //auto id, auto number, auto värv
+        //postituse uuendamine
         updatePostData($_GET["user_id"], $_GET["postitus"]);
     }
     
+    $keyword = "";
+    if(isset($_GET["keyword"])){
+        $keyword = $_GET["keyword"];
     
-    
-    // kõik autod objektide kujul massiivis
-    $post_array = getAllData();
+
+    $post_array = getAllData($keyword);
+	
+	}else{
+		$post_array = getAllData();
+		
+	}
 ?>
 
 <h1>Tabel</h1>
+
+<form action="table.php" method="get">
+    <input name="keyword" type="search" value="<?=$keyword?>" >
+    <input type="submit" value="otsi">
+<form>
+<br><br>
 <table border=1>
 <tr>
     <th>id</th>
@@ -29,10 +42,11 @@
     <th>Postitus</th>
     <th>Kustuta</th>
     <th>Muuda</th>
+    <th></th>
 </tr>
 <?php 
     
-    // autod ükshaaval läbi käia
+
     for($i = 0; $i < count($post_array); $i++){
         
         // kasutaja tahab rida muuta
@@ -56,7 +70,8 @@
             echo "<td>".$post_array[$i]->postitus."</td>";
             echo "<td><a href='?delete=".$post_array[$i]->id."'>X</a></td>";
             echo "<td><a href='?edit=".$post_array[$i]->id."'>edit</a></td>";
-            echo "</tr>";
+            echo "<td><a href='edit.php?edit_id=".$post_array[$i]->id."'>edit.php</a></td>";
+			echo "</tr>";
             
         }
         
