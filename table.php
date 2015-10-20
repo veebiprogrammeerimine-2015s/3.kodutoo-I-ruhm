@@ -6,7 +6,7 @@
 	}
 	
 	if(isset($_GET["edit"])){
-		editPostData($_GET["car"], $_GET["mileage"], $_GET["cost"], $_GET["description"]);
+		editPostData($_GET["carmodel"], $_GET["mileage"], $_GET["cost"], $_GET["description"]);
 	}
 	
 	$keyword = "";
@@ -47,7 +47,7 @@
             echo "<input type='hidden' name='car_id' value='".$car_array[$i]->id."'>";
             echo "<td>".$car_array[$i]->id."</td>";
             echo "<td>".$car_array[$i]->user_id."</td>";
-            echo "<td><input name='car' value='".$car_array[$i]->car."' ></td>";
+            echo "<td><input name='carmodel' value='".$car_array[$i]->carmodel."' ></td>";
             echo "<td><input name='mileage' value='".$car_array[$i]->mileage."' ></td>";
 			echo "<td><input name='cost' value='".$car_array[$i]->cost."' ></td>";
 			echo "<td><input name='description' value='".$car_array[$i]->description."' ></td>";
@@ -60,7 +60,7 @@
             echo "<tr>";
             echo "<td>".$car_array[$i]->id."</td>";
             echo "<td>".$car_array[$i]->user_id."</td>";
-            echo "<td>".$car_array[$i]->car."</td>";
+            echo "<td>".$car_array[$i]->carmodel."</td>";
             echo "<td>".$car_array[$i]->mileage."</td>";
 			echo "<td>".$car_array[$i]->cost."</td>";
 			echo "<td>".$car_array[$i]->description."</td>";
