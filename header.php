@@ -11,17 +11,29 @@
 	require_once("menu.php"); 
 	require_once("login.php");		
 	?>
-		
+	
 	<!--Login form start-->
 	<div class="loginmenu">
+	
+	<?php 
+		if(!isset($_SESSION['logged_in_user_id'])) {
+	?>
+	
 	<form class="logininput" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post" >
 		<input name="email" type="email" placeholder="E-post" value="<?php echo $email; ?>">
 		<input name="password" type="password" placeholder="Parool" value="<?php echo $password; ?>">
 		<input type="submit" name="login" value="Log in">
-	</form>
+	</form>	
 	<a href="register.php" style="position: absolute; top: 30px; left: 8px;">Pole kasutajat?</a>
+	<?php 
+		} else { ?>
+			Tere, <?=$_SESSION['logged_in_user_email'];?><br> <a href="?logout=1">Logi välja</a>
+	<?php } ?>
 	</div>
 	<!--Login form end-->
+	
+
+	
 	<!--Error message-->
 	<div class="errormsg"><?php echo $email_error; ?> <?php echo $password_error; ?></div>
 	

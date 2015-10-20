@@ -5,7 +5,7 @@
 	//Kontrollin kas sessiooni muutuja on olemas
 	
 	if(!isset($_SESSION['logged_in_user_id'])) {
-		header("Location: login.php");
+		header("Location: register.php");
 	}
 
 	//aadressireale tekkis ?logout=1
@@ -70,8 +70,6 @@
 ?>
 
 <?php require_once("header.php"); ?>
-
-Tere, <?=$_SESSION['logged_in_user_email'];?> <a href="?logout=1">Logi välja</a>
 
 <h2>Lisa uus</h2>
 <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post" >
