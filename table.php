@@ -55,7 +55,19 @@
             echo "<td><a href='table.php'>cancel</a></td>";
             echo "</form>";
             echo "</tr>";
-		
+		 }else{
+            // lihtne vaade
+            echo "<tr>";
+            echo "<td>".$car_array[$i]->id."</td>";
+            echo "<td>".$car_array[$i]->user_id."</td>";
+            echo "<td>".$car_array[$i]->car."</td>";
+            echo "<td>".$car_array[$i]->mileage."</td>";
+			echo "<td>".$car_array[$i]->cost."</td>";
+			echo "<td>".$car_array[$i]->description."</td>";
+            echo "<td><a href='?delete=".$car_array[$i]->id."'>X</a></td>";
+            echo "<td><a href='?edit=".$car_array[$i]->id."'>edit</a></td>";
+            echo "<td><a href='edit.php?edit_id=".$car_array[$i]->id."'>edit.php</a></td>";
+            echo "</tr>";
 	}
 ?>
 	<>
