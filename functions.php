@@ -16,7 +16,7 @@
         // deleted IS NULL - ei ole kustutatud
         $stmt = $mysqli->prepare("SELECT id, user_id, mileage, cost, description FROM car_costs WHERE deleted IS NULL AND (mileage LIKE ? OR description like ? OR cost LIKE ?)");
         $stmt->bind_param("ss", $search, $search);
-        $stmt->bind_result($id_from_db, $user_id_from_db, $number_plate_from_db, $color_from_db);
+        $stmt->bind_result($id_from_db, $user_id_from_db, $mileage_from_db, $cost_from_db, $description_from_db);
         $stmt->execute();
 	}
 	
