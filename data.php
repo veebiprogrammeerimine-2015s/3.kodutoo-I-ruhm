@@ -19,7 +19,7 @@
     // muutujad väärtustega
     $car_plate = $color = "";
     $car_plate_error = $color_error = "";
-	$m = "";
+		$m = "";
     
     // valideerida välja ja käivita fn
     if($_SERVER["REQUEST_METHOD"] == "POST"){
@@ -56,17 +56,20 @@
     
     
     // kirjuta fn 
-    function cleanInput($data) {
-        $data = trim($data);
-        $data = stripslashes($data);
-        $data = htmlspecialchars($data);
-        return $data;
-    }
-	
+
 	//Küsime tabeli kujul andmed
 	getAllData();
 	
 ?>
+
+<?php
+	//Lehe nimi
+	$page_title = "data";
+	//Faili nimi
+	$page_file = "data.php";
+?>
+
+<?php require_once("header.php"); ?>
 
 Tere, <?=$_SESSION['logged_in_user_email'];?> <a href="?logout=1">Logi välja</a>
 

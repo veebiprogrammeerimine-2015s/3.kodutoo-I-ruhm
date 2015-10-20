@@ -7,10 +7,10 @@
 		Avaleht |
 	<?php } ?>
 	
-	<?php if($page_file != "login.php") { ?>
-		<a href="login.php">Logi sisse</a> |
+	<?php if($page_file != "data.php") { ?>
+		<a href="data.php">Data</a> |
 	<?php } else { ?>
-		Logi sisse |
+		Data |
 	<?php } ?>
 	
 	

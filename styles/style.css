@@ -1,6 +1,6 @@
 
 body {
-	background: url(https://newevolutiondesigns.com/images/freebies/abstract-background-14.jpg);
+	background: url(../images/background.jpg);
 	background-repeat: no-repeat;
 	background-size: cover;
 }
@@ -16,15 +16,28 @@ header {
 
 nav {
 	position: absolute;
-    left: 325px;
-    top: 50px;
+	left: 325px;
+	top: 50px;
 	
 }
 
-#login {
+.loginmenu {
 	position: absolute;
-	background-color: #fff;
 	right: 100px;
+	background-color: #551551;
+	height: 45px;
+	width: 420px;
+	padding-top: 5px;
+}
+
+form.logininput {
+	text-align: center;
+}
+
+.errormsg {
+	position: absolute;
+	width: 400px;
+	left: 400px;
 }
 
 /*#logoback {

@@ -26,10 +26,7 @@
 			}
       // Kui oleme siia jõudnud, võime kasutaja sisse logida
 			if($password_error == "" && $email_error == ""){
-				echo "Võib sisse logida! Kasutajanimi on ".$email;
-			
                 $hash = hash("sha512", $password);
-                
                 loginUser($email, $hash);
             
             }
@@ -38,7 +35,6 @@
 	
 	//login end
 	
-
 
 	
 	

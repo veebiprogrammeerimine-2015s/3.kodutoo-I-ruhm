@@ -3,24 +3,27 @@
 		<title><?php echo $page_title; ?></title>
 		<link rel="stylesheet" type="text/css" href="styles/style.css">
 		<link rel="stylesheet" media="screen and (min-width: 1023px) and (max-width: 1920px)" href="styles/desktop.css">
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 	</head>
 	<body>	
 	<header>
 	<?php 
 	require_once("menu.php"); 
-	require_once("login.php");			
+	require_once("login.php");		
 	?>
-	
-		<!--Login form-->
-	<div id="login">
-			<form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post" >
-				<input name="email" type="email" placeholder="E-post" value="<?php echo $email; ?>"> <br><?php echo $email_error; ?>
-				<input name="password" type="password" placeholder="Parool" value="<?php echo $password; ?>"><br> <?php echo $password_error; ?>
-				<input type="submit" name="login" value="Log in">
-			</form>
-			<a href="register.php">Pole kasutajat?</a>
+		
+	<!--Login form start-->
+	<div class="loginmenu">
+	<form class="logininput" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post" >
+		<input name="email" type="email" placeholder="E-post" value="<?php echo $email; ?>">
+		<input name="password" type="password" placeholder="Parool" value="<?php echo $password; ?>">
+		<input type="submit" name="login" value="Log in">
+	</form>
+	<a href="register.php" style="position: absolute; top: 30px; left: 8px;">Pole kasutajat?</a>
 	</div>
 	<!--Login form end-->
+	<!--Error message-->
+	<div class="errormsg"><?php echo $email_error; ?> <?php echo $password_error; ?></div>
 	
 	<!--logo start-->
 	<div id="logoback">

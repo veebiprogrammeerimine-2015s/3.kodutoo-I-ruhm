@@ -20,24 +20,21 @@
 	//register start
 	    if(isset($_POST["create"])){
 			if ( empty($_POST["create_email"]) ) {
-				$create_email_error = "See v‰li on kohustuslik";
+				$create_email_error = "See v√§li on kohustuslik";
 			}else{
 				$create_email = cleanInput($_POST["create_email"]);
 			}
 			if ( empty($_POST["create_password"]) ) {
-				$create_password_error = "See v‰li on kohustuslik";
+				$create_password_error = "See v√§li on kohustuslik";
 			} else {
 				if(strlen($_POST["create_password"]) < 8) {
-					$create_password_error = "Peab olema v‰hemalt 8 t‰hem‰rki pikk!";
+					$create_password_error = "Peab olema v√§hemalt 8 t√§hem√§rki pikk!";
 				}else{
 					$create_password = cleanInput($_POST["create_password"]);
 				}
 			}
 			if(	$create_email_error == "" && $create_password_error == ""){
-				echo hash("sha512", $create_password);
-                echo "Vıib kasutajat luua! Kasutajanimi on ".$create_email;
-                
-                // tekitan paroolir‰si
+                // tekitan paroolir√§si
                 $hash = hash("sha512", $create_password);
                 
                 //functions.php's funktsioon
