@@ -38,7 +38,7 @@
 	</tr>
 <?php
 
-	for($i = 0; $i < count($car_array); $i++)
+	for($i = 0; $i < count($car_array); $i++){
 		
 	if(isset($_GET["edit"]) && $_GET["edit"] == $car_array[$i]->id){
 		echo "<tr>";
@@ -68,6 +68,8 @@
             echo "<td><a href='?edit=".$car_array[$i]->id."'>edit</a></td>";
             echo "<td><a href='edit.php?edit_id=".$car_array[$i]->id."'>edit.php</a></td>";
             echo "</tr>";
+		}
 	}
+	
 ?>
-	<>
+</table>
