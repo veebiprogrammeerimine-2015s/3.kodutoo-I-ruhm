@@ -6,5 +6,5 @@
 	}
 	
 	if(isset($_GET["edit"])){
-		editPostData($_GET["car_id"], $_GET["mileage"], $_GET["cost"], $_GET["description"]);
+		editPostData($_GET["car"], $_GET["mileage"], $_GET["cost"], $_GET["description"]);
 	}
