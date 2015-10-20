@@ -2,11 +2,11 @@
 	require_once("functions.php");
 	
 	if(isset($_GET["delete"])) {
-		deletePostData($_GET["delete"]);
+		deleteCarData($_GET["delete"]);
 	}
 	
 	if(isset($_GET["edit"])){
-		editPostData($_GET["carmodel"], $_GET["mileage"], $_GET["cost"], $_GET["description"]);
+		editCarData($_GET["carmodel"], $_GET["mileage"], $_GET["cost"], $_GET["description"]);
 	}
 	
 	$keyword = "";

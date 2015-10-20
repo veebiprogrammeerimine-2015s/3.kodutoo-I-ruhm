@@ -50,7 +50,36 @@
         $mysqli->close();
     }
 	
-	}
+	function deleteCarData($car_id){
+        
+        $mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["server_username"], $GLOBALS["server_password"], $GLOBALS["database"]);
+        
+        // uuendan välja deleted, lisan praeguse date'i
+        $stmt = $mysqli->prepare("UPDATE car_costs SET deleted=NOW() WHERE id=?");
+        $stmt->bind_param("i", $car_id);
+        $stmt->execute();
+        
+        // tühjendame aadressirea
+        header("Location: table.php");
+        
+        $stmt->close();
+        $mysqli->close();
+        
+    }
 	
-	
+	function updateCarData($car_id, $number_plate, $color){
+        
+        $mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["server_username"], $GLOBALS["server_password"], $GLOBALS["database"]);
+        
+        $stmt = $mysqli->prepare("UPDATE car_costs SET carmodel=?, mileage=? ,cost=?, description=? WHERE id=?");
+        $stmt->bind_param("sifs", $carmodel, $mileage, $cost, $description, $car_id);
+        $stmt->execute();
+        
+        // tühjendame aadressirea
+        header("Location: table.php");
+        
+        $stmt->close();
+        $mysqli->close();
+        
+    }
 ?>
