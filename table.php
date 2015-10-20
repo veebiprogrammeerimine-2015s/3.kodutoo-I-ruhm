@@ -36,3 +36,13 @@
     <th>kirjeldus</th>
     <th></th>
 	</tr>
+<?php
+
+	for($i = 0; $i < count($car_array); $i++)
+		
+	if(isset($_GET["edit"]) && $_GET["edit"] == $car_array[$i]->id){
+		
+		
+	}
+?>
+	<>
