@@ -33,7 +33,7 @@
 	
 ?>
 
-<h1>Elupaikade tabel</h1>
+<h1>Natura 2000 ranniku elupaikade koondtabel</h1>
 
 <a href="data.php">Sisesta uus elupaik</a><br>
 
@@ -53,7 +53,7 @@
 	<th>Elupaiga nimetus</th>
 	<th>Elupaiga kood</th>
 	<th>Kustuta</th>
-	<th>Muuda</th>
+	<th>Muuda kirjet</th>
 	<th>Muuda eraldi lehel</th>
 
 	
@@ -76,7 +76,7 @@
 			echo "<td><input name='habitat_name' value='".$habitat_array[$i]->habitat_name."'></td>";
 			echo "<td><input name='habitat_code' value='".$habitat_array[$i]->habitat_code."'></td>";
 			echo "<td><input name='update' type='submit'></td>";
-			echo "<td><a href='table.php'>cancel</a></td>";
+			echo "<td><a href='table.php'>tühista</a></td>";
 			
 			echo"</tr>";
 			
@@ -89,8 +89,8 @@
 			echo "<td>".$habitat_array[$i]->habitat_code."</td>";
 			
 			echo "<td><a href='?delete=".$habitat_array[$i]->id."'>X</a></td>";
-			echo "<td><a href='?edit=".$habitat_array[$i]->id."'>edit</a></td>";
-			echo "<td><a href='edit.php?edit_id=".$habitat_array[$i]->id."'>edit</a></td>";
+			echo "<td><a href='?edit=".$habitat_array[$i]->id."'>muuda</a></td>";
+			echo "<td><a href='edit.php?edit_id=".$habitat_array[$i]->id."'>muuda</a></td>";
 		
 			echo "</tr>";
 		
