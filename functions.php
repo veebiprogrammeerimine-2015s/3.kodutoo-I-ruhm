@@ -17,7 +17,7 @@
 			   
 			   $stmt = $mysqli->prepare("SELECT training_id, user_id, begin, end, sports, distance FROM training WHERE deleted IS NULL AND (sports LIKE ? OR distance LIKE ?)");
     		   $stmt->bind_param("ss", $search, $search);
-			   $stmt -> bind_result($training_id_from_db, $user_id_from_db, $begin_db, $end_from_db, $sports_from_db, $distance_from_db);
+			   $stmt -> bind_result($training_id_from_db, $user_id_from_db, $begin_from_db, $end_from_db, $sports_from_db, $distance_from_db);
 			   $stmt->execute();
 				// massiiv, kus hoiame autosid
 				$array = array();
@@ -59,12 +59,12 @@
              $stmt->close(); 
 		     $mysqli->close();
 	}
-   function updateCarData($training_training_id, $sports, $distance) {			 
+   function updateCarData($training_id, $begin, $end, $sports, $distance) {			 
             
 			$mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["server_username"], $GLOBALS["server_password"], $GLOBALS["database"]); 
    
-             $stmt = $mysqli->prepare("UPDATE training SET sports=?, distance=? WHERE id=?");
-			 $stmt -> bind_param("ssi", $sports, $distance, $training_training_id);
+             $stmt = $mysqli->prepare("UPDATE training SET begin=?, end=?, sports=?, distance=? WHERE id=?");
+			 $stmt -> bind_param("ssssi", $begin, $end, $sports, $distance, $training_training_id);
 			 $stmt->execute();
 			 // tühjendame aadressirea
 			 header("Location:table.php");
