@@ -3,7 +3,7 @@
    require_once("edit_functions.php");
    
    if(isset($_GET["update"])){
-      updateCarData($_GET["car_id"], $_GET["number_plate"], $_GET["color"]);
+      updateTrainingData($_GET["training_id"], $_GET["begin"], $_GET["end"], $_GET["sports"], $_GET["distance"]);
 	} 
  
    if(isset($_GET["edit_id"])){
@@ -13,8 +13,8 @@
  
 	
 	// //küsin andmed 
-    $car = getSingleCarData($_GET["edit_id"]); 
-    var_dump($car); 
+    $training = getSingleTrainingData($_GET["edit_id"]); 
+    var_dump($training); 
 
 
     }else{ 
@@ -24,10 +24,12 @@
 	
 	}
 ?> 
-<!-- Salvestamiseks kasutan table.php rida 15, updateCar() -->
+<!-- Salvestamiseks kasutan table.php rida 15, updateTraining() -->
  <form action="edit.php" method="get">
-  <input name="car_id" type="hidden" value="<?=$_GET["edit_id"];?>">
-  <input name="number_plate" type="text" value="<?=$car->number_plate;?>" ><br>
-  <input name="color" type="text" value="<?=$car->color;?>"><br>
+  <input name="training_id" type="hidden" value="<?=$_GET["edit_id"];?>">
+  <input name="begin" type="text" value="<?=$training->begin;?>" ><br>
+  <input name="end" type="text" value="<?=$training->end;?>"><br>
+  <input name="sports" type="text" value="<?=$training->sports;?>" ><br>
+  <input name="distance" type="text" value="<?=$training->distance;?>"><br>
   <input name="update" type="submit" >
  </form>

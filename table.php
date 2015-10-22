@@ -3,11 +3,11 @@ require_once("functions.php");
 
    // kuulan, kas kasutaja tahab kustutada
    if(isset($_GET["delete"])) {
-	   deleteCarData($_GET["delete"]);
+	   deleteTrainingData($_GET["delete"]);
    }
    
    if(isset($_GET["update"])){
-      updateCarData($_GET["car_id"], $_GET["number_plate"], $_GET["color"]);
+      updateTrainingData($_GET["training_id"], $_GET["begin"], $_GET["end"], $_GET["sports"], $_GET["distance"]);
 	}  
 	
     
@@ -15,10 +15,10 @@ require_once("functions.php");
    if(isset($_GET["keyword"])){
       $keyword=$_GET["keyword"];
 	  //otsime
-	  $car_array = getAllData($keyword);
+	  $training_array = getAllData($keyword);
 	  
 	} else{
-	$car_array = getAllData();	
+	$trianing_array = getAllData();	
 		
 	} 
 ?> 
@@ -31,28 +31,31 @@ require_once("functions.php");
 	<br><br>
  <table border=1>
  <tr>
-    <th>id</th>
-	<th>kasutaja ID</th>
-	<th>Number</th>
-	<th>Värv</th>
-	<th></th>
+    <th>training_ID</th>
+	<th>user_ID</th>
+	<th>Begin</th>
+	<th>End</th>
+	<th>Sports</th>
+	<th>Distance</th>
     <th></th>
     <th></th>
 </tr>  
  <?php
  
-      //autod ükshaaval läbi käia
-    for($i = 0; $i < count($car_array); $i++){
+      //trennid ükshaaval läbi käia
+    for($i = 0; $i < count($training_array); $i++){
 		
 		//kasutaja tahab rida muuta
-	  if(isset($_GET["edit"])&& $_GET["edit"]==$car_array[$i]->id){
+	  if(isset($_GET["edit"])&& $_GET["edit"]==$training_array[$i]->id){
 		echo "<tr>";
 		echo "<form action='table.php' method='get'>";
-		echo "<input type='hidden' name='car_id' value='".$car_array[$i]->id."'>"; 
-		echo "<td>".$car_array[$i]->id."</td>";  
-        echo "<td>".$car_array[$i]->user_id."</td>";  
-	    echo "<td><input name='number_plate' value='".$car_array[$i]->number_plate."'></td>";  
-		echo "<td><input name='color' value='".$car_array[$i]->color."'</td>"; 
+		echo "<input type='hidden' name='training_id' value='".$training_array[$i]->id."'>"; 
+		echo "<td>".$training_array[$i]->training_id."</td>";  
+        echo "<td>".$training_array[$i]->user_id."</td>";  
+	    echo "<td><input name='begin' value='".$training_array[$i]->begin."'></td>";  
+		echo "<td><input name='end' value='".$training_array[$i]->end."'</td>"; 
+		echo "<td><input name='sports' value='".$training_array[$i]->sports."'></td>";  
+		echo "<td><input name='distance' value='".$training_array[$i]->distance."'</td>"; 
 		echo "<td><input name='update' type='submit'></td>";  
 		echo "<td><a href='?table.php'>cancel</a></td>";  
 	    echo "</form>";
@@ -60,12 +63,14 @@ require_once("functions.php");
 	
 		}else{
 	    echo"<tr>";
-        echo "<td>".$car_array[$i]->id."</td>";  
-        echo "<td>".$car_array[$i]->user_id."</td>";  
-	    echo "<td>".$car_array[$i]->number_plate."</td>";  
-	    echo "<td>".$car_array[$i]->color."</td>"; 
-	    echo "<td><a href='?delete=".$car_array[$i]->id."'>X</a></td>";  
-	    echo "<td><a href='edit.php?edit_id=".$car_array[$i]->id."'>edit.php</a></td>";  
+        echo "<td>".$training_array[$i]->training_id."</td>";  
+        echo "<td>".$training_array[$i]->user_id."</td>";  
+	    echo "<td>".$training_array[$i]->begin."</td>";  
+	    echo "<td>".$training_array[$i]->end."</td>"; 
+		echo "<td>".$training_array[$i]->sports."</td>";  
+	    echo "<td>".$training_array[$i]->distance."</td>"; 
+	    echo "<td><a href='?delete=".$training_array[$i]->id."'>X</a></td>";  
+	    echo "<td><a href='edit.php?edit_id=".$training_array[$i]->id."'>edit.php</a></td>";  
         echo "</tr>"; 
 	
 	}
