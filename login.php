@@ -105,18 +105,18 @@
 </head>
 <body>
 
-  <h2>Log in</h2>
+  <h2>Logi sisse</h2>
   <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post" >
   	<input name="email" type="email" placeholder="E-post" value="<?php echo $email; ?>"> <?php echo $email_error; ?><br><br>
   	<input name="password" type="password" placeholder="Parool" value="<?php echo $password; ?>"> <?php echo $password_error; ?><br><br>
-  	<input type="submit" name="login" value="Log in">
+  	<input type="submit" name="login" value="Logi sisse!">
   </form>
 
-  <h2>Create user</h2>
+  <h2>Loo kasutaja</h2>
   <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post" >
   	<input name="create_email" type="email" placeholder="E-post" value="<?php echo $create_email; ?>"> <?php echo $create_email_error; ?><br><br>
   	<input name="create_password" type="password" placeholder="Parool"> <?php echo $create_password_error; ?> <br><br>
-  	<input type="submit" name="create" value="Create user">
+  	<input type="submit" name="create" value="Loo kasutaja!">
   </form>
 <body>
 <html>
