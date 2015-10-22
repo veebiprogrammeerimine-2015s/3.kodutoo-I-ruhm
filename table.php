@@ -18,7 +18,7 @@ require_once("functions.php");
 	  $training_array = getAllData($keyword);
 	  
 	} else{
-	$trianing_array = getAllData();	
+	$training_array = getAllData();	
 		
 	} 
 ?> 
@@ -37,8 +37,8 @@ require_once("functions.php");
 	<th>End</th>
 	<th>Sports</th>
 	<th>Distance</th>
-    <th></th>
-    <th></th>
+    <th>Delete</th>
+    <th>Edit</th>
 </tr>  
  <?php
  

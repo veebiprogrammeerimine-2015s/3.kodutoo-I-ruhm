@@ -17,7 +17,7 @@
 			   
 			   $stmt = $mysqli->prepare("SELECT training_id, user_id, begin, end, sports, distance FROM training WHERE deleted IS NULL AND (sports LIKE ? OR distance LIKE ?)");
     		   $stmt->bind_param("ss", $search, $search);
-			   $stmt -> bind_result($training_id_from_db, $user_id_from_db, $sports_from_db, $distance_from_db);
+			   $stmt -> bind_result($training_id_from_db, $user_id_from_db, $begin_db, $end_from_db, $sports_from_db, $distance_from_db);
 			   $stmt->execute();
 				// massiiv, kus hoiame autosid
 				$array = array();
@@ -32,6 +32,8 @@
 					$training = new StdClass();
 				    $training-> training_id = $training_id_from_db;
 					$training-> user_id = $user_id_from_db; 
+					$training-> begin = $begin_from_db;
+				    $training-> end = $end_from_db;
 					$training-> sports = $sports_from_db;
 				    $training-> distance = $distance_from_db;
 					
