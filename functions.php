@@ -15,9 +15,9 @@
 				 			 
    			 $mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["server_username"], $GLOBALS["server_password"], $GLOBALS["database"]);  
 			   
-			   $stmt = $mysqli->prepare("SELECT id, user_id, number_plate, color FROM car_plates WHERE deleted IS NULL AND (number_plate LIKE ? OR color LIKE ?)");
+			   $stmt = $mysqli->prepare("SELECT training_id, user_id, begin, end, sports, distance FROM training WHERE deleted IS NULL AND (sports LIKE ? OR distance LIKE ?)");
     		   $stmt->bind_param("ss", $search, $search);
-			   $stmt -> bind_result($id_from_db, $user_id_from_db, $number_plate_from_db, $color_from_db);
+			   $stmt -> bind_result($training_id_from_db, $user_id_from_db, $sports_from_db, $distance_from_db);
 			   $stmt->execute();
 				// massiiv, kus hoiame autosid
 				$array = array();
@@ -29,17 +29,15 @@
 					//andmed saada transporditavale kujule
 					
 					// suvaline muutuja, kus hoiame auto andmeid massiivi lisamiseni
-					$car = new StdClass();
-				    $car-> id = $id_from_db;
-					$car-> number_plate = $number_plate_from_db;
-				    $car-> user_id = $user_id_from_db; 
-				    $car-> color = $color_from_db;
+					$training = new StdClass();
+				    $training-> training_id = $training_id_from_db;
+					$training-> user_id = $user_id_from_db; 
+					$training-> sports = $sports_from_db;
+				    $training-> distance = $distance_from_db;
 					
 					//lisan massiivi
-					array_push($array, $car);
-					//echo "<pre>";
-					//var_dump($array);
-					//echo "</pre>";
+					array_push($array, $training);
+					
 				}
 				return $array;	
 				   
@@ -48,23 +46,23 @@
 		      $mysqli->close();      
 		   } 
 		   
-  function deleteCarData($car_id){
+  function deleteTrainingData($training_id){
 	  
 	 	     $mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["server_username"], $GLOBALS["server_password"], $GLOBALS["database"]);  		
-             $stmt = $mysqli->prepare("UPDATE car_plates SET deleted=NOW() WHERE id=?");
-			 $stmt -> bind_param("i", $car_id);
+             $stmt = $mysqli->prepare("UPDATE training SET deleted=NOW() WHERE training_id=?");
+			 $stmt -> bind_param("i", $training_training_id);
 			 $stmt->execute();
 			 // tühjendame aadressirea
 			 header("Location: table.php");
              $stmt->close(); 
 		     $mysqli->close();
 	}
-   function updateCarData($car_id, $number_plate, $color) {			 
+   function updateCarData($training_training_id, $sports, $distance) {			 
             
 			$mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["server_username"], $GLOBALS["server_password"], $GLOBALS["database"]); 
    
-             $stmt = $mysqli->prepare("UPDATE car_plates SET number_plate=?, color=? WHERE id=?");
-			 $stmt -> bind_param("ssi", $number_plate, $color, $car_id);
+             $stmt = $mysqli->prepare("UPDATE training SET sports=?, distance=? WHERE id=?");
+			 $stmt -> bind_param("ssi", $sports, $distance, $training_training_id);
 			 $stmt->execute();
 			 // tühjendame aadressirea
 			 header("Location:table.php");

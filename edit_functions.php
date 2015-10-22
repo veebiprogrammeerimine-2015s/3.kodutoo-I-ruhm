@@ -3,25 +3,26 @@
   require_once("../config_global.php");
    $database = "if15_merit26_1";
    
-   function getSingleCarData($id){
+   function getSingleTrainingData($training_id){
 	   
 	   $mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["server_username"], $GLOBALS["server_password"], $GLOBALS["database"]);
 	   
-	   $stmt = $mysqli->prepare("SELECT number_plate, color FROM car_plates WHERE id=? AND deleted IS NULL");
+	   $stmt = $mysqli->prepare("SELECT begin, end, sports, distance FROM training WHERE training_id=? AND deleted IS NULL");
 	   $stmt ->bind_param("i", $id);
-	   $stmt ->bind_result($number_plate, $color);
+	   $stmt ->bind_result($begin, $end, $sports, $distance);
        $stmt->execute();
 	   
 	   //auto objekt
-	   $car = new StdClass();
+	   $training = new StdClass();
 	   
 	   
    //kas sain andmed
    if($stmt->fetch()){
 	   
-	     $car->number_plate = $number_plate;
-		 $car->color = $color;
-	    
+	     $training->begin = $begin;
+		 $training->end = $end;
+	     $training->sports = $sports;
+		 $training->distance = $distance;
 		
    }else{
 	   	//ei tulnud kui id ei olnud 
@@ -34,15 +35,15 @@
    $stmt->close(); 
    $mysqli->close();
    
-   return $car;
+   return $training;
    
    }
-function updateCarData($car_id, $number_plate, $color) {			 
+function updateTrainingData($training_training_id, $sports, $distance) {			 
             
 			$mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["server_username"], $GLOBALS["server_password"], $GLOBALS["database"]); 
    
-             $stmt = $mysqli->prepare("UPDATE car_plates SET number_plate=?, color=? WHERE id=?");
-			 $stmt -> bind_param("ssi", $number_plate, $color, $car_id);
+             $stmt = $mysqli->prepare("UPDATE training SET sports=?, distance=? WHERE training_id=?");
+			 $stmt -> bind_param("ssi", $sports, $distance, $training_id);
 			 $stmt->execute();
 			 // tühjendame aadressirea
 			 header("Location:table.php");
