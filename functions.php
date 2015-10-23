@@ -117,9 +117,7 @@ function getSearchData($keyword=""){
 		$notes_search->done = $done_from_db; 
 		
 		array_push($array, $notes_search);
-		//echo "<pre>";
 		//var_dump($array);
-		//echo "</pre>";
 	}
 	
 	return $array;

@@ -15,8 +15,13 @@ if(isset($_GET["keyword"])){
 }else{
 	$note_array = getAllData();
 }
-?>
 
+if(isset($_GET["logout"])){
+	session_destroy();
+		header("Location: login.php");
+}
+?>
+<a href="?logout=1">Logout</a><br><br>
 <h1>Table</h1>
 <form action="table.php" action="get">
 	<input name="keyword" type="search" value="<?=$keyword?>" > 
