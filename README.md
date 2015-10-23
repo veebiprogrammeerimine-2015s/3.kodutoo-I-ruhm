@@ -39,5 +39,6 @@ CREATE TABLE notes (
   user_id INT NOT NULL,
   note VARCHAR(255),   
   done VARCHAR(3),
+  deleted TIMESTAMP NULL DEFAULT NULL,
   FOREIGN KEY (user_id) REFERENCES mvp(id)
 );

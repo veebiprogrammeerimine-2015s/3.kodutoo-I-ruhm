@@ -41,7 +41,6 @@ if(isset($_POST["login"])){
 } 
 }
 	if(isset($_SESSION["id_from_db"])){
-		// suunan data lehele
 		header("Location: data.php");
 	}
 ?>
