@@ -24,7 +24,7 @@
 	if($_SERVER["REQUEST_METHOD"] == "POST"){
 		if(isset($_POST["create_qweet"])){
 			if ( empty($_POST["qweet"]) ) {
-				$qweet_error = "See v�li on kohustuslik";
+				$qweet_error = "See väli on kohustuslik";
 			}else{
 				$qweet = cleanInput($_POST["qweet"]);
 			}
@@ -47,6 +47,13 @@ function cleanInput($data) {
   getAllData();
 ?>
 
+<nav id="menyy">
+<ul>
+  <li><a href="table.php" target="_self">Suured qweedid</a></li>
+</ul>
+</nav>
+
+
 Tere, <?=$_SESSION['logged_in_user_email'];?> <a href="?logout=1"> Logi välja</a>
 
 <h2> Lisa uus qweet </h2>
@@ -55,6 +62,6 @@ Tere, <?=$_SESSION['logged_in_user_email'];?> <a href="?logout=1"> Logi välja</
 <label for="qweet"> Sinu Qweet </label>
   	<input id="qweet" name="qweet" type="text" value="<?=$qweet; ?>"> <?=$qweet_error; ?><br>
 	<? echo $qweet?><br>
-	<input type="submit" name="create_qweet" value="Log in">
+	<input type="submit" name="create_qweet" value="Qweet">
 	<p style="color:green;"> <?=$m?> </p>
   </form>

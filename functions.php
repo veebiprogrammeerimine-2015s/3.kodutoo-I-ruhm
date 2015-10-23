@@ -87,13 +87,29 @@
 	
 	}
 	
- function deleteQweetData($car_id){
+ function deleteQweetData($tex_id){
     
     $mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["server_username"], $GLOBALS["server_password"], $GLOBALS["database"]);
     
     // uuendan välja deleted, lisan praeguse date'i
     $stmt = $mysqli->prepare("UPDATE qweet SET deleted=NOW() WHERE id=?");
-    $stmt->bind_param("i", $car_id);
+    $stmt->bind_param("i", $qwert_id);
+    $stmt->execute();
+    
+    // tühjendame aadressirea
+    header("Location: table.php");
+    
+    $stmt->close();
+    $mysqli->close();
+}	
+
+function updateQweetData($tex_id){
+    
+    $mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["server_username"], $GLOBALS["server_password"], $GLOBALS["database"]);
+    
+    // uuendan välja deleted, lisan praeguse date'i
+    $stmt = $mysqli->prepare("UPDATE qweet SET qwert=? WHERE id=?");
+    $stmt->bind_param("si",$qwert, $qwert_id);
     $stmt->execute();
     
     // tühjendame aadressirea
