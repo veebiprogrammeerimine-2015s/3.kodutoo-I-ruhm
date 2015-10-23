@@ -7,12 +7,12 @@
 	   
 	   $mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["server_username"], $GLOBALS["server_password"], $GLOBALS["database"]);
 	   
-	   $stmt = $mysqli->prepare("SELECT begin, end, sports, distance FROM training WHERE training_id=? AND deleted IS NULL");
+	   $stmt = $mysqli->prepare("SELECT begin, ending, sports, distance FROM training WHERE training_id=? AND deleted IS NULL");
 	   $stmt ->bind_param("i", $id);
-	   $stmt ->bind_result($begin, $end, $sports, $distance);
+	   $stmt ->bind_result($begin, $ending, $sports, $distance);
        $stmt->execute();
 	   
-	   //auto objekt
+	   //trenni objekt
 	   $training = new StdClass();
 	   
 	   
@@ -20,7 +20,7 @@
    if($stmt->fetch()){
 	   
 	     $training->begin = $begin;
-		 $training->end = $end;
+		 $training->ending = $ending;
 	     $training->sports = $sports;
 		 $training->distance = $distance;
 		
@@ -38,12 +38,12 @@
    return $training;
    
    }
-function updateTrainingData($training_training_id, $sports, $distance) {			 
+function updateTrainingData($training_training_id, $begin, $ending, $sports, $distance) {			 
             
 			$mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["server_username"], $GLOBALS["server_password"], $GLOBALS["database"]); 
    
-             $stmt = $mysqli->prepare("UPDATE training SET sports=?, distance=? WHERE training_id=?");
-			 $stmt -> bind_param("ssi", $sports, $distance, $training_id);
+             $stmt = $mysqli->prepare("UPDATE training SET begin=?, ending=?, sports=?, distance=? WHERE training_id=?");
+			 $stmt -> bind_param("ssssi", $begin, $ending, $sports, $distance, $training_id);
 			 $stmt->execute();
 			 // tühjendame aadressirea
 			 header("Location:table.php");

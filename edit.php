@@ -3,7 +3,7 @@
    require_once("edit_functions.php");
    
    if(isset($_GET["update"])){
-      updateTrainingData($_GET["training_id"], $_GET["begin"], $_GET["end"], $_GET["sports"], $_GET["distance"]);
+      updateTrainingData($_GET["training_id"], $_GET["begin"], $_GET["ending"], $_GET["sports"], $_GET["distance"]);
 	} 
  
    if(isset($_GET["edit_id"])){
@@ -28,7 +28,7 @@
  <form action="edit.php" method="get">
   <input name="training_id" type="hidden" value="<?=$_GET["edit_id"];?>">
   <input name="begin" type="text" value="<?=$training->begin;?>" ><br>
-  <input name="end" type="text" value="<?=$training->end;?>"><br>
+  <input name="ending" type="text" value="<?=$training->ending;?>"><br>
   <input name="sports" type="text" value="<?=$training->sports;?>" ><br>
   <input name="distance" type="text" value="<?=$training->distance;?>"><br>
   <input name="update" type="submit" >

@@ -15,9 +15,9 @@
 				 			 
    			 $mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["server_username"], $GLOBALS["server_password"], $GLOBALS["database"]);  
 			   
-			   $stmt = $mysqli->prepare("SELECT training_id, user_id, begin, end, sports, distance FROM training WHERE deleted IS NULL AND (sports LIKE ? OR distance LIKE ?)");
+			   $stmt = $mysqli->prepare("SELECT training_id, user_id, begin, ending, sports, distance FROM training WHERE deleted IS NULL AND (sports LIKE ? OR distance LIKE ?)");
     		   $stmt->bind_param("ss", $search, $search);
-			   $stmt -> bind_result($training_id_from_db, $user_id_from_db, $begin_from_db, $end_from_db, $sports_from_db, $distance_from_db);
+			   $stmt -> bind_result($training_id_from_db, $user_id_from_db, $begin_from_db, $ending_from_db, $sports_from_db, $distance_from_db);
 			   $stmt->execute();
 				// massiiv, kus hoiame autosid
 				$array = array();
@@ -28,12 +28,12 @@
 					//saime andmed kätte
 					//andmed saada transporditavale kujule
 					
-					// suvaline muutuja, kus hoiame auto andmeid massiivi lisamiseni
+					// suvaline muutuja, kus hoiame andmeid massiivi lisamiseni
 					$training = new StdClass();
 				    $training-> training_id = $training_id_from_db;
 					$training-> user_id = $user_id_from_db; 
 					$training-> begin = $begin_from_db;
-				    $training-> end = $end_from_db;
+				    $training-> ending = $ending_from_db;
 					$training-> sports = $sports_from_db;
 				    $training-> distance = $distance_from_db;
 					
@@ -52,19 +52,19 @@
 	  
 	 	     $mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["server_username"], $GLOBALS["server_password"], $GLOBALS["database"]);  		
              $stmt = $mysqli->prepare("UPDATE training SET deleted=NOW() WHERE training_id=?");
-			 $stmt -> bind_param("i", $training_training_id);
+			 $stmt -> bind_param("i", $training_id);
 			 $stmt->execute();
 			 // tühjendame aadressirea
 			 header("Location: table.php");
              $stmt->close(); 
 		     $mysqli->close();
 	}
-   function updateCarData($training_id, $begin, $end, $sports, $distance) {			 
+   function updateTrainingData($training_id, $begin, $ending, $sports, $distance) {			 
             
 			$mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["server_username"], $GLOBALS["server_password"], $GLOBALS["database"]); 
    
-             $stmt = $mysqli->prepare("UPDATE training SET begin=?, end=?, sports=?, distance=? WHERE id=?");
-			 $stmt -> bind_param("ssssi", $begin, $end, $sports, $distance, $training_training_id);
+             $stmt = $mysqli->prepare("UPDATE training SET begin=?, ending=?, sports=?, distance=? WHERE id=?");
+			 $stmt -> bind_param("ssssi", $begin, $ending, $sports, $distance, $training_training_id);
 			 $stmt->execute();
 			 // tühjendame aadressirea
 			 header("Location:table.php");
