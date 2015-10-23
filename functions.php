@@ -19,7 +19,7 @@
     		   $stmt->bind_param("ss", $search, $search);
 			   $stmt -> bind_result($training_id_from_db, $user_id_from_db, $begin_from_db, $ending_from_db, $sports_from_db, $distance_from_db);
 			   $stmt->execute();
-				// massiiv, kus hoiame autosid
+				// massiiv, kus hoiame trenne
 				$array = array();
 				
 				
