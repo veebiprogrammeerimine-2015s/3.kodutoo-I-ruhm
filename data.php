@@ -5,7 +5,6 @@ $page_file_name = "data.php";
 require_once("functions.php");
 
     
-
 if(isset($_GET["logout"])){
 	session_destroy();
 		header("Location: login.php");
@@ -52,8 +51,8 @@ function cleanInput($data) {
     }
     
     getAllData();
-?>
 
+?>	
 <a href="?logout=1">Logout</a><br><br>
 <a href="?notes=">Notes</a>
 

@@ -41,7 +41,7 @@ function createNote($note, $done){
 	$stmt->bind_param("iss", $_SESSION["id_from_db"], $note, $done);
         $message = "";
         if($stmt->execute()){
-            $message = "Edukalt andmebaasi salvestatud!";
+            $message = "Note saved!!";
         }else{
 			echo $stmt->error;
 		}
@@ -53,7 +53,7 @@ function createNote($note, $done){
 function getAllData(){
         	
 	$mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["server_username"], $GLOBALS["server_password"], $GLOBALS["database"]);
-	$stmt = $mysqli->prepare("SELECT id, user_id, note, done FROM notes WHERE deleted IS NULL");
+	$stmt = $mysqli->prepare("SELECT id, user_id, note, done FROM notes WHERE deleted IS NULL AND user_id={$_SESSION["id_from_db"]}");
 	$stmt->bind_result($id_from_db, $user_id_from_db, $note_from_db, $done_from_db);
 	$stmt->execute();
 	
