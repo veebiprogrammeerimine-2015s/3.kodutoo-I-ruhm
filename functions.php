@@ -63,8 +63,8 @@
             
 			$mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["server_username"], $GLOBALS["server_password"], $GLOBALS["database"]); 
    
-             $stmt = $mysqli->prepare("UPDATE training SET begin=?, ending=?, sports=?, distance=? WHERE id=?");
-			 $stmt -> bind_param("ssssi", $begin, $ending, $sports, $distance, $training_training_id);
+             $stmt = $mysqli->prepare("UPDATE training SET begin=?, ending=?, sports=?, distance=? WHERE training_id=?");
+			 $stmt -> bind_param("ssssi", $begin, $ending, $sports, $distance, $training_id);
 			 $stmt->execute();
 			 // tühjendame aadressirea
 			 header("Location:table.php");

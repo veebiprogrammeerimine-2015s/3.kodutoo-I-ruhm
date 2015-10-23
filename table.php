@@ -47,10 +47,10 @@ require_once("functions.php");
     for($i = 0; $i < count($training_array); $i++){
 		
 		//kasutaja tahab rida muuta
-	  if(isset($_GET["edit"])&& $_GET["edit"]==$training_array[$i]->id){
+	  if(isset($_GET["edit"])&& $_GET["edit"]==$training_array[$i]->training_id){
 		echo "<tr>";
 		echo "<form action='table.php' method='get'>";
-		echo "<input type='hidden' name='training_id' value='".$training_array[$i]->id."'>"; 
+		echo "<input type='hidden' name='training_id' value='".$training_array[$i]->training_id."'>"; 
 		echo "<td>".$training_array[$i]->training_id."</td>";  
         echo "<td>".$training_array[$i]->user_id."</td>";  
 	    echo "<td><input name='begin' value='".$training_array[$i]->begin."'></td>";  
