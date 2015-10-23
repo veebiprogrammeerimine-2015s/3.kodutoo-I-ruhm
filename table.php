@@ -5,13 +5,25 @@ require_once("functions.php");
 $tex_array = getAllData();
 if(isset($_GET["delete"])) {
         ///saadan kustutatava auto id
-        deleteCarData($_GET["delete"]);
+        deleteQweetData($_GET["delete"]);
     }
 
  if(isset($_GET["update"])){
         updateQweetData($_GET["qwert"], $_GET["qwert_id"]);
     }
     
+	$keyword = "";
+    if(isset($_GET["keyword"])){
+        $keyword = $_GET["keyword"];
+        
+        // otsime 
+        $tex_array = getAllData($keyword);
+        
+        
+    }else{
+	$tex_array = getAllData();
+        
+    }
 ?>
 
 <nav id="menyy">
@@ -22,6 +34,11 @@ if(isset($_GET["delete"])) {
 <br><br>
 
 <h1> Qweedid </h1>
+<form action="table.php" method="get">
+    <input name="keyword" type="search" value="<?=$keyword?>" >
+    <input type="submit" value="otsi">
+<form>
+<br><br>
 <table border=1>
 <tr>
     <th>id</th>

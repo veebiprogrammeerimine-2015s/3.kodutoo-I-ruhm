@@ -14,6 +14,7 @@ CREATE TABLE qweet (
   id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   user_id INT NOT NULL,
   qwert VARCHAR(100),
+  deleted DATE NULL,
   FOREIGN KEY (user_id) REFERENCES user_sample(id)
 );
 

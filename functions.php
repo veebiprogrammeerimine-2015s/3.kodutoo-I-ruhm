@@ -66,9 +66,18 @@
 		
 	}
 	
-	function getAllData(){
+	function getAllData($keyword=""){
+        
+        if($keyword == ""){
+            //ei otsi
+            $search = "%%";
+        }else{
+            //otsime
+            $search = "%".$keyword."%";
+        }
 		$mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["server_username"], $GLOBALS["server_password"], $GLOBALS["database"]);
-		$stmt = $mysqli->prepare("SELECT id, user_id, qwert from qweet");
+		$stmt = $mysqli->prepare("SELECT id, user_id, qwert from qweet WHERE deleted IS NULL AND (qwert LIKE ?)");
+		$stmt->bind_param("s", $search);
 		$stmt->bind_result($id_from_db, $user_id_from_db, $qwert_from_db);
 		$stmt->execute();
 		$array = array();
@@ -87,7 +96,9 @@
 	
 	}
 	
- function deleteQweetData($tex_id){
+
+	
+ function deleteQweetData($qwert_id){
     
     $mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["server_username"], $GLOBALS["server_password"], $GLOBALS["database"]);
     
@@ -103,7 +114,7 @@
     $mysqli->close();
 }	
 
-function updateQweetData($tex_id){
+function updateQweetData($qwert, $qwert_id){
     
     $mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["server_username"], $GLOBALS["server_password"], $GLOBALS["database"]);
     
