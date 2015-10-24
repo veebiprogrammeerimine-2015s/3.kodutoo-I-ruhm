@@ -61,7 +61,7 @@
 			
 				if($email_error == "" && $password_error == ""){
 					// kui erroreid ei olnud
-					echo "Võib sisse logida! Kasutaja on: ".$email. "ja parool: " .$password;
+					echo "Võib sisse logida!";
 				
 					$hash = hash("sha512", $password);
 					
@@ -74,7 +74,7 @@
 		
 	
 	//siit algab kasutaja loomise osa.
-	if(isset($_POST["create"])){
+	
 		
 		if(isset($_POST["createuser"])){ //kui vajutatakse "registreeri kasutaja" nuppu
 		
@@ -127,19 +127,18 @@
 		
 		if($name_error == "" && $surname_error == "" && $newemail_error == "" && $password1_error == ""){
 					// kui erroreid ei olnud
-					echo "Kontrollin " .$name. " " .$surname. " " .$newemail. " " .$password1;
+					
 				
-				echo hash("sha512", $create_password);	
-				echo "võib kasutaja luua. Kasutaja eesnimi on ".$name." perekonnanimi ".$surname." email ".$newemail." parool ".$password1;
+				echo "KASUTAJA LOODUD!";
 					
 				$hash = hash("sha512", $password1);
 				
-				createUser($create_email, $hash);
+				createUser($name, $surname, $newemail, $hash, $comment, $dob, $gender);
 				
 				}
 		
 		}
-	}
+	
 	
 	}
 	//Selle saan lisada igale asjale, et käiks läbi ja kustutaks üleliigse.

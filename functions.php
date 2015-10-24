@@ -96,12 +96,12 @@
 				$mysqli->close();
 	}
 	
-	function createUser($create_email, $hash){
+	function createUser($name, $surname, $newemail, $hash, $comment, $dob, $gender){
 		
 		$mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["server_username"], $GLOBALS["server_password"], $GLOBALS["database"]);
 		
 		$stmt = $mysqli->prepare("INSERT INTO users (name, surname, email, password, comment, dob, gender) VALUES (?,?,?,?,?,?,?)");
-		$stmt->bind_param("sssssss", $name, $surname, $create_email, $hash, $comment, $dob, $gender);
+		$stmt->bind_param("sssssss", $name, $surname, $newemail, $hash, $comment, $dob, $gender);
 		$stmt->execute();
         $stmt->close();
 		$mysqli->close();	
