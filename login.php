@@ -1,15 +1,10 @@
 <?php
-
-	//loome AB ühenduse
-    require_once("../config.php");
-    $database = "if15_merit26_1";
-    $mysqli = new mysqli($servername, $username, $password, $database);
-    
-    //check connection
-    if($mysqli->connect_error) {
-        die("connect error ".mysqli_connect_error());
-	}
+    require_once("functions.php"); 
 	
+	if(isset($_SESSION['logged_in_user_id'])){
+        header("Location: data.php");
+		}
+		
 	// muuutujad errorite jaoks
 	$email_error = "" ;
 	$password_error = "" ;
@@ -28,7 +23,7 @@
 	 $gender = "";
 	 
 	// kontrolli ainult siis, kui kasutaja vajutab "logi sisse" nuppu
-	if($_SERVER["REQUEST_METHOD"] == "POST"){
+	    if($_SERVER["REQUEST_METHOD"] == "POST"){
 		
 		//kontrollin kas muutuja $_POST["login"] ehk kas inimene tahab sisse logida
 		if(isset($_POST["login"])){
@@ -49,11 +44,17 @@
 			}
 		  
 			if($password_error == "" && $email_error == ""){
-				echo "Sisselogimine. Kasutajanimi on ".$email." ja parool on ".$password;
+				//echo "Sisselogimine. Kasutajanimi on ".$email." ja parool on ".$password;
 			   
 				$hash = hash("sha512", $password);	
-
-				$stmt = $mysqli->prepare("SELECT id, email FROM users WHERE email=? AND password=?");
+                loginUser($email, $hash);
+            
+            }
+		}
+		
+				//See tuleks siit ära tõsta
+				
+        		$stmt = $mysqli->prepare("SELECT id, email FROM users WHERE email=? AND password=?");
 				// küsimärkide asendus
 				$stmt->bind_param("ss", $email, $hash);
 				//ab tulnud muutujad
@@ -75,13 +76,10 @@
 			} 
 		
 		
+		} 
 		
 		
-		
-		
-		
-		
-		} elseif(isset($_POST["create"])) {
+		 if(isset($_POST["create"])) {
 		
 			if(empty($_POST["email_2"])) { 
 				$email_2_error = "Ei saa olla täitmata";
@@ -115,14 +113,16 @@
 			
 			
 			if(	$email_2_error == "" && $password_2_error == "" && $age_error == "" && $gender_error == ""){
-				echo hash("sha512", $password_2);
-				echo " Kasutaja loomine. Kasutajanimi on ".$email_2." ja parool on ".$password_2.". Vanus on ".$age.". Sugu on ".$gender.".";
+				//echo hash("sha512", $password_2);
+				//echo " Kasutaja loomine. Kasutajanimi on ".$email_2." ja parool on ".$password_2.". Vanus on ".$age.". Sugu on ".$gender.".";
 			
 				$hash = hash("sha512", $password_2);
+			// see asemele: 
+			createUser($email_2, $hash, $age, $gender);	
+				// see ka functions faili viia
 				
 				$stmt = $mysqli->prepare("INSERT INTO users (email, password, age, gender) VALUES (?,?,?,?)");
-		
-				$stmt->bind_param("ssss", $email_2, $hash, $age, $gender); //iga string on s
+		    	$stmt->bind_param("ssss", $email_2, $hash, $age, $gender); //iga string on s
 					
 				//käivitab sisestuse
 				$stmt->execute();
@@ -153,23 +153,24 @@
 ?>
 <?php require_once("header.php"); ?>
 	
-		<h2>Login</h2>
+		<h2>Log in</h2>
 
-	    <form action="edit.php" method="post"?>
-			<input name="email" type="email" placeholder="E-post">*<?php echo $email_error; ?><br><br>
-			<input name="password" type="password" placeholder="parool">*<?php echo $password_error; ?><br><br>		
-			<input name="login" type="submit" value="logi sisse"> 
+	     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post" >
+			<input name="email" type="email" placeholder="E-post" value="<?php echo $email; ?>"> <?php echo $email_error; ?><br><br>
+			<input name="password" type="password" placeholder="parool" value="<?php echo $password; ?>"> <?php echo $password_error; ?><br><br>	
+			<input type="submit" name="login" value="Log in">
 		</form>
 		
 		<h2>Create user</h2>
-	        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post"?>
-			<input name="email_2" type="email" placeholder="E-post">*<?php echo $email_2_error; ?><br> <br>
-			<input name="password_2" type="password" placeholder="parool">*<?php echo $password_2_error; ?> <br> <br>
+	        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" >
+			<input name="email_2" type="email" placeholder="E-post" value="<?php echo $email_2; ?>"> <?php echo $email_2_error; ?><br><br>
+			<input name="password_2" type="password" placeholder="parool"> <?php echo $password_2_error; ?> <br> <br>
 			<input name="age" type="text" placeholder="vanus"> <br> <br> 
 			<input name="gender" type="text" placeholder="sugu mees/naine"> <br> <br> 
-			<input name="create" type="submit" value="loo kasutaja"> 
+			<input type="submit" name="create" value="Create user"> 
 		</form>	
-		
+		<body>
+<html>
 		
 		
 <?php

@@ -14,7 +14,7 @@
    }
    
    // muutujad väärtustega
-   $training=$begin=$ending=$sports=$distance="";
+   $training=$begin=$ending=$sports=$distance=$m="";
    $training_error=$begin_error=$ending_error=$sports_error=$distance_error="";
    
    // valideerida väljad
@@ -53,7 +53,7 @@
 			
 			{
 				$m = createTraining($begin, $ending, $sports, $distance);
-			if($m !=""){
+			  if($m !=""){
 				$begin = "";
 				$ending ="";
 				$sports = "";
@@ -80,16 +80,16 @@
 Tere, <?= $_SESSION['logged_in_user_email']; ?> 
 <a href="?logout=1">Log out</a>
    
-<h2>Log in</h2>
+<h2>Lisa uus</h2>
   <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post" >
-     <label > Algus </label>
-  	<input id="begin" name="begin" type="text" value="<?=$begin;?>"> <?=$begin_error;?><br><br>
-  	 <label > Lõpp </label>
-	<input name="ending" type="text" value="<?=$ending;?>"> <?=$ending_error;?><br><br>
-	 <label > Spordiala </label>
+     <label for "begin"> Algus </label>
+  	    <input id="begin" name="begin" type="text" value="<?=$begin;?>"> <?=$begin_error;?><br><br>
+  	 <label for "ending" > Lõpp </label>
+	<input id="ending" name="ending" type="text" value="<?=$ending;?>"> <?=$ending_error;?><br><br>
+	 <label for "sports" > Spordiala </label>
   	<input id="sports" name="sports" type="text" value="<?=$sports;?>"> <?=$sports_error;?><br><br>
-  	 <label > Distants </label>
-	<input name="distance" type="text" value="<?=$distance;?>"> <?=$distance_error;?><br><br>
+  	 <label for "distance"> Distants </label>
+	<input id="distance" name="distance" type="text" value="<?=$distance;?>"> <?=$distance_error;?><br><br>
   	<input type="submit" name="add_training" value="Lisa">
 	<p style="color:blue;"><?=$m;?><?p>
   </form>

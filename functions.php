@@ -3,7 +3,72 @@
 //loome AB ühenduse
    require_once("../config_global.php");
    $database = "if15_merit26_1";
- 
+  
+  session_start();
+  
+      function logInUser($email, $hash){
+        
+        // GLOBALS saab kätte kõik muutujad mis kasutusel
+        $mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["server_username"], $GLOBALS["server_password"], $GLOBALS["database"]);
+        
+        $stmt = $mysqli->prepare("SELECT id, email FROM users WHERE email=? AND password=?");
+        $stmt->bind_param("ss", $email, $hash);
+        $stmt->bind_result($id_from_db, $email_from_db);
+        $stmt->execute();
+        if($stmt->fetch()){
+            echo "Kasutaja logis sisse id=".$id_from_db;
+            
+            // sessioon, salvestatakse serveris
+            $_SESSION['logged_in_user_id'] = $id_from_db;
+            $_SESSION['logged_in_user_email'] = $email_from_db;
+            
+            //suuname kasutaja teisele lehel
+            header("Location: data.php");
+            
+        }else{
+            echo "Wrong credentials!";
+        }
+        $stmt->close();
+        
+        $mysqli->close();
+        
+    }
+    
+    
+    function createUser($email_2, $hash){
+        
+        $mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["server_username"], $GLOBALS["server_password"], $GLOBALS["database"]);
+        $stmt = $mysqli->prepare("INSERT INTO users (email, password, age, gender) VALUES (?,?,?,?)");
+        $stmt->bind_param("ss", $email_2, $hash, $age, $gender);
+        $stmt->execute();
+        $stmt->close();
+        
+        $mysqli->close();
+        
+    }
+    
+    function createTraining($begin, $ending, $sports, $distance) {
+        
+        $mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["server_username"], $GLOBALS["server_password"], $GLOBALS["database"]);
+        $stmt = $mysqli->prepare("INSERT INTO training (user_id, begin, ending, sports, distance) VALUES (?,?,?,?,?)");
+        // i - on user_id INT
+        $stmt->bind_param("issss", $_SESSION['logged_in_user_id'], $begin, $ending, $sports, $distance);
+        
+        $message = "";
+        
+        // kui õnnestub siis tõene kui viga siis else
+        if($stmt->execute()){
+            // õnnestus
+            $message = "Edukalt andmebaasi salvestatud!";
+        }
+        
+        $stmt->close();
+        $mysqli->close();
+        
+        // saadan sõnumi tagasi
+        return $message;
+        
+    }
   function getAllData($keyword=""){
 	  if($keyword== ""){
 		  //ei otsi
@@ -13,7 +78,7 @@
 		  $search = "%".$keyword."%";
 	  }
 				 			 
-   			 $mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["server_username"], $GLOBALS["server_password"], $GLOBALS["database"]);  
+   			   $mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["server_username"], $GLOBALS["server_password"], $GLOBALS["database"]);  
 			   
 			   $stmt = $mysqli->prepare("SELECT training_id, user_id, begin, ending, sports, distance FROM training WHERE deleted IS NULL AND (sports LIKE ? OR distance LIKE ?)");
     		   $stmt->bind_param("ss", $search, $search);
