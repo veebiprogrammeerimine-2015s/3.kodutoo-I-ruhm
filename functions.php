@@ -1,7 +1,7 @@
 <?php
 
 
-	require_once("../../config_global.php");
+	require_once("../../configglobal.php");
 	$database = "if15_karl";
 	
 	function getAllData($keyword=""){
