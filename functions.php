@@ -69,18 +69,34 @@
     }
 		
 	
-	function getAllData() {
-        $mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["server_username"], $GLOBALS["server_password"], $GLOBALS["database"]);
-		$stmt = $mysqli->prepare("SELECT id, user_id, number_plate, color FROM car_plates");
-		$stmt->bind_result($id_from_db, $user_from_db, $number_plate_from_db, $color_from_db);
-		//Iga rea kohta teeme midagi
-		while($stmt->fetch()) {
-			//Saime andmed katte
-			echo($user_id_from_db);
+		function getAllData() {
+				$mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["server_username"], $GLOBALS["server_password"], $GLOBALS["database"]);
+				
+				$stmt = $mysqli->prepare("SELECT id, name, description, company, county, parish, location, address FROM job_offers");
+				$stmt->bind_result($id_from_db, $name_from_db, $desc_from_db, $company_from_db, $county_from_db, $parish_from_db, $location_from_db, $address_from_db);
+				$stmt->execute();
+        
+				$array = array();
+			//Iga rea kohta teeme midagi
+				while($stmt->fetch()) {
+					$job = new StdClass();
+					$job->id = $id_from_db;
+					$job->name = $name_from_db;
+					$job->description = $desc_from_db;
+					$job->company = $company_from_db;
+					$job->county = $county_from_db;
+					$job->parish = $parish_from_db;
+					$job->location = $location_from_db;
+					$job->address = $address_from_db;
+					array_push($array, $job);
+			}
+				return $array;
+				//Saime andmed katte
+				echo($name_from_db);
+				
 			
-		}
-	$stmt->close();
-	$mysqli->close();
+		$stmt->close();
+		$mysqli->close();
 	}
 
 	

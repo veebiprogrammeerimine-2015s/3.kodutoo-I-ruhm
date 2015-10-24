@@ -7,6 +7,12 @@
 		Avaleht |
 	<?php } ?>
 	
+	<?php if($page_file != "jobs.php") { ?>
+		<a href="jobs.php">Tööpakkumised</a> |
+	<?php } else { ?>
+		Tööpakkumised |
+	<?php } ?>
+	
 	<?php if($page_file != "data.php") { ?>
 		<a href="data.php">Data</a> |
 	<?php } else { ?>
