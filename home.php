@@ -10,8 +10,6 @@
 ?>
 
 <h1>Avaleht</h1>
-<div id="content">
-
 	<div class="newest">
 		<table border=1>
 			<tr>
@@ -51,6 +49,5 @@
 	
 	</div>
 	
-</div>
 
 <?php require_once("footer.php"); ?>

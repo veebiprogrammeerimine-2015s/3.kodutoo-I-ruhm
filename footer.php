@@ -1,5 +1,7 @@
 
 </div>
-<p><i>Made by Rauno</i></p>
+<footer>
+	<p><i>Made by Rauno</i></p>
+</footer>
 	</body>
 </html>

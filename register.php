@@ -69,5 +69,5 @@
   	<input type="submit" name="create" value="Loo konto">
   </form>
 
-	
+<?php require_once("footer.php"); ?>
 	
