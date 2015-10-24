@@ -24,10 +24,10 @@
 			$_SESSION['logged_in_user_email'] = $email_from_db;
 			$_SESSION['logged_in_user_group'] = $usergroup_from_db;
 			//Suuname kasutaja teisele lehele
-			header("Location: data.php");
+			header("Location: home.php");
 			
         }else{
-            echo "Wrong credentials!";
+            echo "Vale kasutajanimi/parool";
         }
         $stmt->close();
         
@@ -69,10 +69,17 @@
     }
 		
 	
-		function getAllData() {
+		function getAllData($keyword="") {
+			if ($keyword == "") {
+				$search = "%%";
+			}else{
+				$search = "%".$keyword."%";
+			}
+		
 				$mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["server_username"], $GLOBALS["server_password"], $GLOBALS["database"]);
 				
-				$stmt = $mysqli->prepare("SELECT id, name, description, company, county, parish, location, address FROM job_offers WHERE deleted IS NULL");
+				$stmt = $mysqli->prepare("SELECT id, name, description, company, county, parish, location, address FROM job_offers WHERE deleted IS NULL AND (name LIKE ? OR description LIKE ? OR company LIKE ? OR county LIKE ? OR parish LIKE ? OR location LIKE ? OR address LIKE ?)");
+				$stmt->bind_param("sssssss", $search, $search, $search, $search, $search, $search, $search);
 				$stmt->bind_result($id_from_db, $name_from_db, $desc_from_db, $company_from_db, $county_from_db, $parish_from_db, $location_from_db, $address_from_db);
 				$stmt->execute();
         
@@ -114,7 +121,18 @@
 	}
 	
 	
-	
+		function updateJobData($job_id, $job_name, $job_desc, $job_company, $job_county, $job_parish, $job_location, $job_address) {
+		$mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["server_username"], $GLOBALS["server_password"], $GLOBALS["database"]);
+		$stmt = $mysqli->prepare("UPDATE job_offers SET name=?, description=?, company=?, county=?, parish=?, location=?, address=? WHERE id=?");
+		$stmt->bind_param("sssssssi", $job_name, $job_desc, $job_company, $job_county, $job_parish, $job_location, $job_address, $job_id);
+		
+		$stmt->execute();
+		//Tühjendame aadressirea
+		header("Location: jobs.php");
+		
+		$stmt->close();
+		$mysqli->close();
+	}
 	
 	
 	

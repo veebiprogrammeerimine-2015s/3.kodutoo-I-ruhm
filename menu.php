@@ -14,9 +14,9 @@
 	<?php } ?>
 	
 	<?php if($page_file != "data.php") { ?>
-		<a href="data.php">Data</a> |
+		<a href="data.php">Lisa töö</a> |
 	<?php } else { ?>
-		Data |
+		Lisa töö |
 	<?php } ?>
 	
 	
