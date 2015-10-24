@@ -52,31 +52,7 @@
             }
 		}
 		
-				//See tuleks siit ära tõsta
-				
-        		$stmt = $mysqli->prepare("SELECT id, email FROM users WHERE email=? AND password=?");
-				// küsimärkide asendus
-				$stmt->bind_param("ss", $email, $hash);
-				//ab tulnud muutujad
-				$stmt->bind_result($id_from_db, $email_from_db);
-				$stmt->execute();
-				
-				// teeb päringu ja kui on tõene (st et ab oli see väärtus)
-				if($stmt->fetch()){
-					
-					// Kasutaja email ja parool õiged
-					echo " Kasutaja logis sisse id=".$id_from_db;
-					
-				}else{
-					echo "Valed andmed!";
-				}
-				
-				$stmt->close();
-               
-			} 
-		
-		
-		} 
+			logInUser($email_2, $hash);	
 		
 		
 		 if(isset($_POST["create"])) {
@@ -117,16 +93,9 @@
 				//echo " Kasutaja loomine. Kasutajanimi on ".$email_2." ja parool on ".$password_2.". Vanus on ".$age.". Sugu on ".$gender.".";
 			
 				$hash = hash("sha512", $password_2);
-			// see asemele: 
+			
+			
 			createUser($email_2, $hash, $age, $gender);	
-				// see ka functions faili viia
-				
-				$stmt = $mysqli->prepare("INSERT INTO users (email, password, age, gender) VALUES (?,?,?,?)");
-		    	$stmt->bind_param("ssss", $email_2, $hash, $age, $gender); //iga string on s
-					
-				//käivitab sisestuse
-				$stmt->execute();
-				$stmt->close();
 					
 			}
 			

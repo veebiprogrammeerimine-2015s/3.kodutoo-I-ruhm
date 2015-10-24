@@ -22,7 +22,7 @@
             $_SESSION['logged_in_user_id'] = $id_from_db;
             $_SESSION['logged_in_user_email'] = $email_from_db;
             
-            //suuname kasutaja teisele lehel
+            //suuname kasutaja teisele lehele
             header("Location: data.php");
             
         }else{
