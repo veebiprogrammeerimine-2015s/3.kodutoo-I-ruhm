@@ -77,7 +77,7 @@
 	function logInUser($email, $hash){
 	
 		$mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["server_username"], $GLOBALS["server_password"], $GLOBALS["database"]);
-		$stmt = $mysqli->prepare("SELECT id, email FROM user_sample WHERE email=? AND password=?"); 
+		$stmt = $mysqli->prepare("SELECT id, email FROM users WHERE email=? AND password=?"); 
         $stmt->bind_param("ss", $email, $hash);
         $stmt->bind_result($id_from_db, $email_from_db);
 		$stmt->execute();
@@ -100,8 +100,8 @@
 		
 		$mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["server_username"], $GLOBALS["server_password"], $GLOBALS["database"]);
 		
-		$stmt = $mysqli->prepare("INSERT INTO user_sample (email, password) VALUES (?,?)");
-		$stmt->bind_param("ss", $create_email, $hash);
+		$stmt = $mysqli->prepare("INSERT INTO users (name, surname, email, password, comment, dob, gender) VALUES (?,?,?,?,?,?,?)");
+		$stmt->bind_param("sssssss", $name, $surname, $create_email, $hash, $comment, $dob, $gender);
 		$stmt->execute();
         $stmt->close();
 		$mysqli->close();	

@@ -54,7 +54,6 @@
 	<th>Elupaiga kood</th>
 	<th>Kustuta</th>
 	<th>Muuda kirjet</th>
-	<th>Muuda eraldi lehel</th>
 
 	
 </tr>
@@ -89,7 +88,6 @@
 			echo "<td>".$habitat_array[$i]->habitat_code."</td>";
 			
 			echo "<td><a href='?delete=".$habitat_array[$i]->id."'>X</a></td>";
-			echo "<td><a href='?edit=".$habitat_array[$i]->id."'>muuda</a></td>";
 			echo "<td><a href='edit.php?edit_id=".$habitat_array[$i]->id."'>muuda</a></td>";
 		
 			echo "</tr>";

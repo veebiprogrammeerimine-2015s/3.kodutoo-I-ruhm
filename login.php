@@ -1,122 +1,209 @@
 <?php
 
-	//selleks, et functions.php ¸hendatud oleks.
-	
+	// √ºhenduse loomiseks kasuta MYSQL
 	require_once("functions.php");
-	
-	//kui kasutaja on sisselogitu, suuna teisele lehele. Ei saaks logituna minna tagasi login lehele.
-	//kontrollin kas sessioonimuutuja on olemas? 
+
+	//check connection_aborted
 	if(isset($_SESSION['logged_in_user_id'])){
 		header("Location: table.php");
 	}
 	
-    
-  // muuutujad errorite jaoks
+
+	
 	$email_error = "";
-	$password_error = "";
-	$create_email_error = "";
-	$create_password_error = "";
-  // muutujad v‰‰rtuste jaoks
+	$password_error ="";
+	$password1 = ""; 
+	$password1_error ="";
+	$name_error = "";
+	$surname_error = "";
+	$newemail_error = "";
+	
+	
+	//muutujad v√§√§rtustega
 	$email = "";
 	$password = "";
-	$create_email = "";
-	$create_password = "";
-	if($_SERVER["REQUEST_METHOD"] == "POST") {
-    // *********************
-    // **** LOGI SISSE *****
-    // *********************
+	$name = "";
+	$surname = "";
+	$newemail = "";
+	$dob = "";
+	$comment ="";
+	$gender = "";
+	
+	//isset - √ºtleb kas asi on olemas
+	//empty - kas on t√ºhi
+	
+	//kontrolli ainult siis kui kasutaja vajutab "Logi sisse" nuppu. kas toimub nupuvajutus.
+	if($_SERVER["REQUEST_METHOD"] == "POST"){
+		
 		if(isset($_POST["login"])){
-			if ( empty($_POST["email"]) ) {
-				$email_error = "See v‰li on kohustuslik";
-			}else{
-        // puhastame muutuja vıimalikest ¸leliigsetest s¸mbolitest
-				$email = cleanInput($_POST["email"]);
-			}
-			if ( empty($_POST["password"]) ) {
-				$password_error = "See v‰li on kohustuslik";
-			}else{
-				$password = cleanInput($_POST["password"]);
-			}
-      // Kui oleme siia jıudnud, vıime kasutaja sisse logida
-			if($password_error == "" && $email_error == ""){
-				//echo "Vıib sisse logida! Kasutajanimi on ".$email." ja parool on ".$password;
 			
-                $hash = hash("sha512", $password);
-                
-                logInUser($email, $hash);
-                
-            
-            
-            }
-		} // login if end
-    // *********************
-    // ** LOO KASUTAJA *****
-    // *********************
-    if(isset($_POST["create"])){
-			if ( empty($_POST["create_email"]) ) {
-				$create_email_error = "See v‰li on kohustuslik";
+			if(empty($_POST["email"])){
+				$email_error = "Sisesta e-mail";
 			}else{
-				$create_email = cleanInput($_POST["create_email"]);
+				//annan v√§√§rtuse
+				$email = test_input($_POST["email"]);
 			}
-			if ( empty($_POST["create_password"]) ) {
-				$create_password_error = "See v‰li on kohustuslik";
-			} else {
-				if(strlen($_POST["create_password"]) < 8) {
-					$create_password_error = "Peab olema v‰hemalt 8 t‰hem‰rki pikk!";
+		
+	
+			if(empty($_POST["password"])){
+				$password_error = "Sisesta parool!";
+			}else{
+				$password = test_input($_POST["password"]);
+				
+				if(strlen($_POST["password"]) <= 8){
+					$password_error ="Parool peab olema v√§hemalt 8 s√ºmbolit pikk!";
 				}else{
-					$create_password = cleanInput($_POST["create_password"]);
+					$password = test_input($_POST["password"]);
 				}
 			}
-			if(	$create_email_error == "" && $create_password_error == ""){
-				echo hash("sha512", $create_password);
-                //echo "Vıib kasutajat luua! Kasutajanimi on ".$create_email." ja parool on ".$create_password;
+			
+			//kui erroreid pole, siis viskab veebilehe p√§isesse sisestatud andmed
+			
+				if($email_error == "" && $password_error == ""){
+					// kui erroreid ei olnud
+					echo "V√µib sisse logida! Kasutaja on: ".$email. "ja parool: " .$password;
+				
+					$hash = hash("sha512", $password);
+					
+					logInUser($email, $hash);
+				
+					
+				}
+		}
+			
+		
+	
+	//siit algab kasutaja loomise osa.
+	if(isset($_POST["create"])){
+		
+		if(isset($_POST["createuser"])){ //kui vajutatakse "registreeri kasutaja" nuppu
+		
+			if (empty($_POST["name"])) {
+				$name_error = "Eesnime v√§li on kohustuslik!";
+			}else{
+				$name = test_input($_POST["name"]);
+			}	
+		
+			if (empty($_POST["surname"])) {
+				$surname_error = "Perekonnanime v√§li on kohustuslik!";
+			}else{
+				$surname = test_input($_POST["surname"]);
+			}	
+		
+			if(empty($_POST["newemail"])){
+				$newemail_error = "e-maili v√§li on kohustuslik!";
+			}else{
+				$newemail = test_input($_POST["newemail"]);
+			}
+		
+			if(empty($_POST["password1"])){
+				$password1_error="Ei saa olla t√ºhi";
+			}else{
+            
+				//parool ei ole tƒÜ¬ºhi, kontrollime pikkust
+				if(strlen($_POST["password1"]) < 8){
+					$password1_error="Peab olema vƒÜ¬§hemalt 8 s√ºmbolit!";
+				}else{
+					$password1 = test_input($_POST["password1"]);
                 
-                // tekitan paroolir‰si
-                $hash = hash("sha512", $create_password);
-                
-                //salvestan andmebaasi
-               createUser($create_email, $hash); //see on edasi functions.php failis, kuhu siit saadetakse create_email ja hash. 
-                
-                
-            }
-        } // create if end
+				//errorit tr√ºkitakse HTML osas rea j√§rel php koodis.
+				}
+				
+			}
+			
+			if(!empty($_POST["comment"])){
+				$comment = test_input($_POST["comment"]);
+			}
+			
+			if(!empty($_POST["dob"])){
+				$dob = test_input($_POST["dob"]);
+			}
+			
+			
+			if(!empty($_POST["gender"])){
+				$gender = test_input($_POST["gender"]);
+			}
 		
 		
-
+		if($name_error == "" && $surname_error == "" && $newemail_error == "" && $password1_error == ""){
+					// kui erroreid ei olnud
+					echo "Kontrollin " .$name. " " .$surname. " " .$newemail. " " .$password1;
+				
+				echo hash("sha512", $create_password);	
+				echo "v√µib kasutaja luua. Kasutaja eesnimi on ".$name." perekonnanimi ".$surname." email ".$newemail." parool ".$password1;
+					
+				$hash = hash("sha512", $password1);
+				
+				createUser($create_email, $hash);
+				
+				}
 		
+		}
 	}
-  // funktsioon, mis eemaldab kıikvıimaliku ¸leliigse tekstist
-  function cleanInput($data) {
-  	$data = trim($data);
-  	$data = stripslashes($data);
-  	$data = htmlspecialchars($data);
-  	return $data;
-  }
-   
- 
-  // paneme ¸henduse kinni
- 
-  
+	
+	}
+	//Selle saan lisada igale asjale, et k√§iks l√§bi ja kustutaks √ºleliigse.
+	function test_input($data) {
+	$data = trim($data);
+	$data = stripslashes($data); //kaotab liigsed kaldkriipsud
+	$data = htmlspecialchars($data); //v√µtab erinevad HTML s√ºmbolid ja teeb teksti kujule.
+	return $data;
+		}
+	
+?>
+<?php
+	//lehe nimi
+	$page_title = "Logi sisse!";
+	
+	//faili nimi
+	$page_file_name = "login.php";
 ?>
 <!DOCTYPE html>
+
 <html>
 <head>
-  <title>Login</title>
+		<title><p>Veebileht kujutaks endast pigem informatiivset lehte avalikkusele, kuhu on koondatud geo√∂koloogia v√§lit√∂√∂del saadud info/andmed. See on t√∂√∂deldud selliseks, et ka tavainimene saaks aru.
+		Tegemist Natura 2000 rannikuelupaikade projektiga. Leht h√µlmab kirjeldusi, pilte, graafikuid, skeeme jne.
+		</title>
 </head>
 <body>
-
-  <h2>Logi sisse</h2>
-  <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post" >
-  	<input name="email" type="email" placeholder="E-post" value="<?php echo $email; ?>"> <?php echo $email_error; ?><br><br>
-  	<input name="password" type="password" placeholder="Parool" value="<?php echo $password; ?>"> <?php echo $password_error; ?><br><br>
-  	<input type="submit" name="login" value="Logi sisse!">
-  </form>
-
-  <h2>Loo kasutaja</h2>
-  <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post" >
-  	<input name="create_email" type="email" placeholder="E-post" value="<?php echo $create_email; ?>"> <?php echo $create_email_error; ?><br><br>
-  	<input name="create_password" type="password" placeholder="Parool"> <?php echo $create_password_error; ?> <br><br>
-  	<input type="submit" name="create" value="Loo kasutaja!">
-  </form>
-<body>
-<html>
+		
+	
+	
+		<h2>Log in</h2>
+		<!--selleks, et -->
+			<form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+			
+				<input name="email" type="email" placeholder="e-post" value="<?php echo $email;?>" >* <?php echo $email_error; ?> <br><br>
+				<input name="password" type="password" placeholder="parool">* <?php echo $password_error; ?><br><br>
+				<input name="login" type="submit" value="Logi sisse">
+			
+			</form>
+			
+			
+		<h2>Create user</h2>
+			
+			<form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+			
+				<input type="text" name="name" placeholder="Eesnimi" value="<?php echo $name;?>" >* <?php echo $name_error;?><br><br>
+				<input type="text" name="surname" placeholder="Perekonnanimi" value="<?php echo $surname;?>" >* <?php echo $surname_error;?><br><br>
+				<input name="newemail" type="email" placeholder="e-post" value="<?php echo $newemail;?>" >* <?php echo $newemail_error; ?> <br><br>
+				<input name="password1" type="password" placeholder="Sisesta soovitud parool">* <?php echo $password1_error; ?><br><br>
+				
+				
+				
+				Biograafia <textarea name="comment" rows="5" cols="30"><?php echo $comment;?></textarea><br>
+				
+				<p>S√ºnniaeg: <input type="text" name="dob" placeholder="nt. 01.01.1993" /></p>
+				
+				<input type="radio" name="gender" value="female" <?php if (isset($gender) && $gender=="female") echo "checked";?>>Naine
+				<input type="radio" name="gender" value="male" <?php if (isset($gender) && $gender=="male") echo "checked";?>>Mees <br><br>
+				<input name="createuser" type="submit" value="Registreeri kasutajaks!">
+			
+			
+			</form>
+					
+			
+		
+	</body>
+	</html>
