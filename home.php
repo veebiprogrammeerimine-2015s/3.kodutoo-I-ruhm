@@ -25,9 +25,9 @@
 			</tr>
 
 <?php
-	//kõik autod objektide kujul massiivis
+	//kõik tööd objektide kujul massiivis
 	$job_array = getAllData();
-	//autod ükshaaval läbi käia
+	//tööd ükshaaval läbi käia
 	for($i = 0; $i < count($job_array); $i++) {
 		echo "<tr>";
 		echo "<td>".$job_array[$i]->name."</td>";

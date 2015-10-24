@@ -52,7 +52,7 @@
     function createJob($job_name, $job_desc, $job_company, $job_county, $job_parish, $job_location, $job_address) {
         
         $mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["server_username"], $GLOBALS["server_password"], $GLOBALS["database"]);
-        $stmt = $mysqli->prepare("INSERT INTO job_offers (user_id, name, description, company, county, parish, location, address) VALUES (?,?,?,?,?,?,?,?)");
+        $stmt = $mysqli->prepare("INSERT INTO job_offers (user_id, name, description, company, county, parish, location, address, inserted) VALUES (?,?,?,?,?,?,?,?,NOW())");
         $stmt->bind_param("isssssss", $_SESSION['logged_in_user_id'], $job_name, $job_desc, $job_company, $job_county, $job_parish, $job_location, $job_address);
         
 		$message = "";
@@ -72,7 +72,7 @@
 		function getAllData() {
 				$mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["server_username"], $GLOBALS["server_password"], $GLOBALS["database"]);
 				
-				$stmt = $mysqli->prepare("SELECT id, name, description, company, county, parish, location, address FROM job_offers");
+				$stmt = $mysqli->prepare("SELECT id, name, description, company, county, parish, location, address FROM job_offers WHERE deleted IS NULL");
 				$stmt->bind_result($id_from_db, $name_from_db, $desc_from_db, $company_from_db, $county_from_db, $parish_from_db, $location_from_db, $address_from_db);
 				$stmt->execute();
         
@@ -99,6 +99,26 @@
 		$mysqli->close();
 	}
 
+		function deleteJobData($job_id) {
+		$mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["server_username"], $GLOBALS["server_password"], $GLOBALS["database"]);
+		
+		//Uuendan välja deleted, lisan praeguse date
+		$stmt = $mysqli->prepare("UPDATE job_offers SET deleted=NOW() WHERE id=?");
+		$stmt->bind_param("i", $job_id);
+		$stmt->execute();
+		//Tühjendame aadressirea
+		header("Location: jobs.php");
+		
+		$stmt->close();
+		$mysqli->close();
+	}
+	
+	
+	
+	
+	
+	
+	
 	
   function cleanInput($data) {
   	$data = trim($data);

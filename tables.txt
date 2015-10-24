@@ -18,6 +18,7 @@ CREATE TABLE job_offers (
 	parish VARCHAR(64) NOT NULL,
 	location VARCHAR(64) NOT NULL,
 	address VARCHAR(64) NOT NULL,
-	sisestusaeg DATETIME NOT NULL,
+	inserted DATETIME NOT NULL,
+	deleted DATETIME,
 	FOREIGN KEY(user_id) REFERENCES ntb_kasutajad(id)
 );

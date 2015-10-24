@@ -8,6 +8,16 @@
 	require_once("header.php"); 
 	require_once ("functions.php");
 ?>
+<?php
+if(isset($_SESSION['logged_in_user_id'])) {
+	if($_SESSION['logged_in_user_group'] == 3) {
+		if(isset($_GET["delete"])) {
+			//saadan kustutatava töö id
+			deleteJobData($_GET["delete"]);
+		}
+	}
+}
+?>
 <h1>Tööpakkumised</h1>
 
 <table border=1>
@@ -22,9 +32,9 @@
 	</tr>
 
 	<?php
-		//kõik autod objektide kujul massiivis
+		//kõik tööd objektide kujul massiivis
 		$job_array = getAllData();
-		//autod ükshaaval läbi käia
+		//tööd ükshaaval läbi käia
 		for($i = 0; $i < count($job_array); $i++) {
 			echo "<tr>";
 			echo "<td>".$job_array[$i]->name."</td>";
@@ -34,6 +44,11 @@
 			echo "<td>".$job_array[$i]->parish."</td>";
 			echo "<td>".$job_array[$i]->location."</td>";
 			echo "<td>".$job_array[$i]->address."</td>";
+			if(isset($_SESSION['logged_in_user_id'])) {
+				if($_SESSION['logged_in_user_group'] == 3) {
+					echo "<td><a href='?delete=".$job_array[$i]->id."'>x</a></td>";
+				}
+			}
 			echo "</tr>";
 		}
 	?>
