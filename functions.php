@@ -35,11 +35,11 @@
     }
     
     
-    function createUser($email_2, $hash){
+    function createUser($email_2, $hash, $age, $gender){
         
         $mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["server_username"], $GLOBALS["server_password"], $GLOBALS["database"]);
         $stmt = $mysqli->prepare("INSERT INTO users (email, password, age, gender) VALUES (?,?,?,?)");
-        $stmt->bind_param("ss", $email_2, $hash, $age, $gender);
+        $stmt->bind_param("ssss", $email_2, $hash, $age, $gender);
         $stmt->execute();
         $stmt->close();
         

@@ -44,17 +44,15 @@
 			}
 		  
 			if($password_error == "" && $email_error == ""){
-				//echo "Sisselogimine. Kasutajanimi on ".$email." ja parool on ".$password;
+				echo "Sisselogimine. Kasutajanimi on ".$email." ja parool on ".$password;
 			   
 				$hash = hash("sha512", $password);	
-                loginUser($email, $hash);
+                logInUser($email, $hash);
             
             }
 		}
 		
-			logInUser($email_2, $hash);	
-		
-		
+			
 		 if(isset($_POST["create"])) {
 		
 			if(empty($_POST["email_2"])) { 
@@ -90,7 +88,7 @@
 			
 			if(	$email_2_error == "" && $password_2_error == "" && $age_error == "" && $gender_error == ""){
 				//echo hash("sha512", $password_2);
-				//echo " Kasutaja loomine. Kasutajanimi on ".$email_2." ja parool on ".$password_2.". Vanus on ".$age.". Sugu on ".$gender.".";
+				echo " Kasutaja loomine. Kasutajanimi on ".$email_2." ja parool on ".$password_2.". Vanus on ".$age.". Sugu on ".$gender.".";
 			
 				$hash = hash("sha512", $password_2);
 			
