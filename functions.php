@@ -6,6 +6,7 @@
 	//paneme sessiooni serveris toole, saame kasutada SESSIOS[]
 	session_start();
     
+		
     function logInUser($email, $hash){
         
         // GLOBALS saab kätte kõik muutujad mis kasutusel
@@ -34,7 +35,7 @@
         
     }
     
-    
+		
     function createUser($create_email, $hash){
         
         $mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["server_username"], $GLOBALS["server_password"], $GLOBALS["database"]);
@@ -48,15 +49,13 @@
     }
 		
 	
-    function createCarPlate($plate, $car_color) {
+    function createJob($job_name, $job_desc, $job_company, $job_county, $job_parish, $job_location, $job_address) {
         
         $mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["server_username"], $GLOBALS["server_password"], $GLOBALS["database"]);
-        $stmt = $mysqli->prepare("INSERT INTO car_plates (user_id, number_plate, color) VALUES (?,?,?)");
-        // i - on user_id INT
-        $stmt->bind_param("iss", $_SESSION['logged_in_user_id'], $plate, $car_color);
+        $stmt = $mysqli->prepare("INSERT INTO job_offers (user_id, name, description, company, county, parish, location, address) VALUES (?,?,?,?,?,?,?,?)");
+        $stmt->bind_param("isssssss", $_SESSION['logged_in_user_id'], $job_name, $job_desc, $job_company, $job_county, $job_parish, $job_location, $job_address);
         
 		$message = "";
-		//Kui onnestub ss toene kui viga ss else
 		if($stmt->execute()) {
 			//onnestus
 			$message = "Edukalt andmebaasi salvestatud";

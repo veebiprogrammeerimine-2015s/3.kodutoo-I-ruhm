@@ -10,11 +10,13 @@ CREATE TABLE ntb_kasutajad (
 
 CREATE TABLE job_offers (
 	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	user_id INT NOT NULL,
 	name VARCHAR(128) NOT NULL,
 	description TEXT NOT NULL,
 	company VARCHAR(128) NOT NULL,
 	county VARCHAR(64) NOT NULL,
 	parish VARCHAR(64) NOT NULL,
 	location VARCHAR(64) NOT NULL,
-	address VARCHAR(64) NOT NULL
+	address VARCHAR(64) NOT NULL,
+	FOREIGN KEY(user_id) REFERENCES ntb_kasutajad(id)
 );
