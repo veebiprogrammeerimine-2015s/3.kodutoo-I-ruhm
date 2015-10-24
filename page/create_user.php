@@ -6,7 +6,7 @@
 	$create_user_password_error = "";
 	$first_name_error = "";
 	$last_name_error = "";
-	$organisation_error ="";
+	$organisation_error = "";
 	
 	
 	$create_user_email = "";

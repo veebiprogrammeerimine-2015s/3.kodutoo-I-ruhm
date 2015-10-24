@@ -8,3 +8,18 @@ CREATE TABLE users_naaber(
 	created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	UNIQUE(email)
 );
+
+CREATE TABLE orders_naaber(
+	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	user_id INT,
+	text_type VARCHAR(100),
+	subject VARCHAR(200),
+	target_group VARCHAR(200),
+	description TEXT,
+	source VARCHAR(300),
+	length INT,
+	deadline DATETIME,
+	output VARCHAR(100),
+	deleted DATETIME,
+	modified DATETIME
+);
