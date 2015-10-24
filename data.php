@@ -1,5 +1,6 @@
 <?php
     require_once("functions.php");
+		require_once("../config_global.php");
 	
 	//Kui kasutaja ei ole sisse logitud, suuna teisele lehele
 	//Kontrollin kas sessiooni muutuja on olemas
@@ -7,12 +8,9 @@
 	if(!isset($_SESSION['logged_in_user_id'])) {
 		header("Location: register.php");
 	}
-
-	//aadressireale tekkis ?logout=1
-	if(isset($_GET["logout"])) {
-		//kustutame sessiooni muutujad
-		session_destroy();
-		header("Location: login.php");
+	
+	if($_SESSION['logged_in_user_group'] == 1) {
+		header("Location: noaccess.php");
 	}
 
 	

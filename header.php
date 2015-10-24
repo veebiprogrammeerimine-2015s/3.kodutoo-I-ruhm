@@ -32,7 +32,16 @@
 	</div>
 	<!--Login form end-->
 	
-
+	<!--Logout start-->
+	<?php
+	//aadressireale tekkis ?logout=1
+	if(isset($_GET["logout"])) {
+		//kustutame sessiooni muutujad
+		session_destroy();
+		header("Location: home.php");
+	}
+	?>
+	<!--Logout end-->
 	
 	<!--Error message-->
 	<div class="errormsg"><?php echo $email_error; ?> <?php echo $password_error; ?></div>

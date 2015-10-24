@@ -12,6 +12,7 @@
 	$create_email = "";
 	$create_password = "";
 	
+	
 	//errors
 	$create_email_error = "";
 	$create_password_error = "";
@@ -48,10 +49,18 @@
 //register end
 
 ?>
+<?php
+	//Lehe nimi
+	$page_title = "Konto loomine";
+	//Faili nimi
+	$page_file = "register.php";
+?>
 <?php 
 	require_once("header.php"); 
 	require_once("menu.php");
 ?>
+
+
 
 <h1>Loo konto</h1>
   <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post" >
