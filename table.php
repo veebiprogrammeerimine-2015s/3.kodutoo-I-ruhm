@@ -37,8 +37,7 @@ require_once("functions.php");
 	<th>Ending</th>
 	<th>Sports</th>
 	<th>Distance</th>
-    <th>Delete</th>
-    <th>Edit</th>
+    <th></th>
 	<th></th>
 </tr>  
  <?php
@@ -72,7 +71,7 @@ require_once("functions.php");
 	    echo "<td>".$training_array[$i]->distance."</td>"; 
 	    echo "<td><a href='?delete=".$training_array[$i]->training_id."'>X</a></td>";  
 		echo "<td><a href='?edit=".$training_array[$i]->training_id."'>edit</a></td>";
-        echo "<td><a href='edit.php?edit_id=".$training_array[$i]->training_id."'>edit.php</a></td>";
+        //echo "<td><a href='edit.php?edit_id=".$training_array[$i]->training_id."'>edit.php</a></td>";
         echo "</tr>"; 
 	
 	}
