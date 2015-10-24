@@ -10,5 +10,5 @@
     
     <h2>Avaleht</h2>
     
-        
+
 <?php require_once("footer.php"); ?>  
