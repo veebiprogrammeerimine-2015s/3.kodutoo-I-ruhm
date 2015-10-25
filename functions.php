@@ -69,6 +69,42 @@
         return $message;
         
     }
+    function getSingleTrainingData($training_id){
+	   
+	   $mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["server_username"], $GLOBALS["server_password"], $GLOBALS["database"]);
+	   
+	   $stmt = $mysqli->prepare("SELECT begin, ending, sports, distance FROM training WHERE training_id=? AND deleted IS NULL");
+	   $stmt ->bind_param("i", $id);
+	   $stmt ->bind_result($begin, $ending, $sports, $distance);
+       $stmt->execute();
+	   
+	   //trenni objekt
+	   $training = new StdClass();
+	   
+	   
+   //kas sain andmed
+   if($stmt->fetch()){
+	   
+	     $training->begin = $begin;
+		 $training->ending = $ending;
+	     $training->sports = $sports;
+		 $training->distance = $distance;
+		
+   }else{
+	   	//ei tulnud kui id ei olnud 
+	   header("Location: table.php");
+  
+	   
+	   
+   }   
+   
+   $stmt->close(); 
+   $mysqli->close();
+   
+   return $training;
+   
+   }
+	
   function getAllData($keyword=""){
 	  if($keyword== ""){
 		  //ei otsi

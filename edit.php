@@ -1,6 +1,6 @@
 <?php
 
-   require_once("edit_functions.php");
+   require_once("functions.php");
    
    if(isset($_GET["update"])){
       updateTrainingData($_GET["training_id"], $_GET["begin"], $_GET["ending"], $_GET["sports"], $_GET["distance"]);
