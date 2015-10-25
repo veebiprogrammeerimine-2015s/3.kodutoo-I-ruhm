@@ -1,5 +1,5 @@
-<?php
-    // kıik mis seotud andmetabeliga, lisamine ja tabeli kujul esitamine
+Ôªø<?php
+    // k√µik mis seotud andmetabeliga, lisamine ja tabeli kujul esitamine
     require_once("functions.php");
     
     //kui kasutaja ei ole sisse logitud, suuna teisele lehele
@@ -16,36 +16,36 @@
     }
     
     
-    // muutujad v‰‰rtustega
-    $prillivarv = $color = $m = "";
-    $prillivarv_error = $color_error = "";
+    // muutujad v√§√§rtustega
+    $prillivarv = $materjal = $m = "";
+    $prillivarv_error = $materjal_error = "";
     //echo $_SESSION['logged_in_user_id'];
     
-    // valideerida v‰lja ja k‰ivita fn
+    // valideerida v√§lja ja k√§ivita fn
     if($_SERVER["REQUEST_METHOD"] == "POST"){
         
-        if(isset($_POST["add_prillivarv"])){
+        if(isset($_POST["add_evo_glasses"])){
             
             if ( empty($_POST["prillivarv"]) ) {
-                $prillivarv_error = "Prilliv‰rv on kohustuslik!";
+                $prillivarv_error = "Prilliv√§rv on kohustuslik!";
             }else{
                 $prillivarv = cleanInput($_POST["prillivarv"]);
             }
             
-            if ( empty($_POST["color"]) ) {
-                $materjal_error = "Auto v‰rv on kohustuslik!";
+            if ( empty($_POST["materjal"]) ) {
+                $materjal_error = "Auto v√§rv on kohustuslik!";
             }else{
-                $materjal = cleanInput($_POST["color"]);
+                $materjal = cleanInput($_POST["materjal"]);
             }
             
-            //erroreid ei olnud k‰ivitan funktsiooni,
+            //erroreid ei olnud k√§ivitan funktsiooni,
             //mis sisestab andmebaasi
             if($prillivarv_error == "" && $materjal_error == ""){
                 // m on message mille saadame functions.php
-                $m = evo_glasses($prillivarv, $materjal);
+                $m = newGlasses($prillivarv, $materjal);
                 
                 if($m != ""){
-                    // teeme vormi t¸hjaks
+                    // teeme vormi t√ºhjaks
                     $prillivarv = "";
                     $materjal = "";
                 }
@@ -64,20 +64,20 @@
     }
     
     
-    // k¸sime tabeli kujul andmed
+    // k√ºsime tabeli kujul andmed
     getAllData();
     
     
 ?>
 
-Tere, <?=$_SESSION['logged_in_user_email'];?> <a href="?logout=1">Logi v‰lja</a>
+Tere, <?=$_SESSION['logged_in_user_email'];?> <a href="?logout=1">Logi v√§lja</a>
 
 <h2>Lisa uued Prillid</h2>
 <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post" >
     <label for="prillivarv"> prillivarv </label>
   	<input id="prillivarv" name="prillivarv" type="text" value="<?=$prillivarv;?>"> <?=$prillivarv_error;?><br><br>
-  	<label for="color"> materjal </label>
-    <input id="color" name="color" type="text" value="<?=$color;?>"> <?=$color_error;?><br><br>
-  	<input type="submit" name="add_car_plate" value="Lisa">
+  	<label for="materjal"> materjal </label>
+    <input id="materjal" name="materjal" type="text" value="<?=$materjal;?>"> <?=$materjal_error;?><br><br>
+  	<input type="submit" name="add_evo_glasses" value="Lisa">
     <p style="color:green;"><?=$m;?></p>
   </form>

@@ -48,13 +48,29 @@
         
     }
 	
+	function newGlasses($prillivarv_from_db, $materjal_from_db) {
+        $mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["server_username"], $GLOBALS["server_password"], $GLOBALS["database"]);
+        $stmt = $mysqli->prepare("INSERT INTO evo_glasses (user_id, prillivarv, materjal, created) VALUES (?,?,?,NOW())");
+        $stmt->bind_param("iss", $_SESSION['logged_in_user_id'], $prillivarv_from_db, $materjal_from_db);
+		$message = "";
+		if($stmt->execute()) {
+			$message = "Edukalt andmebaasi salvestatud";
+		}
+		
+        $stmt->close();
+        
+        $mysqli->close();
+        
+		return $message;
+    }
+
 	
     function getAllData(){
           
         $mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["server_username"], $GLOBALS["server_password"], $GLOBALS["database"]);
         // deleted IS NULL - ei ole kustutatud
         $stmt = $mysqli->prepare("SELECT id, user_id, number_plate, color FROM car_plates WHERE deleted IS NULL");
-        $stmt->bind_result($id_from_db, $user_id_from_db, $number_plate_from_db, $color_from_db);
+        $stmt->bind_result($id_from_db, $user_id_from_db, $prillivarv_from_db, $materjal_from_db);
         $stmt->execute();
         // massiiv kus hoiame autosid
         $array = array();
@@ -65,15 +81,15 @@
             //selle hetkeni kui lisame massiivi
                
             // tühi objekt kus hoiame väärtusi
-            $car = new StdClass();
+            $evo_glasses = new StdClass();
             
-            $car->id = $id_from_db;
-            $car->number_plate = $number_plate_from_db; 
-            $car->user_id = $user_id_from_db; 
-            $car->color = $color_from_db; 
+            $evo_glasses->id = $id_from_db;
+            $evo_glasses->prillivarv = $prilivarv_from_db; 
+            $evo_glasses->user_id = $user_id_from_db; 
+            $evo_glasses->materjal = $materjal_from_db; 
             
             //lisan massiivi (auto lisan massiivi)
-            array_push($array, $car);
+            array_push($array, $evo_glasses);
             //echo "<pre>";
             //var_dump($array);
             //echo "</pre>";
@@ -86,13 +102,13 @@
         $mysqli->close();
     }
     
-    function deleteCarData($car_id){
+    function deleteCarData($user_id){
         
         $mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["server_username"], $GLOBALS["server_password"], $GLOBALS["database"]);
         
         // uuendan välja deleted, lisan praeguse date'i
-        $stmt = $mysqli->prepare("UPDATE car_plates SET deleted=NOW() WHERE id=?");
-        $stmt->bind_param("i", $car_id);
+        $stmt = $mysqli->prepare("UPDATE evo_glasses SET deleted=NOW() WHERE id=?");
+        $stmt->bind_param("i", $user_id);
         $stmt->execute();
         
         // tühjendame aadressirea
@@ -103,12 +119,12 @@
         
     }
     
-    function updateCarData($car_id, $number_plate, $color){
+    function updateCarData($user_id, $prillivarv, $materjal){
         
         $mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["server_username"], $GLOBALS["server_password"], $GLOBALS["database"]);
         
-        $stmt = $mysqli->prepare("UPDATE car_plates SET number_plate=?, color=? WHERE id=?");
-        $stmt->bind_param("ssi", $number_plate, $color, $car_id);
+        $stmt = $mysqli->prepare("UPDATE evo_glasses SET prillivarv=?, materjal=? WHERE id=?");
+        $stmt->bind_param("ssi", $prillivarv, $materjal, $user_id);
         $stmt->execute();
         
         // tühjendame aadressirea

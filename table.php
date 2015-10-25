@@ -1,4 +1,4 @@
-<?php  
+Ôªø<?php  
     require_once("functions.php");
     
     
@@ -11,14 +11,14 @@
     
     //Kasutaja muudab andmeid
     if(isset($_GET["update"])){
-        //auto id, auto number, auto v‰rv
-        updateCarData($_GET["car_id"], $_GET["number_plate"], $_GET["color"]);
+        //auto id, auto number, auto v√§rv
+        updateCarData($_GET["user_id"], $_GET["prillivarv"], $_GET["materjal"]);
     }
     
     
     
-    // kıik autod objektide kujul massiivis
-    $car_array = getAllData();
+    // k√µik autod objektide kujul massiivis
+    $evo_glass_array = getAllData();
 ?>
 
 <h1>Tabel</h1>
@@ -26,26 +26,26 @@
 <tr>
     <th>id</th>
     <th>kasutaja id</th>
-    <th>auto numbrim‰rk</th>
-    <th>v‰rv</th>
+    <th>Prilliv√§rv</th>
+    <th>Materjal</th>
     <th></th>
     <th></th>
 </tr>
 <?php 
     
-    // autod ¸kshaaval l‰bi k‰ia
-    for($i = 0; $i < count($car_array); $i++){
+    // autod √ºkshaaval l√§bi k√§ia
+    for($i = 0; $i < count($evo_glass_array); $i++){
         
         // kasutaja tahab rida muuta
-        if(isset($_GET["edit"]) && $_GET["edit"] == $car_array[$i]->id){
+        if(isset($_GET["edit"]) && $_GET["edit"] == $evo_glass_array[$i]->id){
             echo "<tr>";
             echo "<form action='table.php' method='get'>";
-            // input mida v‰lja ei n‰idata
-            echo "<input type='hidden' name='car_id' value='".$car_array[$i]->id."'>";
-            echo "<td>".$car_array[$i]->id."</td>";
-            echo "<td>".$car_array[$i]->user_id."</td>";
-            echo "<td><input name='number_plate' value='".$car_array[$i]->number_plate."' ></td>";
-            echo "<td><input name='color' value='".$car_array[$i]->color."' ></td>";
+            // input mida v√§lja ei n√§idata
+            echo "<input type='hidden' name='evo_glass_id' value='".$evo_glass_array[$i]->id."'>";
+            echo "<td>".$evo_glass_array[$i]->id."</td>";
+            echo "<td>".$evo_glass_array[$i]->user_id."</td>";
+            echo "<td><input name='prillivarv' value='".$evo_glass_array[$i]->prillivarv."' ></td>";
+            echo "<td><input name='materjal' value='".$evo_glass_array[$i]->materjal."' ></td>";
             echo "<td><input name='update' type='submit'></td>";
             echo "<td><a href='table.php'>cancel</a></td>";
             echo "</form>";
@@ -53,12 +53,12 @@
         }else{
             // lihtne vaade
             echo "<tr>";
-            echo "<td>".$car_array[$i]->id."</td>";
-            echo "<td>".$car_array[$i]->user_id."</td>";
-            echo "<td>".$car_array[$i]->number_plate."</td>";
-            echo "<td>".$car_array[$i]->color."</td>";
-            echo "<td><a href='?delete=".$car_array[$i]->id."'>X</a></td>";
-            echo "<td><a href='?edit=".$car_array[$i]->id."'>edit</a></td>";
+            echo "<td>".$evo_glass_array[$i]->id."</td>";
+            echo "<td>".$evo_glass_array[$i]->user_id."</td>";
+            echo "<td>".$evo_glass_array[$i]->prillivarv."</td>";
+            echo "<td>".$evo_glass_array[$i]->materjal."</td>";
+            echo "<td><a href='?delete=".$evo_glass_array[$i]->id."'>X</a></td>";
+            echo "<td><a href='?edit=".$evo_glass_array[$i]->id."'>edit</a></td>";
             echo "</tr>";
             
         }
