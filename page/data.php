@@ -77,4 +77,20 @@ Tere, <?=$_SESSION['logged_in_user_email'];?> <br><a href="?logout=1">Logi välj
   	<input id="name" name="name" type="" value="<?=$name; ?>"> <?=$name_error; ?><br><br>
   	<input type="submit" name="add_competitor" value="Lisa">
     <p style="color:green;"><?=$m;?></p>
+	
   </form>
+  <?php
+    //lehe nimi
+    $page_title="Registreeri";
+    
+    //faili nimi
+    $page_file_name="data.php";
+?>
+	<?php
+        if($page_file_name != "table.php"){ 
+            echo '<li><a href="table.php">Tabel</a></li>';
+        } else{ 
+            echo '<li>Tabel</li>';
+        } 
+    ?>
+    
