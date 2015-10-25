@@ -4,7 +4,7 @@
     //Kasutaja muudab andmeid
     if(isset($_GET["update"])){
         //auto id, auto number, auto värv
-        updateCarData($_GET["user_id"], $_GET["prillivarv"], $_GET["materjal"]);
+        updateGlassData($_GET["user_id"], $_GET["prillivarv"], $_GET["materjal"]);
     }
      
     //kas muutuja on aadressireal
@@ -13,7 +13,7 @@
         echo $_GET["edit_id"];
         
         //küsin andmed
-        $evo_glasses = getSingleCarData($_GET["edit_id"]);
+        $evo_glasses = getSingleGlassData($_GET["edit_id"]);
         var_dump($evo_glasses);
         
     }else{

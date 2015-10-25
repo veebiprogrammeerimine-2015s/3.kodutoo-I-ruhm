@@ -69,7 +69,7 @@
           
         $mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["server_username"], $GLOBALS["server_password"], $GLOBALS["database"]);
         // deleted IS NULL - ei ole kustutatud
-        $stmt = $mysqli->prepare("SELECT id, user_id, prillivarv, materjal FROM evo_glasses");
+        $stmt = $mysqli->prepare("SELECT id, user_id, prillivarv, materjal FROM evo_glasses WHERE deleted IS NULL");
         $stmt->bind_result($id_from_db, $user_id_from_db, $prillivarv_from_db, $materjal_from_db);
         $stmt->execute();
         // massiiv kus hoiame autosid
@@ -102,7 +102,7 @@
         $mysqli->close();
     }
     
-    function deleteCarData($user_id){
+    function deleteGlassData($user_id){
         
         $mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["server_username"], $GLOBALS["server_password"], $GLOBALS["database"]);
         
