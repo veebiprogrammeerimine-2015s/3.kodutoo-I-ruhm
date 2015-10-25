@@ -84,8 +84,8 @@
             $evo_glasses = new StdClass();
             
             $evo_glasses->id = $id_from_db;
-            $evo_glasses->prillivarv = $prillivarv_from_db; 
-            $evo_glasses->user_id = $user_id_from_db; 
+            $evo_glasses->user_id = $user_id_from_db;
+            $evo_glasses->prillivarv = $prillivarv_from_db;  
             $evo_glasses->materjal = $materjal_from_db; 
             
             //lisan massiivi (auto lisan massiivi)
@@ -119,7 +119,7 @@
         
     }
     
-    function updateCarData($user_id, $prillivarv, $materjal){
+    function updateGlassData($user_id, $prillivarv, $materjal){
         
         $mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["server_username"], $GLOBALS["server_password"], $GLOBALS["database"]);
         
