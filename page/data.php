@@ -16,38 +16,38 @@
     }
     
     //muutuja väärtused
-    $car_plate = $color = $m = "";
-    $car_plate_error = $color_error = "";
+    $contest = $name = $m = "";
+    $contest_error = $name_error = "";
     //echo $_SESSION['logged_in_user_id'];
     
 
      //valideeri väljad
         if($_SERVER["REQUEST_METHOD"] == "POST"){
         
-            if(isset($_POST["add_car_plate"])){
+            if(isset($_POST["add_competitor"])){
                 
-                if ( empty($_POST["car_plate"]) ) {
-                    $car_plate_error = "Auto nr on kohustuslik!";
+                if ( empty($_POST["contest"]) ) {
+                    $contest_error = "Võistluse nimi on kohustuslik!";
                 }else{
        
-				$car_plate = cleanInput($_POST["car_plate"]);
+				$contest = cleanInput($_POST["contest"]);
 			}
-            if ( empty($_POST["color"]) ) {
-                   $color_error = "Auto värv on kohustuslik!";
+            if ( empty($_POST["name"]) ) {
+                   $name_error = "Nimi/klubi on kohustuslik!";
                 }else{
        
-				$color = cleanInput($_POST["color"]);
+				$name = cleanInput($_POST["name"]);
 			}
             
             //erroreid ei olnud, käivitan funktsiooni, mis sisaldab andmebaasi
             
-            if($car_plate_error == "" && $color_error == ""){
+            if($contest_error == "" && $name_error == ""){
                 //m on message, mille saadame function.php failist
-                $m = createCarPlate($car_plate, $color);
+                $m = createContest($contest, $name);
                 if($m != ""){
                     //teeme vormi tühjaks
-                    $car_plate = "";
-                    $color = "";
+                    $contest = "";
+                    $name = "";
                 }
             }
             
@@ -69,12 +69,12 @@
 
 Tere, <?=$_SESSION['logged_in_user_email'];?> <br><a href="?logout=1">Logi välja</a>
 
-<h2>Lisa uus</h2>
+<h2>Eelregistreerimine võistlusele</h2>
   <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post" >
-    <label> Auto nr </label>
-  	<input id="car_plate" name="car_plate" type="text"  value="<?=$car_plate;?>"> <?=$car_plate_error; ?><br><br>
-    <label> Värv </label>
-  	<input id="color" name="color" type="text" value="<?=$color; ?>"> <?=$color_error; ?><br><br>
-  	<input type="submit" name="add_car_plate" value="Lisa">
+    <label>Võistlus</label>
+  	<input id="contest" name="contest" type="text"  value="<?=$contest;?>"> <?=$contest_error; ?><br><br>
+    <label>Nimi/klubi</label>
+  	<input id="name" name="name" type="" value="<?=$name; ?>"> <?=$name_error; ?><br><br>
+  	<input type="submit" name="add_competitor" value="Lisa">
     <p style="color:green;"><?=$m;?></p>
   </form>

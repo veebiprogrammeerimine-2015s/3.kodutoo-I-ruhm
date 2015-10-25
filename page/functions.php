@@ -55,12 +55,12 @@
         
     }
     
-    function createCarPlate($plate, $car_color){
+    function createContest($first_contest, $club_name){
         
         $mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["server_username"], $GLOBALS["server_password"], $GLOBALS["database"]);
-        $stmt = $mysqli->prepare("INSERT INTO car_plates (user_id, number_plate, color) VALUES (?,?,?)");
+        $stmt = $mysqli->prepare("INSERT INTO contests (user_id, contest_name, name) VALUES (?,?,?)");
         //i - iser_id INT
-        $stmt->bind_param("iss",  $_SESSION['logged_in_user_id'], $plate, $car_color);
+        $stmt->bind_param("iss",  $_SESSION['logged_in_user_id'], $first_contest, $club_name);
         
         $message = "";
         
@@ -82,13 +82,13 @@
     
     function getAllData(){
         $mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["server_username"], $GLOBALS["server_password"], $GLOBALS["database"]);
-        $stmt = $mysqli->prepare("SELECT id, user_id, number_plate, color FROM car_plates");
-        $stmt->bind_result($id_from_db, $user_id_from_db, $number_plate_from_db, $color_from_db);
+        $stmt = $mysqli->prepare("SELECT id, user_id, contest_name, name FROM contests");
+        $stmt->bind_result($id_from_db, $user_id_from_db, $contest_name_from_db, $name_from_db);
         $stmt->execute();
         //iga rea kohta, mis on andmebaasis, teeme midagi 
         while($stmt->fetch()){
             //saime andmed kätte
-            echo($number_plate_from_db);
+            echo($contest_name_from_db);
             
             //? kuidas saada massiivi
             
