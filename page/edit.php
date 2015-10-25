@@ -20,7 +20,7 @@
     }
 
 ?>
-<!--Salvestamiseks kasutan table.php rida 15 ja updateCar() -->
+
 <form action="edit.php" method="get">
     <input name="contest_id" type="hidden" value="<?=$_GET["edit_id"];?>">
     <input name="contest_name" type="text" value="<?=$car->contest_name;?>"><br>

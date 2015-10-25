@@ -3,7 +3,6 @@
     
     //kuulan, kas kasutaja tahab kustutada
     if(isset($_GET["delete"])){
-        //saadan kustutatava auto id
         deleteContestData($_GET["delete"]);
     }
     
@@ -11,8 +10,6 @@
     if(isset($_GET["update"])){
         updateCarData($_GET["contest_id"], $_GET["contest_number"], $_GET["name"]);
     }
-    
-    //kõik autod objektide kujul massiivis
     $contest_array = getAllData();
     
     $keyword = "";

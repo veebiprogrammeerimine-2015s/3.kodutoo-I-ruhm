@@ -69,6 +69,10 @@
             //õnnestus
             $message = "edukalt andmebaasi salvestatud!";
         }
+		//Kusagil on mingi viga, andmebaasi näitab, et on salvestataud, kuid
+		//näitab ainult 0'i, mitte kirjutatud andmeid. 
+		//Tabelis näitab ka salvestatud andmeid, aga vähevalesti 
+		//Plaan on panna salvestama osaleja sünniaasta ja sugu 
     
     
         
@@ -89,8 +93,6 @@
         while($stmt->fetch()){
             //saime andmed kätte
             echo($contest_name_from_db);
-            
-            //? kuidas saada massiivi
             
         }
         $stmt->close();

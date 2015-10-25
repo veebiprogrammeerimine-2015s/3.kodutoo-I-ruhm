@@ -15,7 +15,6 @@
         $array = array(); 
         
         while($stmt->fetch()){
-            //suvaline muutuja, kus hoida auto andmeid, hetkeni kuni lisame massiivi
             
             //tühi objekt, kus hoiame väärtuseid
             $all_contest = new StdClass();
@@ -24,11 +23,8 @@
             $all_contest->user_id = $user_id_from_db;
             $all_contest->name = $name_from_db;
             
-            //lisan massiivi - auto lisan massiivi
             array_push($array, $all_contest);
-            //echo "<pre>";
-            //var_dump($array); 
-            //echo "</pre>";
+
             
         }
         //saadan tagasi
