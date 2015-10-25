@@ -1,0 +1,21 @@
+CREATE TABLE user_sample (
+	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	email VARCHAR(255) NOT NULL,
+	password VARCHAR(128),
+	created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	UNIQUE(email)
+);
+
+SELECT * FROM user_sample;
+
+mysql phpmyadmin export table
+
+CREATE TABLE kassid (
+	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	nimi VARCHAR(255) NOT NULL,
+	vanus INT(2) NOT NULL,
+	sugu VARCHAR(10) NOT NULL,
+	kirjeldus TEXT NOT NULL,
+	kodus VARCHAR(5),
+	created TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
