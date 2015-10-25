@@ -1,25 +1,18 @@
 <?php
-    //loome AB ühenduse
-    /*  
-        // config_global.php
-        $servername = "";
-        $server_username = "";
-        $server_password = "";
-    
-    */
     require_once("../config_global.php");
     $database = "if15_raiklep";
-    
-    //paneme sessiooni serveris tööle, saaame kasutada SESSION[]
-    session_start();
-    
-    
-    function logInUser($email, $hash){
+	
+	
+	
+	
+	session_start();
+	
+	    function logInUser($email, $hash){
         
         // GLOBALS saab kätte kõik muutujad mis kasutusel
         $mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["server_username"], $GLOBALS["server_password"], $GLOBALS["database"]);
         
-        $stmt = $mysqli->prepare("SELECT id, email FROM user_sample WHERE email=? AND password=?");
+        $stmt = $mysqli->prepare("SELECT id, email FROM evo_users WHERE email=? AND password=?");
         $stmt->bind_param("ss", $email, $hash);
         $stmt->bind_result($id_from_db, $email_from_db);
         $stmt->execute();
@@ -46,7 +39,7 @@
     function createUser($create_email, $hash){
         
         $mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["server_username"], $GLOBALS["server_password"], $GLOBALS["database"]);
-        $stmt = $mysqli->prepare("INSERT INTO user_sample (email, password) VALUES (?,?)");
+        $stmt = $mysqli->prepare("INSERT INTO evo_users (email, password, created) VALUES (?,?,NOW())");
         $stmt->bind_param("ss", $create_email, $hash);
         $stmt->execute();
         $stmt->close();
@@ -54,54 +47,76 @@
         $mysqli->close();
         
     }
-    
-    function createCarPlate($plate, $car_color) {
-        
+	
+	
+    function getAllData(){
+          
         $mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["server_username"], $GLOBALS["server_password"], $GLOBALS["database"]);
-        $stmt = $mysqli->prepare("INSERT INTO car_plates (user_id, number_plate, color) VALUES (?,?,?)");
-        // i - on user_id INT
-        $stmt->bind_param("iss", $_SESSION['logged_in_user_id'], $plate, $car_color);
+        // deleted IS NULL - ei ole kustutatud
+        $stmt = $mysqli->prepare("SELECT id, user_id, number_plate, color FROM car_plates WHERE deleted IS NULL");
+        $stmt->bind_result($id_from_db, $user_id_from_db, $number_plate_from_db, $color_from_db);
+        $stmt->execute();
+        // massiiv kus hoiame autosid
+        $array = array();
         
-        $message = "";
-        
-        // kui õnnestub siis tõene kui viga siis else
-        if($stmt->execute()){
-            // õnnestus
-            $message = "Edukalt andmebaasi salvestatud!";
+        // iga rea kohta mis on ab'is teeme midagi
+        while($stmt->fetch()){
+            //suvaline muutuja, kus hoiame auto andmeid 
+            //selle hetkeni kui lisame massiivi
+               
+            // tühi objekt kus hoiame väärtusi
+            $car = new StdClass();
+            
+            $car->id = $id_from_db;
+            $car->number_plate = $number_plate_from_db; 
+            $car->user_id = $user_id_from_db; 
+            $car->color = $color_from_db; 
+            
+            //lisan massiivi (auto lisan massiivi)
+            array_push($array, $car);
+            //echo "<pre>";
+            //var_dump($array);
+            //echo "</pre>";
         }
+        
+        //saadan tagasi
+        return $array;
         
         $stmt->close();
         $mysqli->close();
+    }
+    
+    function deleteCarData($car_id){
         
-        // saadan sõnumi tagasi
-        return $message;
+        $mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["server_username"], $GLOBALS["server_password"], $GLOBALS["database"]);
+        
+        // uuendan välja deleted, lisan praeguse date'i
+        $stmt = $mysqli->prepare("UPDATE car_plates SET deleted=NOW() WHERE id=?");
+        $stmt->bind_param("i", $car_id);
+        $stmt->execute();
+        
+        // tühjendame aadressirea
+        header("Location: table.php");
+        
+        $stmt->close();
+        $mysqli->close();
         
     }
     
-    function getAllData(){
+    function updateCarData($car_id, $number_plate, $color){
         
         $mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["server_username"], $GLOBALS["server_password"], $GLOBALS["database"]);
-        $stmt = $mysqli->prepare("SELECT id, user_id, number_plate, color FROM car_plates");
-        $stmt->bind_result($id_from_db, $user_id_from_db, $number_plate_from_db, $color_from_db);
+        
+        $stmt = $mysqli->prepare("UPDATE car_plates SET number_plate=?, color=? WHERE id=?");
+        $stmt->bind_param("ssi", $number_plate, $color, $car_id);
         $stmt->execute();
         
-        /*$row_nr = 0;
-        // iga rea kohta mis on ab'is teeme midagi
-        while($stmt->fetch()){
-            //saime andmed kätte
-            echo $row_nr." ".$number_plate_from_db." <br>";
-            $row_nr++;
-        }*/
-        
-        // iga rea kohta mis on ab'is teeme midagi
-        while($stmt->fetch()){
-            //saime andmed kätte
-            echo($user_id_from_db);
-            //? kuidas saada massiivi - SIIT JÄTKAME
-        }
+        // tühjendame aadressirea
+        header("Location: table.php");
         
         $stmt->close();
         $mysqli->close();
+        
     }
     
     

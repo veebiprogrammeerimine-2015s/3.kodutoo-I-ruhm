@@ -17,37 +17,37 @@
     
     
     // muutujad väärtustega
-    $car_plate = $color = $m = "";
-    $car_plate_error = $color_error = "";
+    $prillivarv = $color = $m = "";
+    $prillivarv_error = $color_error = "";
     //echo $_SESSION['logged_in_user_id'];
     
     // valideerida välja ja käivita fn
     if($_SERVER["REQUEST_METHOD"] == "POST"){
         
-        if(isset($_POST["add_car_plate"])){
+        if(isset($_POST["add_prillivarv"])){
             
-            if ( empty($_POST["car_plate"]) ) {
-                $car_plate_error = "Auto nr on kohustuslik!";
+            if ( empty($_POST["prillivarv"]) ) {
+                $prillivarv_error = "Prillivärv on kohustuslik!";
             }else{
-                $car_plate = cleanInput($_POST["car_plate"]);
+                $prillivarv = cleanInput($_POST["prillivarv"]);
             }
             
             if ( empty($_POST["color"]) ) {
-                $color_error = "Auto värv on kohustuslik!";
+                $materjal_error = "Auto värv on kohustuslik!";
             }else{
-                $color = cleanInput($_POST["color"]);
+                $materjal = cleanInput($_POST["color"]);
             }
             
             //erroreid ei olnud käivitan funktsiooni,
             //mis sisestab andmebaasi
-            if($car_plate_error == "" && $color_error == ""){
+            if($prillivarv_error == "" && $materjal_error == ""){
                 // m on message mille saadame functions.php
-                $m = createCarPlate($car_plate, $color);
+                $m = evo_glasses($prillivarv, $materjal);
                 
                 if($m != ""){
                     // teeme vormi tühjaks
-                    $car_plate = "";
-                    $color = "";
+                    $prillivarv = "";
+                    $materjal = "";
                 }
             }
             
@@ -72,11 +72,11 @@
 
 Tere, <?=$_SESSION['logged_in_user_email'];?> <a href="?logout=1">Logi välja</a>
 
-<h2>Lisa uus</h2>
+<h2>Lisa uued Prillid</h2>
 <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post" >
-    <label for="car_plate"> Auto nr </label>
-  	<input id="car_plate" name="car_plate" type="text" value="<?=$car_plate;?>"> <?=$car_plate_error;?><br><br>
-  	<label for="color"> Värv </label>
+    <label for="prillivarv"> prillivarv </label>
+  	<input id="prillivarv" name="prillivarv" type="text" value="<?=$prillivarv;?>"> <?=$prillivarv_error;?><br><br>
+  	<label for="color"> materjal </label>
     <input id="color" name="color" type="text" value="<?=$color;?>"> <?=$color_error;?><br><br>
   	<input type="submit" name="add_car_plate" value="Lisa">
     <p style="color:green;"><?=$m;?></p>

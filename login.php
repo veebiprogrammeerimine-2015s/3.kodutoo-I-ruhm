@@ -1,18 +1,17 @@
-<?php
+ï»¿<?php
     require_once("functions.php");
-	
-	//kui kasutaja on sisse logitud, suuna teisele lehele
-	//kontrollin, kas sessiooni muutuja on olemas
-	var_dump($_SESSION);
-	if(isset($_SESSION["logged_in_user_id"])){	
-		header("Location: data.php");
-	}
+    
+    //kui kasutaja on sisse logitud, suuna teisele lehele
+    //kontrollin kas sessiooni muutuja olemas
+    if(isset($_SESSION['logged_in_user_id'])){
+        header("Location: data.php");
+    }
   // muuutujad errorite jaoks
 	$email_error = "";
 	$password_error = "";
 	$create_email_error = "";
 	$create_password_error = "";
-  // muutujad väärtuste jaoks
+  // muutujad vÃ¤Ã¤rtuste jaoks
 	$email = "";
 	$password = "";
 	$create_email = "";
@@ -23,19 +22,19 @@
     // *********************
 		if(isset($_POST["login"])){
 			if ( empty($_POST["email"]) ) {
-				$email_error = "See väli on kohustuslik";
+				$email_error = "See vÃ¤li on kohustuslik";
 			}else{
-        // puhastame muutuja võimalikest üleliigsetest sümbolitest
+        // puhastame muutuja vÃµimalikest Ã¼leliigsetest sÃ¼mbolitest
 				$email = cleanInput($_POST["email"]);
 			}
 			if ( empty($_POST["password"]) ) {
-				$password_error = "See väli on kohustuslik";
+				$password_error = "See vÃ¤li on kohustuslik";
 			}else{
 				$password = cleanInput($_POST["password"]);
 			}
-      // Kui oleme siia jõudnud, võime kasutaja sisse logida
+      // Kui oleme siia jÃµudnud, vÃµime kasutaja sisse logida
 			if($password_error == "" && $email_error == ""){
-				echo "Võib sisse logida! Kasutajanimi on ".$email." ja parool on ".$password;
+				echo "VÃµib sisse logida! Kasutajanimi on ".$email." ja parool on ".$password;
 			
                 $hash = hash("sha512", $password);
                 
@@ -48,24 +47,24 @@
     // *********************
     if(isset($_POST["create"])){
 			if ( empty($_POST["create_email"]) ) {
-				$create_email_error = "See väli on kohustuslik";
+				$create_email_error = "See vÃ¤li on kohustuslik";
 			}else{
 				$create_email = cleanInput($_POST["create_email"]);
 			}
 			if ( empty($_POST["create_password"]) ) {
-				$create_password_error = "See väli on kohustuslik";
+				$create_password_error = "See vÃ¤li on kohustuslik";
 			} else {
 				if(strlen($_POST["create_password"]) < 8) {
-					$create_password_error = "Peab olema vähemalt 8 tähemärki pikk!";
+					$create_password_error = "Peab olema vÃ¤hemalt 8 tÃ¤hemÃ¤rki pikk!";
 				}else{
 					$create_password = cleanInput($_POST["create_password"]);
 				}
 			}
 			if(	$create_email_error == "" && $create_password_error == ""){
-				echo hash("sha512", $create_password);
-                echo "Võib kasutajat luua! Kasutajanimi on ".$create_email." ja parool on ".$create_password;
+				//echo hash("sha512", $create_password);
+                //echo "VÃµib kasutajat luua! Kasutajanimi on ".$create_email." ja parool on ".$create_password;
                 
-                // tekitan parooliräsi
+                // tekitan paroolirÃ¤si
                 $hash = hash("sha512", $create_password);
                 
                 //functions.php's funktsioon
@@ -75,7 +74,7 @@
             }
         } // create if end
 	}
-  // funktsioon, mis eemaldab kõikvõimaliku üleliigse tekstist
+  // funktsioon, mis eemaldab kÃµikvÃµimaliku Ã¼leliigse tekstist
   function cleanInput($data) {
   	$data = trim($data);
   	$data = stripslashes($data);
@@ -103,8 +102,6 @@
   	<input name="create_email" type="email" placeholder="E-post" value="<?php echo $create_email; ?>"> <?php echo $create_email_error; ?><br><br>
   	<input name="create_password" type="password" placeholder="Parool"> <?php echo $create_password_error; ?> <br><br>
   	<input type="submit" name="create" value="Create user">
-	<p style ="color:green;"><?=$m;?></p>
   </form>
-  
 <body>
 <html>
