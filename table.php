@@ -19,7 +19,6 @@
     if(isset($_GET["keyword"])){
         $keyword = $_GET["keyword"];
     
-
     $post_array = getAllData($keyword);
 	
 	}else{
@@ -46,7 +45,6 @@
 </tr>
 <?php 
     
-
     for($i = 0; $i < count($post_array); $i++){
         
         // kasutaja tahab rida muuta

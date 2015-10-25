@@ -1,11 +1,9 @@
 <?php 
 	// create_new_user.php
 	require_once("functions.php");
-
 	if(isset($_SESSION['logged_in_user_id'])){
         header("Location: data.php");
     }
-
 	
 	//ERRORid
 	$new_username_error = "";
@@ -48,8 +46,8 @@
 			}	
 		
 			if(	$new_email_error == "" && $new_password_error == ""){
-				echo hash("sha512", $new_password);
-				echo "Võib kasutajat luua! Kasutajanimi on ".$new_email." ja parool on ".$new_password;
+				//echo hash("sha512", $new_password);
+			echo nl2br ("Uus kasutaja edukalt loodud, suunan tagasi login lehele!\nKasutajanimi on ".$new_email." ja parool on ".$new_password);
                 
         // tekitan parooliräsi
 		$hash = hash("sha512", $new_password);
@@ -66,6 +64,8 @@
 				
 			
 			}
+		header( "Refresh:7; url=login.php", true, 303);
+		//header("Location: login.php");
 		}
 	}
 		

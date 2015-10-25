@@ -1,5 +1,4 @@
 <?php
-
 	/*  
     // config_global.php
     $servername = "";
@@ -10,7 +9,6 @@
 	//db ühendus
 	require_once("../config_global.php");
 	$database = "if15_kelllep";
-
 	
 	session_start();
 	
@@ -77,7 +75,6 @@
         return $message;
         
     }
-
 	
 	function getAllData($keyword=""){
         
@@ -110,7 +107,6 @@
             $post->postitus = $postitus_from_db; 
             $post->user_id = $user_id_from_db; 
             
-
             array_push($array, $post);
             //echo "<pre>";
             //var_dump($array);
@@ -158,5 +154,4 @@
     }
     
     
-
 ?>
