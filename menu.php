@@ -9,10 +9,23 @@
 		<li>Avaleht</li>
 	<?php } ?>
 	
+	<?php if(!isset($_SESSION['logged_in_user_id'])){ ?>
 	<?php if($page_file_name != "login.php") { ?>
-		<li><a href="login.php">logi sisse</a></li>
+		<li><a href="login.php">Logi sisse</a></li>
 	<?php } else { ?>
-		<li>logi sisse</li>
+		<li>Logi sisse</li>
+	<?php } }?>
+	
+	<?php if($page_file_name != "table.php") { ?>
+		<li><a href="table.php">Prillid</a></li>
+	<?php } else { ?>
+		<li>Prillid</li>
+	<?php } ?>
+	
+	<?php if($page_file_name != "data.php") { ?>
+		<li><a href="data.php">Lisa prillid</a></li>
+	<?php } else { ?>
+		<li>Lisa prillid</li>
 	<?php } ?>
 	
 	

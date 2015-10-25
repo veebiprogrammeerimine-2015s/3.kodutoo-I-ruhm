@@ -20,6 +20,13 @@
     // kõik autod objektide kujul massiivis
     $evo_glass_array = getAllData();
 ?>
+<?php
+	$page_title = "Prillid";
+	$page_file_name = "table.php";
+
+?>
+
+<?php require_once("header.php"); ?>
 
 <h1>Tabel</h1>
 <table border=1>

@@ -69,6 +69,12 @@
     
     
 ?>
+<?php
+	$page_title = "Lisa prillid";
+	$page_file_name = "data.php";
+
+?>
+<?php require_once("header.php"); ?>
 
 Tere, <?=$_SESSION['logged_in_user_email'];?> <a href="?logout=1">Logi välja</a>
 
@@ -81,3 +87,5 @@ Tere, <?=$_SESSION['logged_in_user_email'];?> <a href="?logout=1">Logi välja</a
   	<input type="submit" name="add_evo_glasses" value="Lisa">
     <p style="color:green;"><?=$m;?></p>
   </form>
+  
+  <?php require_once("footer.php"); ?>
