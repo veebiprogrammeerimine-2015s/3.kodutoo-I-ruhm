@@ -87,7 +87,11 @@
 	getAllCats();
 	
   	
-	
+	//kasutaja muudab andmeid
+	if(isset($_GET["update"])){
+		
+		updateCatData($_GET["cat_id"], $_GET["vanus"], $_GET["kodus"], $_GET["kirjeldus"]);
+	}
 	
 	
 	//kõik objektide kujul massiivis
@@ -106,11 +110,7 @@
 		$cat_array=getAllCats();
 	}
 	
-	//kasutaja muudab andmeid
-	if(isset($_GET["update"])){
-		
-		updateCatData($_GET["cat_id"], $_GET["vanus"], $_GET["kodus"], $_GET["kirjeldus"]);
-	}
+	
 	
 ?>
 
