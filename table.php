@@ -4,7 +4,7 @@
     
     // kuulan, kas kasutaja tahab kustutada
     // ?delete=... on aadressireal
-    if(isset($_GET["delete"])) {
+    /*if(isset($_GET["delete"])) {
         ///saadan kustutatava auto id
         deleteCarData($_GET["delete"]);
     }
@@ -13,7 +13,7 @@
     if(isset($_GET["update"])){
         //auto id, auto number, auto värv
         updateCarData($_GET["user_id"], $_GET["prillivarv"], $_GET["materjal"]);
-    }
+    }*/
     
     
     
@@ -43,7 +43,7 @@
     // autod ükshaaval läbi käia
     for($i = 0; $i < count($evo_glass_array); $i++){
         
-        // kasutaja tahab rida muuta
+       /* // kasutaja tahab rida muuta
         if(isset($_GET["edit"]) && $_GET["edit"] == $evo_glass_array[$i]->id){
             echo "<tr>";
             echo "<form action='table.php' method='get'>";
@@ -57,18 +57,18 @@
             echo "<td><a href='table.php'>cancel</a></td>";
             echo "</form>";
             echo "</tr>";
-        }else{
+        }else{*/
             // lihtne vaade
             echo "<tr>";
             echo "<td>".$evo_glass_array[$i]->id."</td>";
             echo "<td>".$evo_glass_array[$i]->user_id."</td>";
             echo "<td>".$evo_glass_array[$i]->prillivarv."</td>";
             echo "<td>".$evo_glass_array[$i]->materjal."</td>";
-            echo "<td><a href='?delete=".$evo_glass_array[$i]->id."'>X</a></td>";
-            echo "<td><a href='?edit=".$evo_glass_array[$i]->id."'>edit</a></td>";
+           /* echo "<td><a href='?delete=".$evo_glass_array[$i]->id."'>X</a></td>";
+            echo "<td><a href='?edit=".$evo_glass_array[$i]->id."'>edit</a></td>";*/
             echo "</tr>";
             
-        }
+        //}
         
         
         
