@@ -80,8 +80,14 @@ Tere, <?= $_SESSION['logged_in_user_email']; ?>
 	    echo "<td>".$training_array[$i]->ending."</td>"; 
 		echo "<td>".$training_array[$i]->sports."</td>";  
 	    echo "<td>".$training_array[$i]->distance."</td>"; 
-	    echo "<td><a href='?delete=".$training_array[$i]->training_id."'>X</a></td>";  
-		echo "<td><a href='?edit=".$training_array[$i]->training_id."'>edit</a></td>";
+		if($training_array[$i]->user_id==$_SESSION['logged_in_user_id']){
+			
+			echo "<td><a href='?delete=".$training_array[$i]->training_id."'>X</a></td>";  
+			echo "<td><a href='?edit=".$training_array[$i]->training_id."'>edit</a></td>";
+			
+		}
+	  
+		
         //echo "<td><a href='edit.php?edit_id=".$training_array[$i]->training_id."'>edit.php</a></td>";
         echo "</tr>"; 
 	
