@@ -1,14 +1,19 @@
 <?php 
     require_once("table_functions.php");
     
+    if(!isset($_SESSION['logged_in_user_id'])){
+        header("Location: login.php");
+    }
+    
     //kuulan, kas kasutaja tahab kustutada
     if(isset($_GET["delete"])){
         deleteContestData($_GET["delete"]);
     }
+
     
     //kasutaja muudab andmeid
     if(isset($_GET["update"])){
-        updateCarData($_GET["contest_id"], $_GET["contest_number"], $_GET["name"]);
+        updateContestData($_GET["contest_id"], $_GET["contest_name"], $_GET["name"]);
     }
     $contest_array = getAllData();
     
@@ -36,7 +41,6 @@
     <th>Osaleja nimi/klubi</th>
     <th>Kustuta</th>
     <th>Muuda</th>
-    <th></th>
 </tr>
 <?php
     //osalejad ükshaaval läbi käia
@@ -65,7 +69,6 @@
             echo "<td>".$contest_array[$i]->name."</td>";
             echo "<td><a href='?delete=".$contest_array[$i]->id."'>X</a></td>";
             echo "<td><a href='?edit=".$contest_array[$i]->id."'>Muuda</a></td>";
-            echo "<td><a href='edit.php?edit_id=".$contest_array[$i]->id."'>Muuda eraldi lehel</a></td>";
             echo "</tr>";
             
         }

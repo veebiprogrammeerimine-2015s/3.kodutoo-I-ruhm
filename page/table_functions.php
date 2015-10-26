@@ -2,16 +2,25 @@
     require_once("../../config_global.php");
     $database = "if15_klinde";
     
-    function getAllData(){
+    function getAllData($keyword=""){
+        $search = "";
+        if($keyword == ""){
+            //ei otsi
+            $search = "%%";
+        }else{
+            //otsime
+            $search = "%".$keyword."%"; 
+        }
+        
         $mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["server_username"], $GLOBALS["server_password"], $GLOBALS["database"]);
         //deleted IS NULL ehk kustutab ära 
-        $stmt = $mysqli->prepare("SELECT id, user_id, contest_name, name FROM contests WHERE deleted IS NULL");
+        $stmt = $mysqli->prepare("SELECT id, user_id, contest_name, name FROM contests WHERE deleted IS NULL AND (contest_name LIKe ? OR name LIKE ?)");
+        $stmt->bind_param("ss", $search, $search);
         $stmt->bind_result($id_from_db, $user_id_from_db, $contest_name_from_db, $name_from_db);
         $stmt->execute();
   
         // iga rea kohta mis on ab'is teeme midagi
         
-        //massiiv, kus hoiame autosid
         $array = array(); 
         
         while($stmt->fetch()){

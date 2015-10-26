@@ -69,13 +69,8 @@
             //õnnestus
             $message = "edukalt andmebaasi salvestatud!";
         }
-		//Kusagil on mingi viga, andmebaasi näitab, et on salvestataud, kuid
-		//näitab ainult 0'i, mitte kirjutatud andmeid. 
-		//Tabelis näitab ka salvestatud andmeid, aga vähevalesti 
-		//Plaan on panna salvestama osaleja sünniaasta ja sugu 
-    
-    
-        
+
+
         $stmt->close();
         
         $mysqli->close();
@@ -92,7 +87,7 @@
         //iga rea kohta, mis on andmebaasis, teeme midagi 
         while($stmt->fetch()){
             //saime andmed kätte
-            echo($contest_name_from_db);
+            //echo($contest_name_from_db);
             
         }
         $stmt->close();
