@@ -48,7 +48,7 @@
         
     }
 	
-	function createCat($nimi, $vanus, $sugu, $kirjeldus){
+	function createCat($nimi, $vanus, $sugu, $kirjeldus, $kodus){
 		
 		$mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["serverusername"], $GLOBALS["serverpassword"], $GLOBALS["database"]);
 		$stmt = $mysqli->prepare("INSERT INTO kassid (nimi, vanus, sugu, kirjeldus, kodus) VALUES (?,?,?,?,?)");
@@ -191,7 +191,7 @@
 		
         $mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["serverusername"], $GLOBALS["serverpassword"], $GLOBALS["database"]);
 		
-        $stmt = $mysqli->prepare("SELECT id, nimi, vanus, sugu, kirjeldus, kodus FROM kassid WHERE (nimi LIKE ? OR sugu LIKE ?)");
+        $stmt = $mysqli->prepare("SELECT id, nimi, vanus, sugu, kirjeldus, kodus FROM kassid WHERE deleted IS NULL AND (nimi LIKE ? OR sugu LIKE ?)");
 		$stmt->bind_param("ss", $search, $search);
         $stmt->bind_result($id_from_db, $nimi_from_db, $vanus_from_db, $sugu_from_db, $kirjeldus_from_db, $kodus_from_db);
         $stmt->execute();
@@ -228,11 +228,27 @@
         $mysqli->close();
     }
 	
+	function deleteCatData($cat_id){
+		$mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["serverusername"], $GLOBALS["serverpassword"], $GLOBALS["database"]);
+		
+		//uuendan välja deleted, lisan date now
+        $stmt = $mysqli->prepare("UPDATE kassid SET deleted=NOW() WHERE id=?");
+        $stmt->bind_param("i", $cat_id);
+        $stmt->execute();
+		
+		//tühjendame aadressirea
+		header("Location:data.php");
+		
+		$stmt->close();
+		$mysqli->close();
+		
+	}
+	
 	function updateCatData($cat_id, $cat_vanus, $cat_kodus, $cat_kirjeldus){
 		$mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["serverusername"], $GLOBALS["serverpassword"], $GLOBALS["database"]);
 		
 		
-        $stmt = $mysqli->prepare("UPDATE kassid SET vanus= ?, kodus='?', kirjeldus='?'  WHERE id=?");
+        $stmt = $mysqli->prepare("UPDATE kassid SET vanus= ?, kodus=?, kirjeldus=?  WHERE id=?");
         $stmt->bind_param("issi", $cat_vanus, $cat_kodus, $cat_kirjeldus, $cat_id);
         $stmt->execute();
 		

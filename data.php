@@ -1,3 +1,6 @@
+<?php require_once ("header.php"); ?>
+
+
 <?php
     // kõik mis seotud andmetabeliga, lisamine ja tabeli kujul esitamine
     require_once("functions.php");
@@ -29,8 +32,6 @@
 	$kirjeldus = "";
 	$kirjeldus_error = "";
 	//echo $_SESSION ['logged_in_user_id'];
-	
-	echo "kodus: ----".$kodus;
 	
 	// valideeri
 	if($_SERVER["REQUEST_METHOD"] == "POST"){
@@ -86,7 +87,13 @@
 	
 	getAllCats();
 	
-  	
+  	// kuulan kas kasutaja tahab kustutada
+	//?delete=.. on aadressireal
+	if(isset($_GET["delete"])){
+		//saadan kustutatava kirje id
+		deleteCatData($_GET["delete"]);
+		
+	}
 	//kasutaja muudab andmeid
 	if(isset($_GET["update"])){
 		
@@ -133,6 +140,8 @@ Tere, <?=$_SESSION['logged_in_user_email'];?> <a href="?logout=1">Logi välja</a
 	<th>Sugu</th>
 	<th>Kirjeldus</th>
 	<th>Kodus</th>
+	<th>Edit</th>
+	<th>Delete</th>
 
 </tr>
 
@@ -151,10 +160,9 @@ Tere, <?=$_SESSION['logged_in_user_email'];?> <a href="?logout=1">Logi välja</a
 			echo "<td>".$cat_array[$i]->nimi."</td>";
 			echo "<td><input name='vanus' value=".$cat_array[$i]->vanus."></td>";
 			echo "<td>".$cat_array[$i]->sugu."</td>";
-			echo "<td><input name='kirjeldus' value=".$cat_array[$i]->kirjeldus."></td>";
+			echo "<td><input name='kirjeldus' type='text' value='".$cat_array[$i]->kirjeldus."'></td>";
 			echo "<td><input name='kodus' value=".$cat_array[$i]->kodus."></td>";
 			echo "<td><input name='update' type='submit'></td>";
-			echo "<td><input name='update'></td>";
 			echo "<td><a href='data.php'>Katkesta</a></td>";
 			echo "</form>";
 			echo "</tr>";
@@ -169,6 +177,7 @@ Tere, <?=$_SESSION['logged_in_user_email'];?> <a href="?logout=1">Logi välja</a
 			echo "<td>".$cat_array[$i]->kirjeldus."</td>";
 			echo "<td>".$cat_array[$i]->kodus."</td>";
 			echo "<td><a href='?edit=".$cat_array[$i]->id."'>Edit</a></td>";
+			echo "<td><a href='?delete=".$cat_array[$i]->id."'>X</a></td>";
 			echo "</tr>";
 		}
 	}
@@ -201,3 +210,5 @@ Tere, <?=$_SESSION['logged_in_user_email'];?> <a href="?logout=1">Logi välja</a
 	<p style="color:green;"><?=$m;?></p>
 	
   </form>  
+  
+  <?php require_once ("footer.php"); ?>
