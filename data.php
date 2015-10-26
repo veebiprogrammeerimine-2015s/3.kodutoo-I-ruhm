@@ -21,16 +21,16 @@
 	
 	// muutujad väärtustega
 	$m = "";
-	$kodus = "";
-	$kodus_error = "";
-	$nimi = "";
-	$nimi_error = "";
-	$sugu = "";
-	$sugu_error = "";
-	$vanus = "";
-	$vanus_error = "";
-	$kirjeldus = "";
-	$kirjeldus_error = "";
+	$home = "";
+	$home_error = "";
+	$name = "";
+	$name_error = "";
+	$gender = "";
+	$gender_error = "";
+	$age = "";
+	$age_error = "";
+	$description = "";
+	$description_error = "";
 	//echo $_SESSION ['logged_in_user_id'];
 	
 	// valideeri
@@ -38,40 +38,40 @@
 		
 		if(isset($_POST["add_cat"])){
 		
-			if (empty($_POST["kodus"]))  {
-				$kodus_error = "Kassi elukoha määramine on kohustuslik";
+			if (empty($_POST["home"]))  {
+				$home_error = "Kassi elukoha määramine on kohustuslik";
 			}else{
-				$kodus = cleanInput($_POST["kodus"]);
+				$home = cleanInput($_POST["home"]);
 			}
 			
-			if (empty($_POST["kirjeldus"]))  {
-				$kirjeldus_error = "Kassi kirjelduse lisamine on kohustuslik";
+			if (empty($_POST["description"]))  {
+				$description_error = "Kassi kirjelduse lisamine on kohustuslik";
 			}else{
-				$kirjeldus = cleanInput($_POST["kirjeldus"]);
+				$description = cleanInput($_POST["description"]);
 			}
 			
-			if (empty($_POST["nimi"]))  {
-				$nimi = "";
+			if (empty($_POST["name"]))  {
+				$name = "";
 			}else{
-				$nimi = cleanInput($_POST["nimi"]);
+				$name = cleanInput($_POST["name"]);
 			}
 			
-			if (empty($_POST["vanus"]))  {
-				$vanus = "";
+			if (empty($_POST["age"]))  {
+				$age = "";
 			}else{
-				$vanus = cleanInput($_POST["vanus"]);
+				$age = cleanInput($_POST["age"]);
 			}
 			
-			if (empty($_POST["sugu"]))  {
-				$sugu = "";
+			if (empty($_POST["gender"]))  {
+				$gender = "";
 			}else{
-				$sugu = cleanInput($_POST["sugu"]);
+				$gender = cleanInput($_POST["gender"]);
 			}
 			
 			
-			if($kodus_error == "" && $kirjeldus_error == ""){
+			if($home_error == "" && $description_error == ""){
 				echo "siin";
-				$m=createCat($nimi, $vanus, $sugu, $kirjeldus, $kodus);
+				$m=createCat($name, $age, $gender, $description, $home);
 				
 				
 			}
@@ -97,7 +97,7 @@
 	//kasutaja muudab andmeid
 	if(isset($_GET["update"])){
 		
-		updateCatData($_GET["cat_id"], $_GET["vanus"], $_GET["kodus"], $_GET["kirjeldus"]);
+		updateCatData($_GET["cat_id"], $_GET["age"], $_GET["home"], $_GET["description"]);
 	}
 	
 	
@@ -135,11 +135,11 @@ Tere, <?=$_SESSION['logged_in_user_email'];?> <a href="?logout=1">Logi välja</a
 <table border=1>
 <tr>
 
-	<th>Nimi</th>
-	<th>Vanus</th>
-	<th>Sugu</th>
-	<th>Kirjeldus</th>
-	<th>Kodus</th>
+	<th>name</th>
+	<th>age</th>
+	<th>gender</th>
+	<th>description</th>
+	<th>home</th>
 	<th>Edit</th>
 	<th>Delete</th>
 
@@ -157,11 +157,11 @@ Tere, <?=$_SESSION['logged_in_user_email'];?> <a href="?logout=1">Logi välja</a
 			
 			//input mida välja ei näidata 
 			echo "<input type='hidden' name='cat_id' value='".$cat_array[$i]->id."'>";
-			echo "<td>".$cat_array[$i]->nimi."</td>";
-			echo "<td><input name='vanus' value=".$cat_array[$i]->vanus."></td>";
-			echo "<td>".$cat_array[$i]->sugu."</td>";
-			echo "<td><input name='kirjeldus' type='text' value='".$cat_array[$i]->kirjeldus."'></td>";
-			echo "<td><input name='kodus' value=".$cat_array[$i]->kodus."></td>";
+			echo "<td>".$cat_array[$i]->name."</td>";
+			echo "<td><input name='age' value=".$cat_array[$i]->age."></td>";
+			echo "<td>".$cat_array[$i]->gender."</td>";
+			echo "<td><input name='description' type='text' value='".$cat_array[$i]->description."'></td>";
+			echo "<td><input name='home' value=".$cat_array[$i]->home."></td>";
 			echo "<td><input name='update' type='submit'></td>";
 			echo "<td><a href='data.php'>Katkesta</a></td>";
 			echo "</form>";
@@ -171,11 +171,11 @@ Tere, <?=$_SESSION['logged_in_user_email'];?> <a href="?logout=1">Logi välja</a
 		
 			//lihtne vaade
 			echo "<tr>";
-			echo "<td>".$cat_array[$i]->nimi."</td>";
-			echo "<td>".$cat_array[$i]->vanus."</td>";
-			echo "<td>".$cat_array[$i]->sugu."</td>";
-			echo "<td>".$cat_array[$i]->kirjeldus."</td>";
-			echo "<td>".$cat_array[$i]->kodus."</td>";
+			echo "<td>".$cat_array[$i]->name."</td>";
+			echo "<td>".$cat_array[$i]->age."</td>";
+			echo "<td>".$cat_array[$i]->gender."</td>";
+			echo "<td>".$cat_array[$i]->description."</td>";
+			echo "<td>".$cat_array[$i]->home."</td>";
 			echo "<td><a href='?edit=".$cat_array[$i]->id."'>Edit</a></td>";
 			echo "<td><a href='?delete=".$cat_array[$i]->id."'>X</a></td>";
 			echo "</tr>";
@@ -190,20 +190,20 @@ Tere, <?=$_SESSION['logged_in_user_email'];?> <a href="?logout=1">Logi välja</a
 
   <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post" >
   
-	<label for="nimi"> Nimi </label>
-  	<input id="nimi" name="nimi" type="text" value="<?=$nimi; ?>"> <?=$nimi_error; ?><br><br>
+	<label for="name"> name </label>
+  	<input id="name" name="name" type="text" value="<?=$name; ?>"> <?=$name_error; ?><br><br>
 	
-	<label for="sugu"> Sugu </label>
-  	<input id="sugu" name="sugu" type="text" value="<?=$sugu; ?>"> <?=$sugu_error; ?><br><br>
+	<label for="gender"> gender </label>
+  	<input id="gender" name="gender" type="text" value="<?=$gender; ?>"> <?=$gender_error; ?><br><br>
 	
-	<label for="vanus"> Vanus </label>
-  	<input id="vanus" name="vanus" type="int" value="<?=$vanus; ?>"> <?=$vanus_error; ?><br><br>
+	<label for="age"> age </label>
+  	<input id="age" name="age" type="int" value="<?=$age; ?>"> <?=$age_error; ?><br><br>
 	
-	<label for="kirjeldus"> Kirjeldus </label>
-  	<input id="kirjeldus" name="kirjeldus" type="text" value="<?=$kirjeldus; ?>"> <?=$kirjeldus_error; ?><br><br>
+	<label for="description"> description </label>
+  	<input id="description" name="description" type="text" value="<?=$description; ?>"> <?=$description_error; ?><br><br>
 	
-	<label for="kodus"> Kodus? </label>
-  	<input id="kodus" name="kodus" type="text" value="<?=$kodus; ?>"> <?=$kodus_error; ?><br><br>
+	<label for="home"> home? </label>
+  	<input id="home" name="home" type="text" value="<?=$home; ?>"> <?=$home_error; ?><br><br>
 	
 	
   	<input type="submit" name="add_cat" value="Lisa">

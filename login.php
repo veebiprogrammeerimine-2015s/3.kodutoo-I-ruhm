@@ -106,10 +106,10 @@
   
 ?>
 <?php
-	//lehe nimi
+	//lehe name
 	$page_title="Login leht";
 	
-	//faili nimi
+	//faili name
 	$page_file_name="login.php";
 ?>
 

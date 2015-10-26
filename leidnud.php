@@ -59,10 +59,10 @@
 		
 			//lihtne vaade
 			echo "<tr>";
-			echo "<td>".$cat_array[$i]->nimi."</td>";
-			echo "<td>".$cat_array[$i]->vanus."</td>";
-			echo "<td>".$cat_array[$i]->sugu."</td>";
-			echo "<td>".$cat_array[$i]->kirjeldus."</td>";
+			echo "<td>".$cat_array[$i]->name."</td>";
+			echo "<td>".$cat_array[$i]->age."</td>";
+			echo "<td>".$cat_array[$i]->gender."</td>";
+			echo "<td>".$cat_array[$i]->description."</td>";
 			echo "</tr>";
 		
 	}

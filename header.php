@@ -5,7 +5,7 @@
 	
 <html>
 	<head>
-		<title><?php echo $page_title; ?></title> <!--tabi nimi-->
+		<title><?php echo $page_title; ?></title> <!--tabi name-->
 		
 	</head>
 	<body>

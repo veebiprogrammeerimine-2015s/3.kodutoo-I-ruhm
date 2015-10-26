@@ -1,8 +1,8 @@
 <?php
-	//lehe nimi
+	//lehe name
 	$page_title="Avaleht";
 	
-	//faili nimi
+	//faili name
 	$page_file_name="home.php";
 ?>
 

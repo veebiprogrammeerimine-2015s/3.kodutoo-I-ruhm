@@ -48,11 +48,11 @@
         
     }
 	
-	function createCat($nimi, $vanus, $sugu, $kirjeldus, $kodus){
+	function createCat($name, $age, $gender, $description, $home){
 		
 		$mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["serverusername"], $GLOBALS["serverpassword"], $GLOBALS["database"]);
-		$stmt = $mysqli->prepare("INSERT INTO kassid (nimi, vanus, sugu, kirjeldus, kodus) VALUES (?,?,?,?,?)");
-		$stmt->bind_param("sisss", $nimi, $vanus, $sugu, $kirjeldus, $kodus);
+		$stmt = $mysqli->prepare("INSERT INTO kassid (name, age, gender, description, home) VALUES (?,?,?,?,?)");
+		$stmt->bind_param("sisss", $name, $age, $gender, $description, $home);
 		
 		$message="";
 		
@@ -85,9 +85,9 @@
 		
         $mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["serverusername"], $GLOBALS["serverpassword"], $GLOBALS["database"]);
 		
-        $stmt = $mysqli->prepare("SELECT id, nimi, vanus, sugu, kirjeldus, kodus FROM kassid WHERE kodus='ei' AND(nimi LIKE ? OR sugu LIKE ?)");
+        $stmt = $mysqli->prepare("SELECT id, name, age, gender, description, home FROM kassid WHERE home='ei' AND(name LIKE ? OR gender LIKE ?)");
 		$stmt->bind_param("ss", $search, $search);
-        $stmt->bind_result($id_from_db, $nimi_from_db, $vanus_from_db, $sugu_from_db, $kirjeldus_from_db, $kodus_from_db);
+        $stmt->bind_result($id_from_db, $name_from_db, $age_from_db, $gender_from_db, $description_from_db, $home_from_db);
         $stmt->execute();
         
 		//massiiv kus hoiame autosid
@@ -101,11 +101,11 @@
 			$cat=new StdClass();
 			
 			$cat->id=$id_from_db;
-			$cat->nimi=$nimi_from_db;
-			$cat->vanus=$vanus_from_db;
-			$cat->sugu=$sugu_from_db;
-			$cat->kirjeldus=$kirjeldus_from_db;
-			$cat->kodus=$kodus_from_db;
+			$cat->name=$name_from_db;
+			$cat->age=$age_from_db;
+			$cat->gender=$gender_from_db;
+			$cat->description=$description_from_db;
+			$cat->home=$home_from_db;
 			
 			//lisan massiivi
 			array_push($array, $cat);
@@ -138,9 +138,9 @@
 		
         $mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["serverusername"], $GLOBALS["serverpassword"], $GLOBALS["database"]);
 		
-        $stmt = $mysqli->prepare("SELECT id, nimi, vanus, sugu, kirjeldus, kodus FROM kassid WHERE kodus='jah' AND(nimi LIKE ? OR sugu LIKE ?)");
+        $stmt = $mysqli->prepare("SELECT id, name, age, gender, description, home FROM kassid WHERE home='jah' AND(name LIKE ? OR gender LIKE ?)");
 		$stmt->bind_param("ss", $search, $search);
-        $stmt->bind_result($id_from_db, $nimi_from_db, $vanus_from_db, $sugu_from_db, $kirjeldus_from_db, $kodus_from_db);
+        $stmt->bind_result($id_from_db, $name_from_db, $age_from_db, $gender_from_db, $description_from_db, $home_from_db);
         $stmt->execute();
         
 		//massiiv kus hoiame autosid
@@ -154,11 +154,11 @@
 			$cat=new StdClass();
 			
 			$cat->id=$id_from_db;
-			$cat->nimi=$nimi_from_db;
-			$cat->vanus=$vanus_from_db;
-			$cat->sugu=$sugu_from_db;
-			$cat->kirjeldus=$kirjeldus_from_db;
-			$cat->kodus=$kodus_from_db;
+			$cat->name=$name_from_db;
+			$cat->age=$age_from_db;
+			$cat->gender=$gender_from_db;
+			$cat->description=$description_from_db;
+			$cat->home=$home_from_db;
 			
 			//lisan massiivi
 			array_push($array, $cat);
@@ -191,9 +191,9 @@
 		
         $mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["serverusername"], $GLOBALS["serverpassword"], $GLOBALS["database"]);
 		
-        $stmt = $mysqli->prepare("SELECT id, nimi, vanus, sugu, kirjeldus, kodus FROM kassid WHERE deleted IS NULL AND (nimi LIKE ? OR sugu LIKE ?)");
+        $stmt = $mysqli->prepare("SELECT id, name, age, gender, description, home FROM kassid WHERE deleted IS NULL AND (name LIKE ? OR gender LIKE ?)");
 		$stmt->bind_param("ss", $search, $search);
-        $stmt->bind_result($id_from_db, $nimi_from_db, $vanus_from_db, $sugu_from_db, $kirjeldus_from_db, $kodus_from_db);
+        $stmt->bind_result($id_from_db, $name_from_db, $age_from_db, $gender_from_db, $description_from_db, $home_from_db);
         $stmt->execute();
         
 		//massiiv kus hoiame autosid
@@ -207,11 +207,11 @@
 			$cat=new StdClass();
 			
 			$cat->id=$id_from_db;
-			$cat->nimi=$nimi_from_db;
-			$cat->vanus=$vanus_from_db;
-			$cat->sugu=$sugu_from_db;
-			$cat->kirjeldus=$kirjeldus_from_db;
-			$cat->kodus=$kodus_from_db;
+			$cat->name=$name_from_db;
+			$cat->age=$age_from_db;
+			$cat->gender=$gender_from_db;
+			$cat->description=$description_from_db;
+			$cat->home=$home_from_db;
 			
 			//lisan massiivi
 			array_push($array, $cat);
@@ -244,12 +244,12 @@
 		
 	}
 	
-	function updateCatData($cat_id, $cat_vanus, $cat_kodus, $cat_kirjeldus){
+	function updateCatData($cat_id, $cat_age, $cat_home, $cat_description){
 		$mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["serverusername"], $GLOBALS["serverpassword"], $GLOBALS["database"]);
 		
 		
-        $stmt = $mysqli->prepare("UPDATE kassid SET vanus= ?, kodus=?, kirjeldus=?  WHERE id=?");
-        $stmt->bind_param("issi", $cat_vanus, $cat_kodus, $cat_kirjeldus, $cat_id);
+        $stmt = $mysqli->prepare("UPDATE kassid SET age= ?, home=?, description=?  WHERE id=?");
+        $stmt->bind_param("issi", $cat_age, $cat_home, $cat_description, $cat_id);
         $stmt->execute();
 		
 		//tühjendame aadressirea
