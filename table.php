@@ -42,7 +42,7 @@
     <th>Postitus</th>
     <th>Kustuta</th>
     <th>Muuda</th>
-    <th></th>
+    
 </tr>
 <?php 
     
@@ -72,7 +72,7 @@
             echo "<td>".$post_array[$i]->postitus."</td>";
             echo "<td><a href='?delete=".$post_array[$i]->id."'>X</a></td>";
             echo "<td><a href='?edit=".$post_array[$i]->id."'>edit</a></td>";
-            echo "<td><a href='edit.php?edit_id=".$post_array[$i]->id."'>edit.php</a></td>";
+            //echo "<td><a href='edit.php?edit_id=".$post_array[$i]->id."'>edit.php</a></td>";
 			echo "</tr>";
             
         }
