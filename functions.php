@@ -50,17 +50,19 @@
     
     
 	
-	function create_qweet($qwert){
+	function create_qweet($qweet){
+		echo $qweet;
 		$mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["server_username"], $GLOBALS["server_password"], $GLOBALS["database"]);
         $stmt = $mysqli->prepare("INSERT INTO qweet (user_id, qwert) VALUES (?,?)");
 
-        $stmt->bind_param("is",$_SESSION['logged_in_user_id'], $qwert);
-		
-		$message = "";
-		
-			if($stmt->execute()){
-				$message = "Edukalt andmebaasi sisestatud!";
-			}
+        $stmt->bind_param("ss",$_SESSION['logged_in_user_id'], $qweet);
+		echo $qweet;
+		$message = "k";
+		if($stmt->execute()){
+			$message='Edukalt andmebaasi sisestatud!';
+			
+			
+		}
 		$stmt->close();
         
         $mysqli->close();

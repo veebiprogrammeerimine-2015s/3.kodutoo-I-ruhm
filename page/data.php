@@ -18,7 +18,12 @@
 	$qweet = "";
 	$qweet_error = "";
 	$m = "";
-	
+	function cleanInput($data) {
+  	$data = trim($data);
+  	$data = stripslashes($data);
+  	$data = htmlspecialchars($data);
+  	return $data;
+  }
 		
 	
 	if($_SERVER["REQUEST_METHOD"] == "POST"){
@@ -27,22 +32,19 @@
 				$qweet_error = "See väli on kohustuslik";
 			}else{
 				$qweet = cleanInput($_POST["qweet"]);
+				echo $qweet;
 			}
-	 }
-		if($qweet_error == ""){
+		}
+			if($qweet_error == ""){
 			$m = create_qweet($qweet);
+			echo $qweet;
 			
 			if($m != ""){
 				$qweet = "";
 			}
 		}
 	}
-function cleanInput($data) {
-  	$data = trim($data);
-  	$data = stripslashes($data);
-  	$data = htmlspecialchars($data);
-  	return $data;
-  }
+
   
   getAllData();
 ?>
@@ -50,10 +52,10 @@ function cleanInput($data) {
 	$page_title = "Lisa Q";
 	$page_file_name = "data.php";
 ?>
-<?php require_once("../header.php"); ?>
-
-
-Tere, <?=$_SESSION['logged_in_user_email'];?> <a href="?logout=1"> Logi välja</a>
+<?php require_once("../header.php");
+	if(isset($_SESSION['logged_in_user_id'])){
+	echo "Tere, ",$_SESSION['logged_in_user_email'], "<a href='?logout=1'> Logi välja</a>";}
+?>
 
 <h2> Lisa uus qweet </h2>
 
