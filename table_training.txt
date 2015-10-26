@@ -1,0 +1,13 @@
+CREATE TABLE training(
+	training_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	user_id int,
+	begin DATETIME NOT NULL,
+	ending DATETIME NOT NULL,
+	sports VARCHAR(100) NOT NULL,
+	distance VARCHAR(25) NOT NULL,
+	deleted DATE,
+	FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
+
+
