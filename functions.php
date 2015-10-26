@@ -15,17 +15,18 @@
 	function logInUser($email, $username, $hash){
 		$mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["server_username"], $GLOBALS["server_password"], $GLOBALS["database"]);
 		
-		$stmt = $mysqli->prepare("SELECT id, email FROM user_db WHERE email=? AND password=?");
+		$stmt = $mysqli->prepare("SELECT id, username, email FROM user_db WHERE email=? AND password=?");
         $stmt->bind_param("ss", $email, $hash);
-        $stmt->bind_result($id_from_db, $email_from_db);
+        $stmt->bind_result($id_from_db, $username_from_db, $email_from_db);
         $stmt->execute();
         if($stmt->fetch()){
             echo "Kasutaja logis sisse id=".$id_from_db;
 			
 			// sessioon, salvestatakse serveris
             $_SESSION['logged_in_user_id'] = $id_from_db;
+			$_SESSION['logged_in_user_username'] = $username_from_db;
             $_SESSION['logged_in_user_email'] = $email_from_db;
-            
+			            
 			//suuname kasutaja teisele lehel
             header("Location: data.php");
 			
@@ -56,9 +57,9 @@
 	function createNewPost($postitus) {
         
         $mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["server_username"], $GLOBALS["server_password"], $GLOBALS["database"]);
-        $stmt = $mysqli->prepare("INSERT INTO postitus (user_id, postitus) VALUES (?,?)");
+        $stmt = $mysqli->prepare("INSERT INTO postitus (user_id, user_username, postitus) VALUES (?,?,?)");
         // i - on user_id INT
-        $stmt->bind_param("is", $_SESSION['logged_in_user_id'], $postitus);
+        $stmt->bind_param("iss", $_SESSION['logged_in_user_id'], $_SESSION['logged_in_user_username'], $postitus);
         
         $message = "";
         
@@ -88,9 +89,9 @@
           
         $mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["server_username"], $GLOBALS["server_password"], $GLOBALS["database"]);
         // deleted IS NULL - ei ole kustutatud
-        $stmt = $mysqli->prepare("SELECT id, user_id, postitus FROM postitus WHERE deleted IS NULL AND (postitus LIKE ?)");
-        $stmt->bind_param("s", $search);
-		$stmt->bind_result($id_from_db, $user_id_from_db, $postitus_from_db);
+        $stmt = $mysqli->prepare("SELECT id, user_id, user_username, postitus FROM postitus WHERE deleted IS NULL AND user_username LIKE ? OR postitus LIKE ?");
+        $stmt->bind_param("ss", $search, $search);
+		$stmt->bind_result($id_from_db, $user_id_from_db, $user_username_from_db, $postitus_from_db);
         $stmt->execute();
         // massiiv kus hoiame autosid
         $array = array();
@@ -106,6 +107,7 @@
             $post->id = $id_from_db;
             $post->postitus = $postitus_from_db; 
             $post->user_id = $user_id_from_db; 
+			$post->user_username = $user_username_from_db;
             
             array_push($array, $post);
             //echo "<pre>";
