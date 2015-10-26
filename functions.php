@@ -66,7 +66,7 @@
         // kui õnnestub siis tõene kui viga siis else
         if($stmt->execute()){
             // õnnestus
-            $message = "Edukalt andmebaasi salvestatud!";
+            $message = "Postitus edukalt sisestatud!";
         }
         
         $stmt->close();

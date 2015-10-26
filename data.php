@@ -45,7 +45,8 @@
                     
                 }
             }
-            
+         header( "Refresh:3; url=table.php", true, 303);
+		 
         }
     }
     
