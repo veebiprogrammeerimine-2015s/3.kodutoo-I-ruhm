@@ -44,7 +44,7 @@
         $stmt->execute();
         
         // tühjendame aadressirea
-        header("Location: table.php");
+        //header("Location: table.php");
         
         $stmt->close();
         $mysqli->close();

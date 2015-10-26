@@ -5,8 +5,9 @@
 		deleteCarData($_GET["delete"]);
 	}
 	
-	if(isset($_GET["edit"])){
-		UpdateCarData($_GET["carmodel"], $_GET["mileage"], $_GET["cost"], $_GET["description"]);
+	if(isset($_GET["update"])){
+		//ID kaasa
+		UpdateCarData($_GET["car_id"], $_GET["carmodel"], $_GET["mileage"], $_GET["cost"], $_GET["description"]);
 	}
 	
 	$keyword = "";
@@ -65,7 +66,7 @@
 			echo "<td>".$car_array[$i]->cost."</td>";
 			echo "<td>".$car_array[$i]->description."</td>";
             echo "<td><a href='?delete=".$car_array[$i]->id."'>X</a></td>";
-            echo "<td><a href='?edit=".$car_array[$i]->id."'>edit</a></td>";
+			echo "<td><a href='?edit=".$car_array[$i]->id."'>edit</a></td>";
             echo "<td><a href='edit.php?edit_id=".$car_array[$i]->id."'>edit.php</a></td>";
             echo "</tr>";
 		}
