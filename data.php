@@ -3,6 +3,7 @@
    require_once("functions.php");
    // kui kasutaja on sisse logitud, suuname teisele lehele
    // kontrolin, kas sessioonimuutja on olemas
+   
    if(!isset($_SESSION['logged_in_user_id'])){
 	   header("Location: login.php");
    }
@@ -79,13 +80,19 @@
  
 Tere, <?= $_SESSION['logged_in_user_email']; ?> 
 <a href="?logout=1">Log out</a>
-   
-<h2>Lisa uus</h2>
+<br><br>
+<form action="table.php">
+    <input type="submit" value="Trennid tabelina">
+    </form>
+	<br><br> 
+
+ 
+<h2>Uue trenni lisamine</h2>
   <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post" >
      <label for "begin"> Algus </label>
-  	    <input id="begin" name="begin" type="text" value="<?=$begin;?>"> <?=$begin_error;?><br><br>
+  	    <input id="begin" name="begin" type="datetime-local" value="<?=$begin;?>"> <?=$begin_error;?><br><br>
   	 <label for "ending" > Lõpp </label>
-	<input id="ending" name="ending" type="text" value="<?=$ending;?>"> <?=$ending_error;?><br><br>
+	<input id="ending" name="ending" type="datetime-local" value="<?=$ending;?>"> <?=$ending_error;?><br><br>
 	 <label for "sports" > Spordiala </label>
   	<input id="sports" name="sports" type="text" value="<?=$sports;?>"> <?=$sports_error;?><br><br>
   	 <label for "distance"> Distants </label>

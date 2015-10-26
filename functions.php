@@ -60,6 +60,7 @@
         if($stmt->execute()){
             // õnnestus
             $message = "Edukalt andmebaasi salvestatud!";
+			header("Location: table.php");
         }
         
         $stmt->close();
@@ -116,8 +117,8 @@
 				 			 
    			   $mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["server_username"], $GLOBALS["server_password"], $GLOBALS["database"]);  
 			   
-			   $stmt = $mysqli->prepare("SELECT training_id, user_id, begin, ending, sports, distance FROM training WHERE deleted IS NULL AND (sports LIKE ? OR distance LIKE ?)");
-    		   $stmt->bind_param("ss", $search, $search);
+			   $stmt = $mysqli->prepare("SELECT training_id, user_id, begin, ending, sports, distance FROM training WHERE user_id=? AND deleted IS NULL AND (sports LIKE ? OR distance LIKE ?)");
+    		   $stmt->bind_param("iss", $_SESSION['logged_in_user_id'], $search, $search);
 			   $stmt -> bind_result($training_id_from_db, $user_id_from_db, $begin_from_db, $ending_from_db, $sports_from_db, $distance_from_db);
 			   $stmt->execute();
 				// massiiv, kus hoiame trenne
@@ -152,8 +153,8 @@
   function deleteTrainingData($training_id){
 	  
 	 	     $mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["server_username"], $GLOBALS["server_password"], $GLOBALS["database"]);  		
-             $stmt = $mysqli->prepare("UPDATE training SET deleted=NOW() WHERE training_id=?");
-			 $stmt -> bind_param("i", $training_id);
+             $stmt = $mysqli->prepare("UPDATE training SET deleted=NOW() WHERE training_id=? AND user_id=?");
+			 $stmt -> bind_param("ii", $training_id, $_SESSION['logged_in_user_id']);
 			 $stmt->execute();
 			 // tühjendame aadressirea
 			 header("Location: table.php");
@@ -164,7 +165,7 @@
             
 			$mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["server_username"], $GLOBALS["server_password"], $GLOBALS["database"]); 
    
-             $stmt = $mysqli->prepare("UPDATE training SET begin=?, ending=?, sports=?, distance=? WHERE training_id=?");
+             $stmt = $mysqli->prepare("UPDATE training SET begin=?, ending=?, sports=?, distance=? WHERE training_id=? ");
 			 $stmt -> bind_param("ssssi", $begin, $ending, $sports, $distance, $training_id);
 			 $stmt->execute();
 			 // tühjendame aadressirea

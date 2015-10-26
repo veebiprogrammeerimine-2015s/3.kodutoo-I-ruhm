@@ -1,6 +1,11 @@
 <?php
 require_once("functions.php");
 
+ if(isset($_GET["logout"])){
+	   
+	   session_destroy();
+	   header("Location: login.php");
+   }
    // kuulan, kas kasutaja tahab kustutada
    if(isset($_GET["delete"])) {
 	   deleteTrainingData($_GET["delete"]);
@@ -22,8 +27,16 @@ require_once("functions.php");
 		
 	} 
 ?> 
+Tere, <?= $_SESSION['logged_in_user_email']; ?> 
+<a href="?logout=1">Log out</a>
 
- <h1>Tabel</h1> 
+
+ <h1>Trennide tabel</h1> 
+ 
+ <form action="data.php">
+    <input type="submit" value="Lisa uus trenn">
+    </form>
+	<br><br>
  <form action="table.php" method="get">
     <input name="keyword" type="search" value="<?=$keyword?>">
 	<input type="submit" value="otsi">
@@ -32,13 +45,12 @@ require_once("functions.php");
  <table border=1>
  <tr>
     <th>training_ID</th>
-	<th>user_ID</th>
 	<th>Begin</th>
 	<th>Ending</th>
 	<th>Sports</th>
 	<th>Distance</th>
-    <th></th>
-	<th></th>
+    <th>Delete</th>
+	<th>Edit</th>
 </tr>  
  <?php
  
@@ -51,7 +63,7 @@ require_once("functions.php");
 		echo "<form action='table.php' method='get'>";
 		echo "<input type='hidden' name='training_id' value='".$training_array[$i]->training_id."'>"; 
 		echo "<td>".$training_array[$i]->training_id."</td>";  
-        echo "<td>".$training_array[$i]->user_id."</td>";  
+        //echo "<td>".$training_array[$i]->user_id."</td>";  
 	    echo "<td><input name='begin' value='".$training_array[$i]->begin."'></td>";  
 		echo "<td><input name='ending' value='".$training_array[$i]->ending."'</td>"; 
 		echo "<td><input name='sports' value='".$training_array[$i]->sports."'></td>";  
@@ -64,8 +76,7 @@ require_once("functions.php");
 		}else{
 	    echo"<tr>";
         echo "<td>".$training_array[$i]->training_id."</td>";  
-        echo "<td>".$training_array[$i]->user_id."</td>";  
-	    echo "<td>".$training_array[$i]->begin."</td>";  
+   	    echo "<td>".$training_array[$i]->begin."</td>";  
 	    echo "<td>".$training_array[$i]->ending."</td>"; 
 		echo "<td>".$training_array[$i]->sports."</td>";  
 	    echo "<td>".$training_array[$i]->distance."</td>"; 

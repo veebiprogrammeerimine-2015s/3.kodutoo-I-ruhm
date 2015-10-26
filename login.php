@@ -2,7 +2,7 @@
     require_once("functions.php"); 
 	
 	if(isset($_SESSION['logged_in_user_id'])){
-        header("Location: data.php");
+        header("Location: table.php");
 		}
 		
 	// muuutujad errorite jaoks
@@ -88,7 +88,8 @@
 			
 			if(	$email_2_error == "" && $password_2_error == "" && $age_error == "" && $gender_error == ""){
 				//echo hash("sha512", $password_2);
-				echo " Kasutaja loomine. Kasutajanimi on ".$email_2." ja parool on ".$password_2.". Vanus on ".$age.". Sugu on ".$gender.".";
+				echo "Kasutaja loomine. Nüüd võid sisse logida ja trenne kirja panna.";
+				//Kasutajanimi on ".$email_2." ja parool on ".$password_2.". Vanus on ".$age.". Sugu on ".$gender.".";
 			
 				$hash = hash("sha512", $password_2);
 			
