@@ -1,5 +1,5 @@
 <?php
-
+	$search = 0;
 
 	require_once("../../configglobal.php");
 	$database = "if15_karl";
@@ -14,8 +14,12 @@
 		
 		$mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["server_username"], $GLOBALS["server_password"], $GLOBALS["database"]);
         // deleted IS NULL - ei ole kustutatud
-        $stmt = $mysqli->prepare("SELECT id, user_id, carmodel, mileage, cost, description FROM car_costs WHERE deleted IS NULL AND (mileage LIKE ? OR carmodel LIKE ? OR description like ? OR cost LIKE ?)");
-        $stmt->bind_param("ss", $search, $search);
+        
+		$stmt = $mysqli->prepare("SELECT id, user_id, carmodel, mileage, cost, description FROM car_costs WHERE deleted IS NULL AND (mileage LIKE ? OR carmodel LIKE ? OR description like ? OR cost LIKE ?)");
+        
+		echo $stmt->error;
+		
+		$stmt->bind_param("ss", $search, $search);
         $stmt->bind_result($id_from_db, $user_id_from_db, $carmodel_from_db, $mileage_from_db, $cost_from_db, $description_from_db);
         $stmt->execute();
 	
