@@ -1,10 +1,10 @@
 <?php 
     require_once("table_functions.php");
+    require_once("functions.php");
     
     if(!isset($_SESSION['logged_in_user_id'])){
         header("Location: login.php");
     }
-    
     //kuulan, kas kasutaja tahab kustutada
     if(isset($_GET["delete"])){
         deleteContestData($_GET["delete"]);

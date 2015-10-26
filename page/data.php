@@ -69,7 +69,7 @@
 
 Tere, <?=$_SESSION['logged_in_user_email'];?> <br><a href="?logout=1">Logi välja</a>
 
-<h2>Eelregistreerimine võistlusele</h2>
+<h2>Eelregistreerimine võistlustele</h2>
   <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post" >
     <label>Võistlus</label>
   	<input id="contest" name="contest" type="text"  value="<?=$contest;?>"> <?=$contest_error; ?><br><br>
@@ -88,7 +88,7 @@ Tere, <?=$_SESSION['logged_in_user_email'];?> <br><a href="?logout=1">Logi välj
 ?>
 	<?php
         if($page_file_name != "table.php"){ 
-            echo '<li><a href="table.php">Tabel</a></li>';
+            echo '<li><a href="table.php">Registreeritud osalejad</a></li>';
         } else{ 
             echo '<li>Tabel</li>';
         } 
