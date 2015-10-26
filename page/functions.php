@@ -51,7 +51,7 @@
         
         $stmt = $mysqli->prepare("INSERT INTO car_costs (user_id, carmodel, mileage, cost, description) VALUES (?,?,?,?,?)");
 		echo $mysqli->error;
-        $stmt->bind_param("siis", $_SESSION['logged_in_user_id'], $carmodel, $mileage, $cost, $description);
+        $stmt->bind_param("ssiis", $_SESSION['logged_in_user_id'], $carmodel, $mileage, $cost, $description);
 	$message = "";
 	if($stmt->execute()){
 	//worked

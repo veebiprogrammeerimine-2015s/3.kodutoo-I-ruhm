@@ -32,8 +32,8 @@ require_once("functions.php");
 			}
 			
 			 if($car_plate_error == "" && $color_error == ""){
-                createCarPlate($_SESSION['logged_in_user_id'], $carmodel, $mileage);
-				$m = createCarPlate($carmodel, $mileage);
+                //createCarPlate($_SESSION['logged_in_user_id'], $carmodel, $mileage);
+				$m = createCarPlate($carmodel, $mileage, $cost, $description);
 		   if($m !=""){
 			$carmodel = "";
 			$mileage = "";
