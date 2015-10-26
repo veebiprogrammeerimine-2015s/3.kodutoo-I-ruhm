@@ -3,11 +3,11 @@ require_once("../functions.php");
 
 $tex_array = getAllData();
 if(isset($_GET["delete"])) {
-        deleteQweetData($_GET["delete"]);
+        deleteQweetData($_GET["delete"], $_GET["user_id"]);
     }
 
- if(isset($_GET["update"])){
-        updateQweetData($_GET["qwert"], $_GET["qwert_id"]);
+if(isset($_GET["update"])){
+        updateQweetData($_GET["qwert"], $_GET["qwert_id"], $_GET["user_id"]);
     }
     
 	$keyword = "";
@@ -58,6 +58,7 @@ if(isset($_SESSION['logged_in_user_id'])){
 		echo "<tr>";
         echo "<form action='table.php' method='get'>";
 		echo "<input type='hidden' name='qwert_id' value='".$tex_array[$i]->id."'>";
+		echo "<input type='hidden' name='user_id' value='".$_SESSION['logged_in_user_id']."'>";
 		echo "<td>".$tex_array[$i]->id."</td> ";
 		echo "<td>".$tex_array[$i]->user_id."</td> ";
 		echo "<td><input name='qwert' value='".$tex_array[$i]->qwert."'></td>";
@@ -68,7 +69,7 @@ if(isset($_SESSION['logged_in_user_id'])){
 		echo "<tr> <td>".$tex_array[$i]->id."</td> ";
 		echo "<td>".$tex_array[$i]->user_id."</td> ";
 		echo "<td>".$tex_array[$i]->qwert."</td>"; 
-		echo "<td><a href='?delete=".$tex_array[$i]->id."'>X</a></td>";
+		echo "<td><a href='?delete=".$tex_array[$i]->id."?user_id=".$_SESSION['logged_in_user_id']."'>X</a></td>";
 		echo "<td><a href='?edit=".$tex_array[$i]->id."'>Edit</a></td></tr>";
 	
 	} 
