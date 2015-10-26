@@ -1,0 +1,24 @@
+CREATE TABLE ntb_kasutajad (
+	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	email VARCHAR(255) NOT NULL,
+	password VARCHAR(128),
+	usergroup INT NOT NULL,
+	resume INT,
+	created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	UNIQUE(email)
+);
+
+CREATE TABLE job_offers (
+	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	user_id INT NOT NULL,
+	name VARCHAR(128) NOT NULL,
+	description TEXT NOT NULL,
+	company VARCHAR(128) NOT NULL,
+	county VARCHAR(64) NOT NULL,
+	parish VARCHAR(64) NOT NULL,
+	location VARCHAR(64) NOT NULL,
+	address VARCHAR(64) NOT NULL,
+	inserted DATETIME NOT NULL,
+	deleted DATETIME,
+	FOREIGN KEY(user_id) REFERENCES ntb_kasutajad(id)
+);

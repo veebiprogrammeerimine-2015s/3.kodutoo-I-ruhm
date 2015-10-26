@@ -1,0 +1,48 @@
+
+
+@media screen and (max-width: 1920px) {
+
+#logoback {
+	margin-left: -2px;
+	width: 400px;
+	background-color: #551551;
+	box-shadow: 1px 1px 4px #000;
+  -webkit-transform: rotate(2deg);
+}
+	
+.logo {
+	margin-left: 250px;
+}
+
+@media screen and (max-width: 1599px) {
+
+#logoback {
+	margin-left: -2px;
+	width: 350px;
+	background-color: #551551;
+	box-shadow: 1px 1px 4px #000;
+  -webkit-transform: rotate(2deg);
+}
+	
+.logo {
+	margin-left: 200px;
+}
+
+}
+
+@media screen and (max-width: 1365px) {
+
+#logoback {
+	margin-left: -2px;
+	width: 300px;
+	background-color: #551551;
+	box-shadow: 1px 1px 4px #000;
+  -webkit-transform: rotate(2deg);
+}
+	
+.logo {
+	margin-left: 150px;
+}
+
+}
+
