@@ -1,0 +1,25 @@
+CREATE TABLE users_naaber(
+	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	email VARCHAR(255) NOT NULL,
+	password VARCHAR(128),
+	first_name VARCHAR(100),
+	last_name VARCHAR(100),
+	organisation VARCHAR(100),
+	created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	UNIQUE(email)
+);
+
+CREATE TABLE orders_naaber(
+	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	user_id INT,
+	text_type VARCHAR(100),
+	subject VARCHAR(200),
+	target_group VARCHAR(200),
+	description TEXT,
+	source VARCHAR(300),
+	length INT,
+	deadline DATETIME,
+	output VARCHAR(100),
+	deleted DATETIME,
+	modified DATETIME
+);
