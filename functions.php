@@ -166,12 +166,11 @@
 			$mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["server_username"], $GLOBALS["server_password"], $GLOBALS["database"]); 
    
              $stmt = $mysqli->prepare("UPDATE training SET begin=?, ending=?, sports=?, distance=? WHERE training_id=? AND user_id=?");
-			 $stmt -> bind_param("ssssi", $begin, $ending, $sports, $distance, $training_id, $_SESSION['logged_in_user_id']);
+			 $stmt -> bind_param("ssssii", $begin, $ending, $sports, $distance, $training_id, $_SESSION['logged_in_user_id']);
 			 $stmt->execute();
 			 // tühjendame aadressirea
 			 header("Location:table.php");
-			 
-             $stmt->close(); 
+			 $stmt->close(); 
 		     $mysqli->close();
      }   
 	 
