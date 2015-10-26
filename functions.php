@@ -107,7 +107,7 @@
     $mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["server_username"], $GLOBALS["server_password"], $GLOBALS["database"]);
     
     // uuendan välja deleted, lisan praeguse date'i
-    $stmt = $mysqli->prepare("UPDATE qweet SET deleted=NOW() WHERE id=? AND user_id =? ");
+    $stmt = $mysqli->prepare("UPDATE qweet SET deleted=NOW() WHERE id=? AND user_id=?");
     $stmt->bind_param("ii", $qwert_id, $user_id);
     $stmt->execute();
     

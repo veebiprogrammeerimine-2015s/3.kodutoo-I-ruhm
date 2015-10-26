@@ -3,7 +3,7 @@ require_once("../functions.php");
 
 $tex_array = getAllData();
 if(isset($_GET["delete"])) {
-        deleteQweetData($_GET["delete"], $_GET["user_id"]);
+        deleteQweetData($_GET["delete"], $_GET["user"]);
     }
 
 if(isset($_GET["update"])){
@@ -53,7 +53,7 @@ require_once("../header.php"); ?>
 </tr>
 <?php 
 for($i = 0; $i < count($tex_array); $i++){
-if(isset($_SESSION['logged_in_user_id'])){	
+if(isset($_SESSION['logged_in_user_id'])&& $_SESSION['logged_in_user_id']==$tex_array[$i]->user_id){	
 	if(isset($_GET["edit"]) && $_GET["edit"] == $tex_array[$i]->id) {
 		echo "<tr>";
         echo "<form action='table.php' method='get'>";
@@ -69,11 +69,15 @@ if(isset($_SESSION['logged_in_user_id'])){
 		echo "<tr> <td>".$tex_array[$i]->id."</td> ";
 		echo "<td>".$tex_array[$i]->user_id."</td> ";
 		echo "<td>".$tex_array[$i]->qwert."</td>"; 
-		echo "<td><a href='?delete=".$tex_array[$i]->id."?user_id=".$_SESSION['logged_in_user_id']."'>X</a></td>";
+		echo "<td><a href='?delete=".$tex_array[$i]->id."&?user=".$_SESSION['logged_in_user_id']."'>X</a></td>";
 		echo "<td><a href='?edit=".$tex_array[$i]->id."'>Edit</a></td></tr>";
 	
-	} 
 	}
+} else {
+	echo "<tr> <td>".$tex_array[$i]->id."</td> ";
+	echo "<td>".$tex_array[$i]->user_id."</td> ";
+	echo "<td>".$tex_array[$i]->qwert."</td></tr>";
+}
 }
 ?>
 </table>

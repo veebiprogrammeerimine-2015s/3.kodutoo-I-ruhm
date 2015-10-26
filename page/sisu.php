@@ -43,7 +43,6 @@ $email = "";
 			if($pw_error == "" && $email_error == ""){
 				$hash = hash("sha512", $password);
 				loginUser($email, $hash);
-				/*$stmt ->close();*/
 			}
 		}
 $mysqli->close();
