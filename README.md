@@ -20,7 +20,26 @@
   * Andmebaasi nimi lisa aga kindlasti enda faili ja `require_once` käsuga küsi parool ja kasutajanimi `config.php` failist, siis saan kodust tööd lihtsamini kontrollida
   ```PHP
   // ühenduse loomiseks kasuta
-  require_once("../config.php");
+  require_once("../../config_global.php");
   $database = "database";
   $mysqli = new mysqli($servername, $username, $password, $database);
   ```
+
+  
+	CREATE TABLE mvp (
+		id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+		email VARCHAR(255) NOT NULL,
+		password VARCHAR(128),
+		age INT, 
+		created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+		UNIQUE(email)
+	);
+
+CREATE TABLE notes (
+  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  user_id INT NOT NULL,
+  note VARCHAR(255),   
+  done VARCHAR(3),
+  deleted TIMESTAMP NULL DEFAULT NULL,
+  FOREIGN KEY (user_id) REFERENCES mvp(id)
+);
