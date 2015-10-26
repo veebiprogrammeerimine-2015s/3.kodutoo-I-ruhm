@@ -89,7 +89,7 @@
           
         $mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["server_username"], $GLOBALS["server_password"], $GLOBALS["database"]);
         // deleted IS NULL - ei ole kustutatud
-        $stmt = $mysqli->prepare("SELECT id, user_id, user_username, postitus FROM postitus WHERE deleted IS NULL AND user_username LIKE ? OR postitus LIKE ?");
+        $stmt = $mysqli->prepare("SELECT id, user_id, user_username, postitus FROM postitus WHERE deleted IS NULL AND user_username LIKE ? OR deleted IS NULL AND postitus LIKE ?");
         $stmt->bind_param("ss", $search, $search);
 		$stmt->bind_result($id_from_db, $user_id_from_db, $user_username_from_db, $postitus_from_db);
         $stmt->execute();
