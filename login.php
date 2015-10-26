@@ -94,7 +94,9 @@
 				$hash = hash("sha512", $password_2);
 			
 			
-			createUser($email_2, $hash, $age, $gender);	
+				createUser($email_2, $hash, $age, $gender);	
+				
+				$email_2= $hash= $age= $gender="";
 					
 			}
 			
@@ -132,9 +134,9 @@
 		<h2>Create user</h2>
 	        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" >
 			<input name="email_2" type="email" placeholder="E-post" value="<?php echo $email_2; ?>"> <?php echo $email_2_error; ?><br><br>
-			<input name="password_2" type="password" placeholder="parool"> <?php echo $password_2_error; ?> <br> <br>
-			<input name="age" type="text" placeholder="vanus"> <br> <br> 
-			<input name="gender" type="text" placeholder="sugu mees/naine"> <br> <br> 
+			<input name="password_2" type="password" placeholder="parool"> <?php echo $password_2_error; ?> <br><br>
+			<input name="age" type="text" placeholder="vanus" value="<?php echo $age; ?>"> <?php echo $age_error; ?> <br><br>
+			<input name="gender" type="text" placeholder="sugu mees/naine" value="<?php echo $gender; ?>"> <?php echo $gender_error; ?> <br><br>
 			<input type="submit" name="create" value="Create user"> 
 		</form>	
 		<body>

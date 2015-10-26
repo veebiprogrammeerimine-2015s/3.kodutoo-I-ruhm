@@ -23,7 +23,7 @@ require_once("functions.php");
 	  $training_array = getAllData($keyword);
 	  
 	} else{
-	$training_array = getAllData();	
+	  $training_array = getAllData();	
 		
 	} 
 ?> 
@@ -57,7 +57,7 @@ Tere, <?= $_SESSION['logged_in_user_email']; ?>
       //trennid ükshaaval läbi käia
     for($i = 0; $i < count($training_array); $i++){
 		
-		//kasutaja tahab rida muuta
+		//kasutaja tahab rida muuta, siis muutub vastav rida vormil:
 	  if(isset($_GET["edit"])&& $_GET["edit"]==$training_array[$i]->training_id){
 		echo "<tr>";
 		echo "<form action='table.php' method='get'>";

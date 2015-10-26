@@ -1,4 +1,4 @@
-<h3>Menüü</h3>
+<h2>Menu</h2>
 <ul>
     <?php 
     // Ükskõik mis lehe puhul näitan linki aga kui on home 

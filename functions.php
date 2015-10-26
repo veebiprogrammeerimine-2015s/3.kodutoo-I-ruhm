@@ -160,8 +160,8 @@
 			 header("Location: table.php");
              $stmt->close(); 
 		     $mysqli->close();
-	}
-   function updateTrainingData($training_id, $begin, $ending, $sports, $distance) {			 
+	        }
+  function updateTrainingData($training_id, $begin, $ending, $sports, $distance) {			 
             
 			$mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["server_username"], $GLOBALS["server_password"], $GLOBALS["database"]); 
    
