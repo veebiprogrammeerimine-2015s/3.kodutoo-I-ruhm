@@ -1,27 +1,42 @@
 <?php
-    //loome AB ühenduse
-    require_once("../config_global.php");
+    //loome AB Ã¼henduse
+    require_once("../../config_global.php");
     $database = "if15_joosjoe";
-	//paneme sessiooni serverist tööle
+	//paneme sessiooni serverist tÃ¶Ã¶le
 	session_start();
     
+    function createUser($email, $hash, $First_name, $Last_name, $Address){
+		$mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["server_username"], $GLOBALS["server_password"], $GLOBALS["database"]);
+		$stmt=$mysqli->prepare("INSERT INTO user(email, password,first_name,last_name,address) VALUES (?,?,?,?,?)");
+		$stmt->bind_param("sssss", $email, $hash, $First_name, $Last_name, $Address);
+		
+		if($stmt->execute()){
+			loginUser($email, $hash);
+		} else {
+			$stmt->error;
+		}
+		
+		
+		$stmt->close();
+		
+		
+		
+	}
     
     function logInUser($email, $hash){
-        
-        // GLOBALS saab kätte kõik muutujad mis kasutusel
+       echo $email." ".$hash;
+        // GLOBALS saab kÃ¤tte kÃµik muutujad mis kasutusel
         $mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["server_username"], $GLOBALS["server_password"], $GLOBALS["database"]);
         
-        $stmt = $mysqli->prepare("SELECT id, email FROM user_sample WHERE email=? AND password=?");
+        $stmt = $mysqli->prepare("SELECT id, email FROM user WHERE email=? AND password=?");
         $stmt->bind_param("ss", $email, $hash);
         $stmt->bind_result($id_from_db, $email_from_db);
         $stmt->execute();
-        if($stmt->fetch()){
-            echo "Kasutaja logis sisse id=".$id_from_db;
-			
+        if($stmt->fetch()){			
 			//Sessioon, salvestatakse aserveris
 			$_SESSION['logged_in_user_id'] = $id_from_db;
 			$_SESSION['logged_in_user_email'] = $email_from_db;
-			header("Location: login.php");
+			header("Location: home.php");
         }else{
 			
             echo "Wrong credentials!";
@@ -34,17 +49,6 @@
     }
     
     
-    function createUser($create_email, $hash){
-        
-        $mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["server_username"], $GLOBALS["server_password"], $GLOBALS["database"]);
-        $stmt = $mysqli->prepare("INSERT INTO user_sample (email, password) VALUES (?,?)");
-        $stmt->bind_param("ss", $create_email, $hash);
-        $stmt->execute();
-        $stmt->close();
-        
-        $mysqli->close();
-        
-    }
 	
 	function create_qweet($qwert){
 		$mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["server_username"], $GLOBALS["server_password"], $GLOBALS["database"]);
@@ -102,12 +106,12 @@
     
     $mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["server_username"], $GLOBALS["server_password"], $GLOBALS["database"]);
     
-    // uuendan välja deleted, lisan praeguse date'i
+    // uuendan vÃ¤lja deleted, lisan praeguse date'i
     $stmt = $mysqli->prepare("UPDATE qweet SET deleted=NOW() WHERE id=?");
     $stmt->bind_param("i", $qwert_id);
     $stmt->execute();
     
-    // tühjendame aadressirea
+    // tÃ¼hjendame aadressirea
     header("Location: table.php");
     
     $stmt->close();
@@ -118,12 +122,12 @@ function updateQweetData($qwert, $qwert_id){
     
     $mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["server_username"], $GLOBALS["server_password"], $GLOBALS["database"]);
     
-    // uuendan välja deleted, lisan praeguse date'i
+    // uuendan vÃ¤lja deleted, lisan praeguse date'i
     $stmt = $mysqli->prepare("UPDATE qweet SET qwert=? WHERE id=?");
     $stmt->bind_param("si",$qwert, $qwert_id);
     $stmt->execute();
     
-    // tühjendame aadressirea
+    // tÃ¼hjendame aadressirea
     header("Location: table.php");
     
     $stmt->close();

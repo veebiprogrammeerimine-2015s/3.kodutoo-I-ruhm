@@ -1,10 +1,9 @@
 <?php
-    require_once("functions.php");
+    require_once("../functions.php");
 	
 	//kui kasutaja on sisse logitud suuna teisele lehele
 	
 	//kontrollin kas sessiooni muutuja on olemas
-	var_dump($_SESSION);
 	if(isset($_SESSION['logged_in_user_id'])){
 		header("Location: data.php");
 		
