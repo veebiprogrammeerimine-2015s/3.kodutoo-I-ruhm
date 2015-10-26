@@ -6,7 +6,7 @@
 	}
 	
 	if(isset($_GET["edit"])){
-		editCarData($_GET["carmodel"], $_GET["mileage"], $_GET["cost"], $_GET["description"]);
+		UpdateCarData($_GET["carmodel"], $_GET["mileage"], $_GET["cost"], $_GET["description"]);
 	}
 	
 	$keyword = "";

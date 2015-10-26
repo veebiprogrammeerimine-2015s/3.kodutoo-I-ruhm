@@ -17,9 +17,9 @@
         
 		$stmt = $mysqli->prepare("SELECT id, user_id, carmodel, mileage, cost, description FROM car_costs WHERE deleted IS NULL AND (mileage LIKE ? OR carmodel LIKE ? OR description like ? OR cost LIKE ?)");
         
-		echo $stmt->error;
+		echo $mysqli->error;
 		
-		$stmt->bind_param("ss", $search, $search);
+		$stmt->bind_param("ssss", $search, $search, $search, $search);
         $stmt->bind_result($id_from_db, $user_id_from_db, $carmodel_from_db, $mileage_from_db, $cost_from_db, $description_from_db);
         $stmt->execute();
 	
