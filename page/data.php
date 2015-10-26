@@ -100,11 +100,11 @@ Kasutaja: <?=$_SESSION['logged_in_user_email'];?> <a href="?logout=1" style="tex
 <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
 	<select id="text_type" name="text_type">
 		<option value="">[ Teksti tüüp ]</option>
-		<option value="uudislugu"<?=$_POST["text_type"] == "uudislugu" ? "selected='selected'" : ""?>>Uudislugu</option>
-		<option value="pressiteade"<?=$_POST["text_type"] == "pressiteade" ? "selected='selected'" : ""?>>Pressiteade</option>
-		<option value="reklaamtekst"<?=$_POST["text_type"] == "reklaamtekst" ? "selected='selected'" : ""?>>Reklaamtekst</option>
-		<option value="blogipostitus"<?=$_POST["text_type"] == "blogipostitus" ? "selected='selected'" : ""?>>Blogipostitus</option>
-		<option value="uudiskiri"<?=$_POST["text_type"] == "uudiskiri" ? "selected='selected'" : ""?>>Uudiskiri</option>
+		<option value="uudislugu"<?=$text_type == "uudislugu" ? "selected='selected'" : ""?>>Uudislugu</option>
+		<option value="pressiteade"<?=$text_type == "pressiteade" ? "selected='selected'" : ""?>>Pressiteade</option>
+		<option value="reklaamtekst"<?=$text_type == "reklaamtekst" ? "selected='selected'" : ""?>>Reklaamtekst</option>
+		<option value="blogipostitus"<?=$text_type == "blogipostitus" ? "selected='selected'" : ""?>>Blogipostitus</option>
+		<option value="uudiskiri"<?=$text_type == "uudiskiri" ? "selected='selected'" : ""?>>Uudiskiri</option>
 	</select>* <?=$text_type_error;?><br><br>
 	<input id="subject" name="subject" type="text" placeholder="Teema" value="<?=$subject;?>">* <?=$subject_error;?><br><br>
 	<input id="target_group" name="target_group" type="text" placeholder="Sihtgrupp" value="<?=$target_group;?>">* <?=$target_group_error;?><br><br>
