@@ -1,7 +1,7 @@
 <h3>Menüü</h3>
 <?php
 	//lehe nimi
-	$page_title="Menüü";
+	$page_title="Kasside hoiukodu";
 	
 	//faili nimi
 	$page_file_name="menu.php";
