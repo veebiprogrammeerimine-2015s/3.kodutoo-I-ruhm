@@ -31,10 +31,9 @@ if(isset($_GET["logout"])){
 	<input type="submit" value="Search">
 </form>
 <table border=1>
+<!--Ei lisa eraldi css faili, kasutan HTML width attribuuti -->
 <tr>
-    <th>N-ID</th>
-    <th>U-ID</th>
-    <th>Note</th>
+    <th width="200px">Note</th>
     <th>Completed?</th>
     <th>Del</th>
     <th>Edit</th>
@@ -57,12 +56,10 @@ for($i = 0; $i < count($note_array); $i++){
 		echo "</tr>";
 	}else{
 		echo "<tr>";
-		echo "<td>".$note_array[$i]->id."</td>";
-		echo "<td>".$note_array[$i]->user_id."</td>";
 		echo "<td>".$note_array[$i]->note."</td>";
 		echo "<td>".$note_array[$i]->done."</td>";
 		echo "<td><a href='?delete=".$note_array[$i]->id."'>X</a></td>";
-		echo "<td><a href='edit.php?edit_id=".$note_array[$i]->id."'>edit.php</a></td>";
+		echo "<td><a href='edit.php?edit_id=".$note_array[$i]->id."'>Edit</a></td>";
 		echo "</tr>";
 		
 	}   

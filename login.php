@@ -32,14 +32,16 @@ if(isset($_POST["login"])){
 	}else{
 		$password = cleanInput($_POST["password"]);
 	}
+		
 	if($password_error == "" && $email_error == ""){
 		$password_hash = hash("sha512", $password);
 		
 		loginUser($email, $password_hash);
 	}
 
-} 
+
 }
+}	
 	if(isset($_SESSION["id_from_db"])){
 		header("Location: data.php");
 	}

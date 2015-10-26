@@ -14,6 +14,7 @@ function loginUser($email, $password_hash){
 		if($stmt->fetch()){
 			echo "kasutaja id=".$id_from_db;
 			
+			
 		$_SESSION["id_from_db"] = $id_from_db;
 		$_SESSION["user_email"] = $email_from_db;
 			header("Location: data.php");
@@ -24,11 +25,11 @@ function loginUser($email, $password_hash){
 		$mysqli->close();
 }
 
-function createUser($create_email, $password_hash){
+function createUser($create_email, $password_hash, $create_age){
 	
 	$mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["server_username"], $GLOBALS["server_password"], $GLOBALS["database"]);	
-	$stmt = $mysqli->prepare("INSERT INTO mvp (email, password) VALUES (?, ?)");
-	$stmt->bind_param("ss", $create_email, $password_hash);
+	$stmt = $mysqli->prepare("INSERT INTO mvp (email, password, age) VALUES (?, ?, ?)");
+	$stmt->bind_param("ssi", $create_email, $password_hash, $create_age);
 	$stmt->execute();
 		$stmt->close();		
 		$mysqli->close();		
@@ -41,7 +42,7 @@ function createNote($note, $done){
 	$stmt->bind_param("iss", $_SESSION["id_from_db"], $note, $done);
         $message = "";
         if($stmt->execute()){
-            $message = "Note saved!!";
+            $message = "Note saved!";
         }else{
 			echo $stmt->error;
 		}

@@ -52,6 +52,7 @@ function cleanInput($data) {
     
     getAllData();
 
+
 ?>	
 <a href="?logout=1">Logout</a><br><br>
 <a href="?notes=">Notes</a>
