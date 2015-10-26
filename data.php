@@ -91,13 +91,23 @@
 	//?delete=.. on aadressireal
 	if(isset($_GET["delete"])){
 		//saadan kustutatava kirje id
-		deleteCatData($_GET["delete"]);
+		
+		if(isset($_SESSION['logged_in_user_id'])){
+		
+			deleteCatData($_GET["delete"]);
+		
+		}
 		
 	}
 	//kasutaja muudab andmeid
 	if(isset($_GET["update"])){
 		
+		if(isset($_SESSION['logged_in_user_id'])){
+			
 		updateCatData($_GET["cat_id"], $_GET["age"], $_GET["home"], $_GET["description"]);
+		
+		}
+		
 	}
 	
 	
