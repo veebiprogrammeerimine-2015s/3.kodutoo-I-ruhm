@@ -93,12 +93,12 @@
         $stmt->bind_param("ss", $search, $search);
 		$stmt->bind_result($id_from_db, $user_id_from_db, $user_username_from_db, $postitus_from_db);
         $stmt->execute();
-        // massiiv kus hoiame autosid
+        // 
         $array = array();
         
         // iga rea kohta mis on ab'is teeme midagi
         while($stmt->fetch()){
-            //suvaline muutuja, kus hoiame auto andmeid 
+            //suvaline muutuja, kus hoiame andmeid 
             //selle hetkeni kui lisame massiivi
                
             // tühi objekt kus hoiame väärtusi
@@ -155,5 +155,5 @@
         
     }
     
-    
+
 ?>

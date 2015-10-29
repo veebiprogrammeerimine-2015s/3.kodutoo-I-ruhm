@@ -1,18 +1,24 @@
 <?php  
     require_once("functions.php");
     
+
     
     // kuulan, kas kasutaja tahab kustutada
     // ?delete=... on aadressireal
     if(isset($_GET["delete"])) {
-        ///saadan kustutatava auto id
-        deletePostData($_GET["delete"]);
+        ///saadan kustutatava posti id
+		if(isset($_SESSION['logged_in_user_id'])){
+		
+		deletePostData($_GET["delete"]);
+		}
     }
     
     //Kasutaja muudab andmeid
     if(isset($_GET["update"])){
         //postituse uuendamine
-        updatePostData($_GET["user_id"], $_GET["postitus"]);
+		if(isset($_SESSION['logged_in_user_id'])){
+			updatePostData($_GET["user_id"], $_GET["postitus"]);
+		}
     }
     
     $keyword = "";
@@ -25,6 +31,8 @@
 		$post_array = getAllData();
 		
 	}
+	
+
 ?>
 
 <h1>Tabel</h1>
@@ -37,12 +45,14 @@
 <table border=1>
 <tr>
     <th>id</th>
-    <th>kasutaja id</th>
 	<th>kasutajanimi</th>
     <th>Postitus</th>
-    <th>Kustuta</th>
-    <th>Muuda</th>
-    
+</tr>
+<?php if (isset($_SESSION['logged_in_user_id']) && $post_array[$i]->user_id == $_SESSION['logged_in_user_id']){?>
+	<th>Kustuta</th>
+	<th>Muuda</th>
+<?php } ?>
+	
 </tr>
 <?php 
     
@@ -55,10 +65,8 @@
             // input mida välja ei näidata
             echo "<input type='hidden' name='user_id' value='".$post_array[$i]->id."'>";
             echo "<td>".$post_array[$i]->id."</td>";
-            echo "<td>".$post_array[$i]->user_id."</td>";
 			echo "<td>".$post_array[$i]->user_username."</td>";
             echo "<td><input name='postitus' value='".$post_array[$i]->postitus."' ></td>";
-            echo "<td><input name='update' type='submit'></td>";
             echo "<td><input name='update' type='submit'></td>";
             echo "<td><a href='table.php'>cancel</a></td>";
             echo "</form>";
@@ -67,12 +75,16 @@
             // lihtne vaade
             echo "<tr>";
             echo "<td>".$post_array[$i]->id."</td>";
-            echo "<td>".$post_array[$i]->user_id."</td>";
 			echo "<td>".$post_array[$i]->user_username."</td>";
             echo "<td>".$post_array[$i]->postitus."</td>";
-            echo "<td><a href='?delete=".$post_array[$i]->id."'>X</a></td>";
-            echo "<td><a href='?edit=".$post_array[$i]->id."'>edit</a></td>";
-            //echo "<td><a href='edit.php?edit_id=".$post_array[$i]->id."'>edit.php</a></td>";
+			
+			if (isset($_SESSION['logged_in_user_id']) && $post_array[$i]->user_id == $_SESSION['logged_in_user_id']){
+				echo "<td><a href='?delete=".$post_array[$i]->id."'>X</a></td>";
+				echo "<td><a href='?edit=".$post_array[$i]->id."'>edit</a></td>";
+			}
+			
+            
+			//echo "<td><a href='edit.php?edit_id=".$post_array[$i]->id."'>edit.php</a></td>";
 			echo "</tr>";
             
         }

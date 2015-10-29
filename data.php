@@ -4,6 +4,7 @@
     
     //kui kasutaja ei ole sisse logitud, suuna teisele lehele
     //kontrollin kas sessiooni muutuja olemas
+	
     if(!isset($_SESSION['logged_in_user_id'])){
         header("Location: login.php");
     }
