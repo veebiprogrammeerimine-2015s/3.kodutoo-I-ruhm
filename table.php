@@ -1,7 +1,6 @@
 <?php  
     require_once("functions.php");
     
-
     
     // kuulan, kas kasutaja tahab kustutada
     // ?delete=... on aadressireal
@@ -21,6 +20,12 @@
 		}
     }
     
+	
+	if(isset($_GET["logout"])){
+        session_destroy();
+        header("Location: table.php");
+    }
+	
     $keyword = "";
     if(isset($_GET["keyword"])){
         $keyword = $_GET["keyword"];
@@ -31,9 +36,10 @@
 		$post_array = getAllData();
 		
 	}
-	
+
 
 ?>
+
 
 <h1>Tabel</h1>
 
@@ -47,10 +53,11 @@
     <th>id</th>
 	<th>kasutajanimi</th>
     <th>Postitus</th>
-</tr>
-<?php if (isset($_SESSION['logged_in_user_id']) && $post_array[$i]->user_id == $_SESSION['logged_in_user_id']){?>
+
+<?php if (isset($_SESSION['logged_in_user_id']) && $post_array[$i]->user_id == $_SESSION['logged_in_user_id']){ ?>
 	<th>Kustuta</th>
 	<th>Muuda</th>
+
 <?php } ?>
 	
 </tr>
@@ -88,9 +95,6 @@
 			echo "</tr>";
             
         }
-        
-        
-        
         
     }
     

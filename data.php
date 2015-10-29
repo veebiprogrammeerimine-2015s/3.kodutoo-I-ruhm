@@ -5,6 +5,7 @@
     //kui kasutaja ei ole sisse logitud, suuna teisele lehele
     //kontrollin kas sessiooni muutuja olemas
 	
+	
     if(!isset($_SESSION['logged_in_user_id'])){
         header("Location: login.php");
     }
@@ -67,7 +68,7 @@
     
 ?>
 
-Tere, <?=$_SESSION['logged_in_user_email'];?> <a href="?logout=1">Logi v‰lja</a>
+Tere, <?=$_SESSION['logged_in_user_email'];?> <a href="?logout=1">Logi v√§lja</a>
 
 <h2>Lisa uus postitus</h2>
 <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post" >
@@ -76,3 +77,10 @@ Tere, <?=$_SESSION['logged_in_user_email'];?> <a href="?logout=1">Logi v‰lja</a>
   	<input type="submit" name="add_postitus" value="Lisa">
     <p style="color:green;"><?=$m;?></p>
   </form>
+ 
+<?php
+if($page_file_name = "data.php") {
+		echo '<a href="table.php">N√§ita k√µiki postitusi</a>';
+
+	}
+?>
