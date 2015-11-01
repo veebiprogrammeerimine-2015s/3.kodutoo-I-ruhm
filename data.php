@@ -30,6 +30,27 @@
 		updateNote($_GET["username"], $_GET["title"], $_GET["text"]);
 	}
 	
+	 // muutujad väärtuste jaoks
+	$title = "";
+	$text = "";
+	$title_error = "";
+	$text_error = "";
+	
+	if(isset($_POST["title"])){
+				
+		if ( empty($_POST["title"]) ) {
+			$title_error = "See väli on kohustuslik!";
+		}else{
+			$title = cleanInput($_POST["title"]);
+		}
+		
+		if ( empty($_POST["text"]) ) {
+			$text_error = "See väli on kohustuslik!";
+		}else{
+			$text = cleanInput($_POST["text"]);
+		}
+	}
+	
  	$note_array = getAllData();
 ?>
 
@@ -37,11 +58,11 @@ Tere, <?=$_SESSION['logged_in_user_username'];?> <a href="?logout=1">Logi välja
 Sellel lehel saad hoida enda memosi/kirjutisi.<br>
 NB! Tekst saab olla kuni 255 tähte pikk!<br><br>
 <html>
-<form method='get'>
-<textarea cols="50" rows="1" id="title" name="title" type="title" placeholder="Pealkiri..." maxlength="255">
-</textarea><br><br>
-<textarea cols="50" rows="5" id="text" name="text" type="text" placeholder="Alusta kirjutamist..." maxlength="255">
-</textarea><br>
+<form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method='post'>
+<textarea cols="50" rows="1" id="title" name="title" type="title" placeholder="Title..." value="<?php echo $title; ?>" maxlength="255">
+</textarea> <?php echo $title_error; ?> <br><br>
+<textarea cols="50" rows="5" id="text" name="text" type="text" placeholder="Start writing..." value="<?php echo $text; ?>" maxlength="255">
+</textarea> <?php echo $text_error; ?> <br>
 <input id="addnew" name="addnew" type="submit" value="Save"><br>
 </form>
 

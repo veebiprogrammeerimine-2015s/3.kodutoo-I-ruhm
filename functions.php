@@ -109,7 +109,7 @@
 		
         $mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["server_username"], $GLOBALS["server_password"], $GLOBALS["database"]);
 
-        $stmt = $mysqli->prepare("SELECT id, username, title, text, time FROM notes WHERE deleted IS NULL AND (title LIKE ? OR text LIKE ?)");
+        $stmt = $mysqli->prepare("SELECT id, username, title, text, time FROM notes WHERE deleted IS NULL AND title IS NOT NULL AND (title LIKE ? OR text LIKE ?)");
 		$stmt->bind_param("ss", $search, $search);
         $stmt->bind_result($id_from_db, $user_id_from_db, $title_from_db, $text_from_db, $time_from_db);
         $stmt->execute();
