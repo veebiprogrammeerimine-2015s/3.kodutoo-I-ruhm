@@ -22,8 +22,9 @@
 		deleteNote($_GET["delete"]);
 	}
 	
-	if(isset($_GET["addnew"])){
-		createNote($_SESSION["logged_in_user_username"], $_GET["title"], $_GET["text"]);
+	if(isset($_POST["addnew"])){
+		echo "siin";
+		createNote($_SESSION["logged_in_user_username"], $_POST["title"], $_POST["text"]);
 	}
  
 	if(isset($_GET["update"])){
