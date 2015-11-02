@@ -37,7 +37,7 @@ $email = "";
 				if(empty($_POST["password"])){
 					$pw_error = "Insert password";
 				}else{
-				$password = cleanInput($_POST["password"]);
+					$password = cleanInput($_POST["password"]);
 				}
 			}
 			if($pw_error == "" && $email_error == ""){

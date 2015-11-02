@@ -9,7 +9,7 @@
 		$mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["server_username"], $GLOBALS["server_password"], $GLOBALS["database"]);
 		$stmt=$mysqli->prepare("INSERT INTO user(email, password,first_name,last_name,address) VALUES (?,?,?,?,?)");
 		$stmt->bind_param("sssss", $email, $hash, $First_name, $Last_name, $Address);
-		
+		$stmt->error;
 		if($stmt->execute()){
 			loginUser($email, $hash);
 		} else {
@@ -51,18 +51,18 @@
     
 	
 	function create_qweet($qweet){
-		echo $qweet;
 		$mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["server_username"], $GLOBALS["server_password"], $GLOBALS["database"]);
         $stmt = $mysqli->prepare("INSERT INTO qweet (user_id, qwert) VALUES (?,?)");
 
         $stmt->bind_param("ss",$_SESSION['logged_in_user_id'], $qweet);
-		echo $qweet;
+
 		$message = "k";
 		if($stmt->execute()){
 			$message='Edukalt andmebaasi sisestatud!';
-			
-			
+		} else {
+			$message= $mysqli->error;
 		}
+		$stmt->error;
 		$stmt->close();
         
         $mysqli->close();
