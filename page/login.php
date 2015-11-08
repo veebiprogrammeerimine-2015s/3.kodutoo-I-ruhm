@@ -12,11 +12,15 @@
 	$password_error = "";
 	$create_email_error = "";
 	$create_password_error = "";
+	$create_location_error = "";
+	$create_vehicle_error = "";
   // muutujad väärtuste jaoks
 	$email = "";
 	$password = "";
 	$create_email = "";
 	$create_password = "";
+	$create_vehicle = "";
+	$create_location = "";
 	if($_SERVER["REQUEST_METHOD"] == "POST") {
     // *********************
     // **** LOGI SISSE *****
@@ -61,6 +65,18 @@
 					$create_password = cleanInput($_POST["create_password"]);
 				}
 			}
+			if ( empty($_POST["create_vehicle"]) ) {
+				$create_vehicle_error = "See väli on kohustuslik";
+			}else{
+				$create_vehicle = cleanInput($_POST["create_vehicle"]);
+			}
+			
+			if ( empty($_POST["create_location"]) ) {
+				$create_location_error = "See väli on kohustuslik";
+			}else{
+				$create_location = cleanInput($_POST["create_location"]);
+			}
+			
 			if(	$create_email_error == "" && $create_password_error == ""){
 				echo hash("sha512", $create_password);
                 echo "Võib kasutajat luua! Kasutajanimi on ".$create_email." ja parool on ".$create_password;
@@ -69,7 +85,7 @@
                 $hash = hash("sha512", $create_password);
                 
                 //functions.php's funktsioon
-                createUser($create_email, $hash);
+                createUser($create_email, $hash, $create_vehicle, $create_location);
                 
                 
             }
@@ -102,6 +118,9 @@
   <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post" >
   	<input name="create_email" type="email" placeholder="E-post" value="<?php echo $create_email; ?>"> <?php echo $create_email_error; ?><br><br>
   	<input name="create_password" type="password" placeholder="Parool"> <?php echo $create_password_error; ?> <br><br>
+	<input name="create_vehicle" type="text" placeholder="Sõiduk" value="<?php echo $create_vehicle; ?>"> <?php echo $create_vehicle_error; ?><br><br>
+	<input name="create_location" type="text" placeholder="Asukoht" value="<?php echo $create_location; ?>"> <?php echo $create_location_error; ?><br><br>
+	
   	<input type="submit" name="create" value="Create user">
   </form>
 <body>

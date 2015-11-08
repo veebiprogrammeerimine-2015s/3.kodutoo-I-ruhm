@@ -1,6 +1,10 @@
 <?php
 	require_once("functions.php");
 	
+	//kui kasutaja on sisse logitud siis suuna kasutaja edasi
+	//kontrollin kas sessiooni muutuja on olemas
+	
+	
 	if(isset($_GET["delete"])) {
 		deleteCarData($_GET["delete"]);
 	}
@@ -65,9 +69,21 @@
             echo "<td>".$car_array[$i]->mileage."</td>";
 			echo "<td>".$car_array[$i]->cost."</td>";
 			echo "<td>".$car_array[$i]->description."</td>";
+			
+			// LISADA if, et näeks vaid enda kirjete puhul muutmise funktsiooni
+			
+			//kui kasutaja on sisse logitud siis suuna kasutaja edasi
+	
+	//kontrollin kas sessiooni muutuja on olemas
+			if(!isset($_SESSION['logged_in_user_id'])){
+		
+		
+			
             echo "<td><a href='?delete=".$car_array[$i]->id."'>X</a></td>";
 			echo "<td><a href='?edit=".$car_array[$i]->id."'>edit</a></td>";
-            echo "<td><a href='edit.php?edit_id=".$car_array[$i]->id."'>edit.php</a></td>";
+			}
+			
+            //echo "<td><a href='edit.php?edit_id=".$car_array[$i]->id."'>edit.php</a></td>";
             echo "</tr>";
 		}
 	}

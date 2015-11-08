@@ -35,8 +35,9 @@
     function createUser($create_email, $hash){
         
         $mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["server_username"], $GLOBALS["server_password"], $GLOBALS["database"]);
-        $stmt = $mysqli->prepare("INSERT INTO user_sample (email, password) VALUES (?,?)");
-        $stmt->bind_param("ss", $create_email, $hash);
+        $stmt = $mysqli->prepare("INSERT INTO user_sample (email, password, uservehicle, userlocation) VALUES (?,?,?,?)");
+		echo $mysqli->error;
+        $stmt->bind_param("ssss", $create_email, $hash, $create_vehicle, $create_location);
         $stmt->execute();
         $stmt->close();
         
@@ -51,7 +52,7 @@
         
         $stmt = $mysqli->prepare("INSERT INTO car_costs (user_id, carmodel, mileage, cost, description) VALUES (?,?,?,?,?)");
 		echo $mysqli->error;
-        $stmt->bind_param("ssiis", $_SESSION['logged_in_user_id'], $carmodel, $mileage, $cost, $description);
+        $stmt->bind_param("isids", $_SESSION['logged_in_user_id'], $carmodel, $mileage, $cost, $description);
 	$message = "";
 	if($stmt->execute()){
 	//worked
