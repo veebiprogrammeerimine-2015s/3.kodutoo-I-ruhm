@@ -1,5 +1,16 @@
+<html>
+		<head>
+			<?php $page_title = "Data";
+			$page_file_name = "data.php";
+			require_once("../header.php");
+			?>
+			
+			<Title><?php echo $page_title?></title>
+		</head>
+		<?$_SESSION['logged_in_user_email'])?> <a href="?logout=1">Logi välja</a>
 <?php
 require_once("functions.php");
+
 	
 	//kui kasutaja on sisse logitud siis suuna kasutaja edasi
 	//kontrollin kas sessiooni muutuja on olemas
@@ -55,7 +66,7 @@ require_once("functions.php");
 	
 	?>
 	
-	Tere, <?$_SESSION['logged_in_user_email'])?> <a href="?logout=1">Logi välja</a>
+	<?$_SESSION['logged_in_user_email'])?> <a href="?logout=1">Logi välja</a>
 	
 	<h2>Lisa uus</h2>
 	

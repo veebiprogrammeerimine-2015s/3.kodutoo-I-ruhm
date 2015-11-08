@@ -1,3 +1,11 @@
+<html>
+		<head>
+			<?php $page_title = "Login page";
+			$page_file_name = "home.php";
+			?>
+			
+			<Title><?php echo $page_title?></title>
+		</head>
 <?php
     require_once("functions.php");
 	

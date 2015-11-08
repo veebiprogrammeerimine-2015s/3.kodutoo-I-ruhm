@@ -5,7 +5,7 @@
 			<body>
 			<?php
 				//laeme menu.php faili sisu
-				require_once("menu.php")
+				require_once("../menu.php")
 				
 			?>
 			</body>
