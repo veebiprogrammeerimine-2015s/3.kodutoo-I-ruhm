@@ -11,6 +11,12 @@
 	require_once("../functions.php");
 	
 	
+	if(isset($_GET["logout"])){
+		//kustutame sessiooni muutujad
+		session_destroy();
+		header("Location: login.php");
+	}
+	
 	//kui kasutaja on sisse logitud siis suuna kasutaja edasi
 	//kontrollin kas sessiooni muutuja on olemas
 	

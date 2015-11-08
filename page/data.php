@@ -66,7 +66,6 @@ require_once("functions.php");
 	
 	?>
 	
-	<?$_SESSION['logged_in_user_email'])?> <a href="?logout=1">Logi välja</a>
 	
 	<h2>Lisa uus</h2>
 	
