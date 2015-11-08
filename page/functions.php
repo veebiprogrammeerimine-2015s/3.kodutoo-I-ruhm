@@ -32,7 +32,7 @@
     }
     
     
-    function createUser($create_email, $hash){
+    function createUser($create_email, $hash, $create_vehicle, $create_location){
         
         $mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["server_username"], $GLOBALS["server_password"], $GLOBALS["database"]);
         $stmt = $mysqli->prepare("INSERT INTO user_sample (email, password, uservehicle, userlocation) VALUES (?,?,?,?)");
