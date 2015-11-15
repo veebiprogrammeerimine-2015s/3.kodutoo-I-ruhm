@@ -57,12 +57,11 @@
 			}
 
 			if($password_error == "" && $username_error == ""){
-				echo "Võib sisse logida! Kasutajanimi on ".$username." ja parool on ".$password."";
+				echo "Vale kasutajanimi või parool! Proovi uuesti!";
 			
                 $hash = hash("sha512", $password);
                 
                 loginUser($username, $hash);
-            
             }
 
 		}
@@ -152,10 +151,10 @@
 
   <h2>Create user</h2>
   <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post" >
-  	<input name="create_username" type="username" placeholder="Username" value="<?php echo $create_username; ?>"> <?php $create_username_error; ?><br><br>
-	<input name="create_firstname" type="firstname" placeholder="First name" value="<?php echo $create_firstname; ?>"> <?php $create_firstname_error; ?><br><br>
-	<input name="create_lastname" type="lastname" placeholder="Last name" value="<?php echo $create_lastname; ?>"> <?php $create_lastname_error; ?><br><br>
-	<input name="create_phone" type="phone" placeholder="Mobile" value="<?php echo $create_phone; ?>"> <?php $create_phone_error; ?><br><br>
+  	<input name="create_username" type="username" placeholder="Username" value="<?php echo $create_username; ?>"> <?php echo $create_username_error; ?><br><br>
+	<input name="create_firstname" type="firstname" placeholder="First name" value="<?php echo $create_firstname; ?>"> <?php echo $create_firstname_error; ?><br><br>
+	<input name="create_lastname" type="lastname" placeholder="Last name" value="<?php echo $create_lastname; ?>"> <?php echo $create_lastname_error; ?><br><br>
+	<input name="create_phone" type="phone" placeholder="Mobile" value="<?php echo $create_phone; ?>"> <?php echo $create_phone_error; ?><br><br>
   	<input name="create_email" type="email" placeholder="E-mail" value="<?php echo $create_email; ?>"> <?php echo $create_email_error; ?><br><br>
   	<input name="create_password" type="password" placeholder="Password"> <?php echo $create_password_error; ?> <br><br>
   	<input type="submit" name="create" value="Create user">

@@ -24,7 +24,7 @@
 			header("Location: data.php");
             
         }else{
-            echo "Wrong credentials!";
+            echo "";
         }
         $stmt->close();
         
@@ -52,7 +52,7 @@
         $mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["server_username"], $GLOBALS["server_password"], $GLOBALS["database"]);
         $stmt = $mysqli->prepare("INSERT INTO notes (username, title, text, time) VALUES (?,?,?,CURRENT_TIMESTAMP())");
 
-        $stmt->bind_param("sss", $username, $title, $text);
+        $stmt->bind_param("sss", $_SESSION['logged_in_user_username'], $title, $text);
         
         $message = "";
         
@@ -71,8 +71,8 @@
         
         $mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["server_username"], $GLOBALS["server_password"], $GLOBALS["database"]);
         
-        $stmt = $mysqli->prepare("UPDATE notes SET deleted='1' WHERE id=?");
-        $stmt->bind_param("i", $id);
+        $stmt = $mysqli->prepare("UPDATE notes SET deleted='1' WHERE id=? AND username = ?");
+        $stmt->bind_param("is", $id, $_SESSION['logged_in_user_username']);
         $stmt->execute();
         
         header("Location: data.php");
@@ -82,12 +82,12 @@
         
     }
 	
-	    function updateNote($username, $title, $text){
+	    function updateNote($id, $username, $title, $text){
         
         $mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["server_username"], $GLOBALS["server_password"], $GLOBALS["database"]);
         
-        $stmt = $mysqli->prepare("UPDATE notes SET title=?, text=? WHERE id=?");
-        $stmt->bind_param("ssi", $title, $text, $username);
+        $stmt = $mysqli->prepare("UPDATE notes SET title=?, text=? WHERE id=? AND username = ?");
+        $stmt->bind_param("ssis", $title, $text, $id, $_SESSION['logged_in_user_username']);
         $stmt->execute();
         
         header("Location: data.php");
