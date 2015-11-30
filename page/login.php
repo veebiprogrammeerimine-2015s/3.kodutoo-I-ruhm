@@ -7,7 +7,7 @@
 			<Title><?php echo $page_title?></title>
 		</head>
 <?php
-    require_once("functions.php");
+    require_once("../functions.php");
 	
 	//kui kasutaja on sisse logitud siis suuna kasutaja edasi
 	//kontrollin kas sessiooni muutuja on olemas

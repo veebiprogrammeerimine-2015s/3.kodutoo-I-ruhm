@@ -1,8 +1,12 @@
 <?php
-	$search = 0;
 
-	require_once("../../../configglobal.php");
-	$database = "if15_karl";
+	$search = 0;
+	//loome AB ühenduse
+    require_once("../../../configglobal.php");
+    $database = "if15_karl";
+    //paneme Sessiooni tööle ja saame kasutada SESSION[]
+	session_start();
+	
 	
 	function getAllData($keyword=""){
 		
@@ -15,7 +19,8 @@
 		$mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["server_username"], $GLOBALS["server_password"], $GLOBALS["database"]);
         // deleted IS NULL - ei ole kustutatud
         
-		$stmt = $mysqli->prepare("SELECT id, user_id, carmodel, mileage, cost, description FROM car_costs WHERE deleted IS NULL AND (mileage LIKE ? OR carmodel LIKE ? OR description like ? OR cost LIKE ?)");
+		$stmt = $mysqli->prepare("SELECT id, user_id, carmodel, mileage, cost, description FROM car_costs 
+		WHERE deleted IS NULL AND user_id={$_SESSION['logged_in_user_id']} AND (mileage LIKE ? OR carmodel LIKE ? OR description like ? OR cost LIKE ?)");
         
 		echo $mysqli->error;
 		
@@ -86,4 +91,67 @@
         $mysqli->close();
         
     }
+	
+	function logInUser($email, $hash){
+        
+        // GLOBALS saab kätte kõik muutujad mis kasutusel
+        $mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["server_username"], $GLOBALS["server_password"], $GLOBALS["database"]);
+        
+        $stmt = $mysqli->prepare("SELECT id, email FROM user_sample WHERE email=? AND password=?");
+        $stmt->bind_param("ss", $email, $hash);
+        $stmt->bind_result($id_from_db, $email_from_db);
+        $stmt->execute();
+        if($stmt->fetch()){
+            echo "Kasutaja logis sisse id=".$id_from_db;
+			
+			$_SESSION['logged_in_user_id'] = $id_from_db;
+			$_SESSION['logged_in_user_email'] = $email;
+			//suuname kasutaja teisele lehele
+			header("Location: data.php");
+			
+        }else{
+            echo "Wrong credentials!";
+        }
+        $stmt->close();
+        
+        $mysqli->close();
+        
+    }
+    
+    
+    function createUser($create_email, $hash, $create_vehicle, $create_location){
+        
+        $mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["server_username"], $GLOBALS["server_password"], $GLOBALS["database"]);
+        $stmt = $mysqli->prepare("INSERT INTO user_sample (email, password, uservehicle, userlocation) VALUES (?,?,?,?)");
+		echo $mysqli->error;
+        $stmt->bind_param("ssss", $create_email, $hash, $create_vehicle, $create_location);
+        $stmt->execute();
+        $stmt->close();
+        
+        $mysqli->close();
+        
+    }
+	
+	function createCarPlate ($carmodel, $mileage, $cost, $description){
+	
+	echo $carmodel, $mileage, $cost, $description;
+	
+	$mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["server_username"], $GLOBALS["server_password"], $GLOBALS["database"]);
+        
+        $stmt = $mysqli->prepare("INSERT INTO car_costs (user_id, carmodel, mileage, cost, description) VALUES (?,?,?,?,?)");
+		echo $mysqli->error;
+        $stmt->bind_param("isids", $_SESSION['logged_in_user_id'], $carmodel, $mileage, $cost, $description);
+	$message = "";
+	if($stmt->execute()){
+	//worked
+	$message = "edukalt andmebaasi salvestatud";
+	}
+        $stmt->close();
+        $mysqli->close();
+		return $message;
+	
+	}
+	
+	
+	
 ?>

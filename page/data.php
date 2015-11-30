@@ -9,7 +9,7 @@
 		</head>
 		<?$_SESSION['logged_in_user_email'])?> <a href="?logout=1">Logi välja</a>
 <?php
-require_once("functions.php");
+require_once("../functions.php");
 
 	
 	//kui kasutaja on sisse logitud siis suuna kasutaja edasi
@@ -24,31 +24,43 @@ require_once("functions.php");
 		header("Location: login.php");
 	}
 	$carmodel = $mileage = $cost = $description = $m = "";
-	$car_plate_error = $color_error = "";
+	$car_plate_error = $color_error = $car_cost_error = $car_description_error = "";
 	$user_id = $_SESSION['logged_in_user_id'];
 	
 	if($_SERVER["REQUEST_METHOD"] == "POST") {
 		if(isset($_POST["add_car_cost"])){
 			
 			if (empty($_POST["carmodel"])){
-				$car_plate_error = "Auto nr märk on kohustuslik!";
+				$car_plate_error = "Auto mudel on kohustuslik!";
 			}else{
 				$carmodel = cleanInput($_POST["carmodel"]);
 			}
 		
 			if (empty($_POST["mileage"])){
-				$color_error = "Värvus on kohustuslik!";
+				$color_error = "Läbisõit on kohustuslik!";
 			}else{
 				$mileage = cleanInput($_POST["mileage"]);
 			}
+			if (empty($_POST["cost"])){
+				$car_cost_error = "Maksumus on kohustuslik!";
+			}else{
+				$cost = cleanInput($_POST["cost"]);
+			}
 			
-			 if($car_plate_error == "" && $color_error == ""){
+			if (empty($_POST["description"])){
+				$car_description_error = "Kirjeldus on kohustuslik!";
+			}else{
+				$description = cleanInput($_POST["description"]);
+			}
+			
+			 if($car_plate_error == "" && $color_error == "" && $car_cost_error == "" && $car_description_error == ""){
                 //createCarPlate($_SESSION['logged_in_user_id'], $carmodel, $mileage);
 				$m = createCarPlate($carmodel, $mileage, $cost, $description);
 		   if($m !=""){
 			$carmodel = "";
 			$mileage = "";
-		   
+			$cost = "";
+			$description = "";
 		   }
 		}
 	}

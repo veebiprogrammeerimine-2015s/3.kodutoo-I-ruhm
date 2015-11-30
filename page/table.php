@@ -85,6 +85,7 @@
             echo "<td>".$car_array[$i]->mileage."</td>";
 			echo "<td>".$car_array[$i]->cost."</td>";
 			echo "<td>".$car_array[$i]->description."</td>";
+			echo "<td><a href='?edit=".$car_array[$i]->id."'>edit</a></td>";
 			
 			// LISADA if, et näeks vaid enda kirjete puhul muutmise funktsiooni
 			
