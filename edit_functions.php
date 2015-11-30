@@ -6,7 +6,7 @@
 	function getSingleCarData($id){
         
         $mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["server_username"], $GLOBALS["server_password"], $GLOBALS["database"]);
-        $stmt = $mysqli->prepare("SELECT carmodel, mileage, cost, description FROM car_costs WHERE id=? AND deleted IS NULL");
+        $stmt = $mysqli->prepare("SELECT carmodel, mileage, cost, description FROM car_costs WHERE id=? AND deleted IS NULL AND user_id={$_SESSION['logged_in_user_id']}");
         $stmt->bind_param("i", $id);
         $stmt->bind_result($carmodel, $mileage, $cost, $description);
         $stmt->execute();
@@ -39,7 +39,7 @@
         
         $mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["server_username"], $GLOBALS["server_password"], $GLOBALS["database"]);
         
-        $stmt = $mysqli->prepare("UPDATE car_costs SET carmodel=?, mileage=?, cost=?, description=? WHERE id=?");
+        $stmt = $mysqli->prepare("UPDATE car_costs SET carmodel=?, mileage=?, cost=?, description=? WHERE id=? AND user_id={$_SESSION['logged_in_user_id']}");
         $stmt->bind_param("sifsi", $carmodel, $milage, $cost, $description, $car_id);
         $stmt->execute();
         
