@@ -123,7 +123,7 @@ class userEdit {
 
 		$response = new StdClass();
 
-		$stmt = $this->connection->prepare("UPDATE users SET first_name=?, last_name=?, address=? WHERE ID=?" );
+		$stmt = $this->connection->prepare("UPDATE users SET first_name=?, last_name=?, address=? WHERE id=?" );
 		#echo($this->connection->error);
 		$stmt->bind_param("sssi", $userfirstname, $userlastname, $useraddress, $_SESSION['logged_in_user_id']);
 		//$stmt->execute();
@@ -165,7 +165,7 @@ class getAllUsers{
 			//otsime
 			$search = "%".$keyword."%";
 		}
-		$stmt = $this->connection->prepare("SELECT ID, first_name, last_name, address, username, creation_date, privileges from users WHERE deleted IS NULL AND (username LIKE ?)");
+		$stmt = $this->connection->prepare("SELECT id, first_name, last_name, address, username, creation_date, privileges from users WHERE deleted IS NULL AND (username LIKE ?)");
 		$stmt->bind_param("s", $search);
 		$stmt->bind_result($id_from_db, $first_name_from_db, $last_name_from_db, $address_from_db, $username_from_db, $creation_date_from_db, $privileges_from_db);
 		$stmt->execute();
@@ -199,7 +199,7 @@ class deleteUsers{
 		$stmt->bind_param("i", $user_id);
 		$stmt->execute();
 
-		
+
 
 		$stmt->close();
 	}
@@ -217,7 +217,7 @@ class updateUsers{
 		$stmt->execute();
 
 		// tühjendame aadressirea
-
+    header("Location: /table.php");
 
 		$stmt->close();
 
