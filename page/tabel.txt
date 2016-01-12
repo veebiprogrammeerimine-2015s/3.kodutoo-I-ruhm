@@ -15,5 +15,5 @@ CREATE TABLE qweet (
   user_id INT NOT NULL,
   qwert VARCHAR(100),
   deleted DATE NULL,
-  FOREIGN KEY (user_id) REFERENCES user_sample(id)
+  FOREIGN KEY (user_id) REFERENCES user(id)
 );

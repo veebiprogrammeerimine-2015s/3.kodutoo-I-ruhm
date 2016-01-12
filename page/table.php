@@ -64,14 +64,16 @@ if(isset($_SESSION['logged_in_user_id'])&& $_SESSION['logged_in_user_id']==$tex_
 		echo "<td><input name='qwert' value='".$tex_array[$i]->qwert."'></td>";
 		echo "<td><input name='update' type='submit'></td>";
 		echo "<td><a href='table.php'>cancel</a></td>";
+		echo "</form>";
     }
 	else{
+		echo "<form action='table.php' method='get'>";
 		echo "<tr> <td>".$tex_array[$i]->id."</td> ";
 		echo "<td>".$tex_array[$i]->user_id."</td> ";
 		echo "<td>".$tex_array[$i]->qwert."</td>"; 
-		echo "<td><a href='?delete=".$tex_array[$i]->id."&?user=".$_SESSION['logged_in_user_id']."'>X</a></td>";
+		echo "<td><a href='?delete=".$tex_array[$i]->id."'>X</a></td>";
 		echo "<td><a href='?edit=".$tex_array[$i]->id."'>Edit</a></td></tr>";
-	
+		echo "</form>";
 	}
 } else {
 	echo "<tr> <td>".$tex_array[$i]->id."</td> ";

@@ -7,7 +7,7 @@
     
     function createUser($email, $hash, $First_name, $Last_name, $Address){
 		$mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["server_username"], $GLOBALS["server_password"], $GLOBALS["database"]);
-		$stmt=$mysqli->prepare("INSERT INTO user(email, password,first_name,last_name,address) VALUES (?,?,?,?,?)");
+		$stmt=$mysqli->prepare("INSERT INTO user_sample (email, password,first_name,last_name,address) VALUES (?,?,?,?,?)");
 		$stmt->bind_param("sssss", $email, $hash, $First_name, $Last_name, $Address);
 		$stmt->error;
 		if($stmt->execute()){
@@ -28,7 +28,7 @@
         // GLOBALS saab kätte kõik muutujad mis kasutusel
         $mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["server_username"], $GLOBALS["server_password"], $GLOBALS["database"]);
         
-        $stmt = $mysqli->prepare("SELECT id, email FROM user WHERE email=? AND password=?");
+        $stmt = $mysqli->prepare("SELECT id, email FROM user_sample WHERE email=? AND password=?");
         $stmt->bind_param("ss", $email, $hash);
         $stmt->bind_result($id_from_db, $email_from_db);
         $stmt->execute();
@@ -108,11 +108,14 @@
     
     $mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["server_username"], $GLOBALS["server_password"], $GLOBALS["database"]);
     
-    // uuendan välja deleted, lisan praeguse date'i
-    $stmt = $mysqli->prepare("UPDATE qweet SET deleted=NOW() WHERE id=? AND user_id=?");
-    $stmt->bind_param("ii", $qwert_id, $user_id);
-    $stmt->execute();
-    
+    $stmt = $mysqli->prepare("UPDATE qweet SET deleted=1 WHERE id=?");
+    $stmt->bind_param("i", $qwert_id);
+   if($stmt->execute()){
+			$message='Edukalt andmebaasi sisestatud!';
+		} else {
+			$message= $mysqli->error;
+		}
+		$stmt->error;
     // tühjendame aadressirea
     header("Location: table.php");
     

@@ -18,8 +18,6 @@
   }
 $email_error = "";
 $pw_error = "";
-$gender_error = "";
-$email = "";
 // Muutujad väärtustega
 
 
@@ -69,7 +67,7 @@ $mysqli->close();
 			<form action="<?php echo $_SERVER["PHP_SELF"]?> " method="post">
 			
 				<p>Email/Username</p>
-				<input name="email" type="email" placeholder="@example.com" value="<?php echo $email;?>" > <?php echo $email_error;?> <br>
+				<input name="email" type="email" placeholder="@example.com" value="" > <?php echo $email_error;?> <br>
 				<p>Password</p>
 				<input name="password" type="password" placeholder="Password" > <?php echo $pw_error;?>
 				<br><br>
