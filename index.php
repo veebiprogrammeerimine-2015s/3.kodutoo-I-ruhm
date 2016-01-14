@@ -1,84 +1,121 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: JaanMartin
+ * Date: 12.01.2016
+ * Time: 10:11
+ */
 require_once(__DIR__.'/functions.php');
-require_once(__DIR__.'/user.class.php');
-if(isset($_SESSION['logged_in_user_id'])){
-  	header("Location: /table.php");
-    die();
+require_once(__DIR__.'/user_manage_class.php');
 
+$user_manage = new user_manage($connection);
+$username_error = $pw_error = $usernamecreate_error = $passwordcreate_error ="";
+if($_SERVER['REQUEST_METHOD'] == "POST"){
+    if(empty($_POST["loginusername"])){
+        $username_error = "Username is required";
+    }else{
+        //echo "kasutajanimi db";
+        $username_to_db = clean_input($_POST["loginusername"]);
+    }
+    if(empty($_POST["loginpassword"])){
+
+        $pw_error = "Password is required";
+    }else{
+        //echo "pass db";
+        $loginpassword = clean_input($_POST['loginpassword']);
+        $password_to_db = hash(sha512, $loginpassword);
+    }
+    if(empty($_POST["createusername"])){
+        $usernamecreate_error = "Username is required";
+    }else{
+        $createusername = clean_input($_POST["createusername"]);
+      //  echo"create kasutajanimi korras";
+    }
+    if(empty($_POST["createpassword"])){
+        $passwordcreate_error = "Password is required";
+    }else{
+        $createpassword = clean_input($_POST['createpassword']);
+        $createpassword=hash(sha512, $createpassword);
+       // echo"create password korras";
+    }
+    if($username_error== "" and $pw_error ==""){
+        //echo"läheme db";
+        $response = $user_manage->loginUser($username_to_db, $password_to_db);
+    }
+    if($passwordcreate_error == "" and $usernamecreate_error ==""){
+        $response = $user_manage->createUser($createusername, $createpassword);
+       // echo"create läheb baasi";
+    }
 }
 
 
-$userLogin = new userLogin($connection);
-$pw_error = $username_error = "";
-	if ($_SERVER["REQUEST_METHOD"] == "POST") {
-		if (empty($_POST["username"])) {
-		$username_error = "Name is required";
-		} else {
-		$username = test_input($_POST["username"]);
-		}
-	}
-	if ($_SERVER["REQUEST_METHOD"] == "POST") {
-		if (empty($_POST["password"])) {
-		$pw_error = "Password is required";
-		} else {
-		$password = test_input($_POST["password"]);
-		$password = hash(sha512, $password);
-		}
 
-		if ($pw_error == "" and $username_error == ""){
-			$response = $userLogin->loginUser($username, $password);
-
-		}
-	}
-
-  $_SESSION['logged_in_user_username'] = $response->success->user->username;
-	$_SESSION['logged_in_user_id'] = $response->success->user->id;
+$_SESSION['logged_in_uid'] = $response->success->user->id;
+$_SESSION['logged_in_username'] = $response->success->user->username;
+if(isset($_SESSION['logged_in_uid'])){
+    header("Location: table.php");
+}
 ?>
 <!DOCTYPE html>
-<html lang="et">
+<html lang="et"">
+<head>
 
+    <meta charset="utf-8">
+    <title>Smth Smth</title>
+    <link rel="stylesheet" type="text/css" href="page.css" />
+</head>
 <body>
 
-  <a href="create.user.php">Create a User</a>
 
 
-  <div id="login" class="container-fluid">
-  	<div class="row">
+    <div class="main">
+        <div class="block"">
+            <form action="<?php echo $_SERVER["PHP_SELF"]?> " method="post">
 
-  		<div class="col-sm-3">
-  		<p style="font-size:30px";>Log In</p>
-  			<form action="<?php echo $_SERVER["PHP_SELF"]?> " method="post">
+            <h1>Login</h1>
+                <p>
+                <label for="loginusername">Username</label>
+                <input name="loginusername" type="text" placeholder="Username"><?php echo"$username_error";?>
+                </p>
+                <p>
 
+                <label for="loginpassword">Password</label>
+                <input name="loginpassword" type="text" placeholder="Password"><?php echo"$pw_error";?>
+                </p>
+                <p>
+            <button name="login"type="submit">Login</button>
+                </p>
+            </form>
+        </div>
 
-  				<?php if(isset($response->success)):	 ?>
+        <div class="block"">
 
-  				<p><?=$response->success->message;?></p>
+            <form action="<?php echo $_SERVER["PHP_SELF"]?> " method="post">
+            <h1>Create User</h1>
+             <h2>
+                <?php if(isset($response->success)):	 ?>
 
-  				<?php	elseif(isset($response->error)): ?>
+                    <p><?=$response->success->message;?></p>
 
-  				<p><?=$response->error->message;?></p>
+                <?php	elseif(isset($response->error)): ?>
 
-  				<?php	endif; ?>
-  			<div class="form-group">
-  				<p>Email/Username</p>
-  				<input name="username" type="text" placeholder="example" value="<?php echo $username;?>" class="form-control"> <?php echo $username_error;?> <br>
-  			</div>
-  			<p>Password</p>
-  			<div class="row">
-  				<div class="col-lg-8">
+                    <p><?=$response->error->message;?></p>
 
-  					<div class="form-group">
-  						<input name="password" type="password" placeholder="Password" class="form-control"> <?php echo $pw_error;?>
-  						<br><br>
-  					</div>
-  				</div>
-  				<div class="col-lg-4">
-  					<button type="submit" class="btn btn-info btn-block">Login</button>
-  				</div>
-  			</div>
-  			</form>
-  		</div>
-  	</div>
-  </div>
+                <?php	endif; ?>
+             </h2>
+            <p>
+                <label for="createusername">Username</label>
+            <input name="createusername" type="text" placeholder="Username">
+            </p>
+            <p>
+                <label for="createpassword">Password</label>
+            <input name="createpassword" type="text" placeholder="Password">
+            </p>
+                <p>
+            <button name="create" type="submit">Create User</button>
+                </p>
+            </form>
+        </div>
+    </div>
 </body>
 </html>
