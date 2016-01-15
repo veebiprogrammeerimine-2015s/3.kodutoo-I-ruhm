@@ -12,7 +12,7 @@
         echo $_GET["edit_id"];
         
         //küsin andmed
-        $car = getSingleHomeworkData($_GET["edit_id"]);
+        $homework = getSingleHomeworkData($_GET["edit_id"]);
         var_dump($homework);
         
     }else{

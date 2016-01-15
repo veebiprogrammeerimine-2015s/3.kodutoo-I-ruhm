@@ -1,6 +1,6 @@
 <?php
 
-    require_once("../../config_global.php");
+    require_once("../../config.php");
     $database = "if15_brenbra_1";
 	session_start();
     function getAllData($keyword=""){
