@@ -24,8 +24,44 @@
     
     
     // muutujad väärtustega
-    $homework = $date = "";
+    $homework = $date = $m = "";
     $homework_error = $date_error = "";
+    //echo $_SESSION['logged_in_user_id'];
+    
+    // valideerida välja ja käivita fn
+    if($_SERVER["REQUEST_METHOD"] == "POST"){
+        
+        if(isset($_POST["add_homework"])){
+
+            if ( empty($_POST["homework"]) ) {
+                $homework_error = "Ei saa mitte midagi lisada.";
+            }else{
+                $homework = cleanInput($_POST["homework"]);
+            }
+            
+            if ( empty($_POST["date"]) ) {
+                $date_error = "Kuupäev puudu!";
+            }else{
+                $date_cost = cleanInput($_POST["date"]);
+            }
+			
+			
+            //erroreid ei olnud käivitan funktsiooni,
+            //mis sisestab andmebaasi
+            if($homework_error == "" && $date_error == ""){
+                // m on message mille saadame functions.php
+                $m = newHomeworkData($homework, $date);
+                            
+                if($m != ""){
+                    // teeme vormi tühjaks
+                    $homework = "";
+                    $date = "";
+					
+                }
+            }
+            
+        }
+    }
     
 ?>
 

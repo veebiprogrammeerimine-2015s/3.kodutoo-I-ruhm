@@ -3,7 +3,7 @@
 	
 	
 	if(isset($_GET["update"])){
-        updateHomeworkData($_GET["homework_id"], $_GET["homework"], $_GET["tähtaeg"]);
+        updateHomeworkData($_GET["homework_id"], $_GET["homework"], $_GET["date"]);
 	}
      
     //kas muutuja on aadressireal

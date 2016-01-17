@@ -15,7 +15,8 @@
         
         $mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["server_username"], $GLOBALS["server_password"], $GLOBALS["database"]);
 
-        $stmt = $mysqli->prepare("SELECT id, user_id, homework, date FROM homeworks");
+        $stmt = $mysqli->prepare("SELECT id, user_id, homework, date FROM homeworks where homework LIKE ?");
+		$stmt->bind_param("s", $search);
         $stmt->bind_result($id_from_db, $user_id_from_db, $homework_from_db, $date_from_db);
         $stmt->execute();
         
@@ -66,11 +67,11 @@
         $stmt->close();
 	}
 	
-	function updatehomeworkData($homework_id, $homework, $date){
+	function newHomeworkData($homework_id, $homework, $date){
         
         $mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["server_username"], $GLOBALS["server_password"], $GLOBALS["database"]);
         
-        $stmt = $mysqli->prepare("UPDATE homeworks SET homework=?, date=? WHERE id=?");
+        $stmt = $mysqli->prepare("INSERT INTO homeworks() WHERE id=?");
         $stmt->bind_param("ssi", $homework, $date, $homework_id);
         $stmt->execute();
         
