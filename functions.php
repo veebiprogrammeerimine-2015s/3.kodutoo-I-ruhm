@@ -1,6 +1,6 @@
 <?php
 
-    require_once("../../config.php");
+    require_once("../../config_global.php");
     $database = "if15_brenbra_1";
 	session_start();
     function getAllData($keyword=""){
@@ -52,13 +52,13 @@
         $mysqli->close();
     }
 	
-	function deleteHomeworkData($homework_id){
+	function deleteHomeworkData($id){
         
         $mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["server_username"], $GLOBALS["server_password"], $GLOBALS["database"]);
         
         // uuendan välja deleted, lisan praeguse date'i
         $stmt = $mysqli->prepare("UPDATE homeworks SET deleted=NOW() WHERE id=?");
-        $stmt->bind_param("i", $homework_id);
+        $stmt->bind_param("i", $id);
         $stmt->execute();
         
         // tühjendame aadressirea
@@ -67,12 +67,12 @@
         $stmt->close();
 	}
 	
-	function newHomeworkData($homework_id, $homework, $date){
+	function newHomeworkData($homework, $date){
         
         $mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["server_username"], $GLOBALS["server_password"], $GLOBALS["database"]);
         
-        $stmt = $mysqli->prepare("INSERT INTO homeworks() WHERE id=?");
-        $stmt->bind_param("ssi", $homework, $date, $homework_id);
+        $stmt = $mysqli->prepare("INSERT INTO homeworks(homework, date, deleted) VALUES(?,?,NULL)");
+        $stmt->bind_param("ss",$homework, $date);
         $stmt->execute();
         
         // tühjendame aadressirea
@@ -103,7 +103,7 @@
 					$_SESSION["id"] = $id_from_db;
 					
 					
-                    header("Location: ../table.php");
+                    header("Location: table.php");
                 }else{
                     echo "Wrong credentials!";
                 }

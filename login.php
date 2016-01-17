@@ -2,7 +2,7 @@
 	
 	
     //loome AB ühenduse
-    require_once("./functions.php");
+    require_once("functions.php");
     
     //check connection
    

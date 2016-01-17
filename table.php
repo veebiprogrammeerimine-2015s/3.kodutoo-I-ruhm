@@ -1,5 +1,6 @@
 <?php  
     require_once("functions.php");
+	require_once("edit_functions.php");
     
     
 	if(isset($_GET["delete"])){
