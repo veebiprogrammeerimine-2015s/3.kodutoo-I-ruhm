@@ -20,6 +20,11 @@
 	}else{
 	$homework_array = getAllData();
 	}
+	if(isset($_GET["logout"])){
+        //kustutame sessiooni muutujad
+        session_destroy();
+        header("Location: login.php");
+    }
 ?>
 
 Tere, <?=$_SESSION['email'];?>
