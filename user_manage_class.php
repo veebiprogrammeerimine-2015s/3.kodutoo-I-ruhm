@@ -221,17 +221,17 @@ class user_manage
         }
         return $array;
     }
-	function editUser($userfirstname, $userlastname, $useraddress, $logged_uid){
+	function editUser($userfirstname, $userlastname, $useraddress){
 		$response = new StdClass();
-		$stmt = $this->connection->prepare("UPDATE userbase SET first_name=?, last_name=?, address=? WHERE id=?");
-		$stmt->bind_param("ssss", $userfirstname, $userlastname, $useraddress, $logged_uid);
+		$stmt = $this->connection->prepare("INSERT INTO userbase(first_name, last_name, address) VALUES(?,?,?)");
+		$stmt->bind_param("sss", $userfirstname, $userlastname, $useraddress);
 		if($stmt->execute()){
 
             $success = new StdClass();
             $success->message = "andmed lisatud";
 
             $response->success = $success;
-            header("Location: new_user.php");
+            header("Location: table.php");
 
 
         } else {
