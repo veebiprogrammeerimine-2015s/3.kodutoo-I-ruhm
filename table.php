@@ -63,7 +63,7 @@ Tere, <?=$_SESSION['logged_in_user_email'];?> <a href="?logout=1">Logi välja</a
     <label for="todo">To do content:</label>
    	<input id="todo" name="todo" type="text" value="<?=$todo;?>"> <?=$todo_error;?><br><br>
    	<label for="date"> Esitamise kuupäev </label>
-    <input id="date" name="date" type="text" value="<?=$date;?>"> <?=$date_error;?><br><br>
+    <input id="date" name="date" type="date" value="<?=$date;?>"> <?=$date_error;?><br><br>
    	<input type="submit" name="add_todo" value="Lisa">
   </form>
 
