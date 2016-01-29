@@ -4,6 +4,13 @@
     // Sessioon, annab ligipääsu $_SESSION[]
     session_start();
 
+    function cleanInput($data) {
+    	$data = trim($data);
+    	$data = stripslashes($data);
+    	$data = htmlspecialchars($data);
+    	return $data;
+    }
+
     function getAllData($keyword=""){
       $search = '';
    		if($keyword == ""){
@@ -74,16 +81,14 @@
 
     function newTodoData($todo, $date){
       $mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["username"], $GLOBALS["password"], $GLOBALS["database"]);
-
       $stmt = $mysqli->prepare("INSERT INTO todos(todo, date, deleted) VALUES(?,?,NULL)");
-      $stmt->bind_param("ss",$todo, $date);
+      $stmt->bind_param("ss", $todo, $date);
       $stmt->execute();
+      $stmt->close();
+      $mysqli->close();
 
       // tühjendame aadressirea
       header("Location: table.php");
-
-      $stmt->close();
-      $mysqli->close();
     }
 
     function deleteTodoData($todo_id){
