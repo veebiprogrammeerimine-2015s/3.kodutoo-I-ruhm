@@ -11,19 +11,19 @@
     	return $data;
     }
 
-    function getAllData($keyword=""){
-      $search = '';
+    function getAllData($keyword){
+      $search = "";
    		if($keyword == ""){
          // No search
-         $search = "%%";
+         $search = "'%%'";
       }else{
          // Else search
-         $search = "%".$keyword."%";
+         $search = "'%".$keyword."%'";
       }
 
       $mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["username"], $GLOBALS["password"], $GLOBALS["database"]);
 
-      $stmt = $mysqli->prepare("SELECT id, user_id, todo, date FROM todos WHERE deleted IS NULL AND todo LIKE ".$search);
+      $stmt = $mysqli->prepare("SELECT id, user_id, todo, date FROM todos WHERE todo LIKE ".$search);
       $stmt->bind_result($id_from_db, $user_id_from_db, $todo_from_db, $date_from_db);
       $stmt->execute();
 
@@ -55,16 +55,15 @@
 
       $stmt = $mysqli->prepare("SELECT todo, date FROM todos WHERE id=? AND deleted IS NULL");
       $stmt->bind_param("i", $id);
-      $stmt->bind_result($todo, $date);
+      $stmt->bind_result($todo_from_db, $date_from_db);
       $stmt->execute();
 
       $todo = new StdClass();
 
       // kas sain rea andmeid
       if($stmt->fetch()){
-
-        $todo->todo = $todo;
-        $todo->date = $date;
+        $todo->todo = $todo_from_db;
+        $todo->date = $date_from_db;
 
       }else{
          // ei tulnud
@@ -79,15 +78,14 @@
          return $todo;
     }
 
-    function newTodoData($todo, $date){
+    function newTodoData($user_id, $todo, $date){
       $mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["username"], $GLOBALS["password"], $GLOBALS["database"]);
-      $stmt = $mysqli->prepare("INSERT INTO todos(todo, date, deleted) VALUES(?,?,NULL)");
-      $stmt->bind_param("ss", $todo, $date);
+      $stmt = $mysqli->prepare("INSERT INTO todos(user_id, todo, date, deleted) VALUES(?,?,?,NULL)");
+      $stmt->bind_param("iss", $user_id, $todo, $date);
       $stmt->execute();
       $stmt->close();
       $mysqli->close();
 
-      // tühjendame aadressirea
       header("Location: table.php");
     }
 
@@ -145,7 +143,7 @@
           $_SESSION['logged_in_user_email'] = $email_from_db;
 
           //suuname kasutaja teisele lehel
-          header("Location: data.php");
+          header("Location: table.php");
 
       }else{
           echo "Valed andmed!";

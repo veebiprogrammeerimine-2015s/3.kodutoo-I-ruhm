@@ -7,7 +7,7 @@
 
     // Kui _SESSION olemas suuna teisele lehele
     if(isset($_SESSION['logged_in_user_id'])){
-        header("Location: data.php");
+        header("Location: table.php");
     }
 
 
