@@ -4,6 +4,77 @@
     // Sessioon, annab ligipääsu $_SESSION[]
     session_start();
 
+    function getAllData($keyword=""){
+      $search = '';
+   		if($keyword == ""){
+         // No search
+         $search = "%%";
+      }else{
+         // Else search
+         $search = "%".$keyword."%";
+      }
+
+      $mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["username"], $GLOBALS["password"], $GLOBALS["database"]);
+
+      $stmt = $mysqli->prepare("SELECT id, user_id, todo, date FROM todos WHERE todo LIKE ".$search);
+      $stmt->bind_result($id_from_db, $user_id_from_db, $todo_from_db, $date_from_db);
+      $stmt->execute();
+
+      // massiiv kus hoiame todos
+      $array = array();
+
+      while($stmt->fetch()){
+        // tühi objekt kus hoiame väärtusi
+        $todo = new StdClass();
+
+        $todo->id = $id_from_db;
+        $todo->todo = $todo_from_db;
+        $todo->user = $user_id_from_db;
+        $todo->date = $date_from_db;
+
+        //lisan objekti massiivi
+        array_push($array, $todo);
+      }
+
+      //saadan tagasi
+      return $array;
+
+      $stmt->close();
+      $mysqli->close();
+    }
+
+    function deleteTodoData($todo_id){
+
+         $mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["username"], $GLOBALS["password"], $GLOBALS["database"]);
+
+         // uuendan välja deleted, lisan praeguse date'i
+         $stmt = $mysqli->prepare("UPDATE todos SET deleted=NOW() WHERE id=?");
+         $stmt->bind_param("i", $todo_id);
+         $stmt->execute();
+
+         // tühjendame aadressirea
+         header("Location: table.php");
+
+         $stmt->close();
+         $mysqli->close();
+    }
+
+   	function updateTodoData($todo_id, $todo, $date){
+
+         $mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["username"], $GLOBALS["password"], $GLOBALS["database"]);
+
+         $stmt = $mysqli->prepare("UPDATE todos SET todo=?, date=? WHERE id=?");
+         $stmt->bind_param("ssi", $todo, $date, $todo_id);
+         $stmt->execute();
+
+         // tühjendame aadressirea
+         header("Location: table.php");
+
+         $stmt->close();
+         $mysqli->close();
+
+    }
+
     function logInUser($email, $hash){
       // Serveri ühendus, tegelikult tuleks GLOBALS meetodit vältida
       // praegusel juhul kui login.php's on kasutusel võtmesõna 'password'
