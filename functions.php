@@ -23,7 +23,7 @@
 
       $mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["username"], $GLOBALS["password"], $GLOBALS["database"]);
 
-      $stmt = $mysqli->prepare("SELECT id, user_id, todo, date FROM todos WHERE todo LIKE ".$search);
+      $stmt = $mysqli->prepare("SELECT id, user_id, todo, date FROM todos WHERE deleted IS NULL AND todo LIKE ".$search);
       $stmt->bind_result($id_from_db, $user_id_from_db, $todo_from_db, $date_from_db);
       $stmt->execute();
 
