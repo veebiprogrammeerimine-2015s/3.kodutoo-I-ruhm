@@ -58,7 +58,7 @@
 
         $todo->todo = $todo;
         $todo->date = $date;
-             
+
       }else{
          // ei tulnud
          // kui id ei olnud (vale id)
@@ -72,35 +72,48 @@
          return $todo;
     }
 
+    function newTodoData($todo, $date){
+      $mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["username"], $GLOBALS["password"], $GLOBALS["database"]);
+
+      $stmt = $mysqli->prepare("INSERT INTO todos(todo, date, deleted) VALUES(?,?,NULL)");
+      $stmt->bind_param("ss",$todo, $date);
+      $stmt->execute();
+
+      // tühjendame aadressirea
+      header("Location: table.php");
+
+      $stmt->close();
+      $mysqli->close();
+    }
+
     function deleteTodoData($todo_id){
+     $mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["username"], $GLOBALS["password"], $GLOBALS["database"]);
 
-         $mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["username"], $GLOBALS["password"], $GLOBALS["database"]);
+     // uuendan välja deleted, lisan praeguse date'i
+     $stmt = $mysqli->prepare("UPDATE todos SET deleted=NOW() WHERE id=?");
+     $stmt->bind_param("i", $todo_id);
+     $stmt->execute();
 
-         // uuendan välja deleted, lisan praeguse date'i
-         $stmt = $mysqli->prepare("UPDATE todos SET deleted=NOW() WHERE id=?");
-         $stmt->bind_param("i", $todo_id);
-         $stmt->execute();
+     // tühjendame aadressirea
+     header("Location: table.php");
 
-         // tühjendame aadressirea
-         header("Location: table.php");
-
-         $stmt->close();
-         $mysqli->close();
+     $stmt->close();
+     $mysqli->close();
     }
 
    	function updateTodoData($todo_id, $todo, $date){
 
-         $mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["username"], $GLOBALS["password"], $GLOBALS["database"]);
+     $mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["username"], $GLOBALS["password"], $GLOBALS["database"]);
 
-         $stmt = $mysqli->prepare("UPDATE todos SET todo=?, date=? WHERE id=?");
-         $stmt->bind_param("ssi", $todo, $date, $todo_id);
-         $stmt->execute();
+     $stmt = $mysqli->prepare("UPDATE todos SET todo=?, date=? WHERE id=?");
+     $stmt->bind_param("ssi", $todo, $date, $todo_id);
+     $stmt->execute();
 
-         // tühjendame aadressirea
-         header("Location: table.php");
+     // tühjendame aadressirea
+     header("Location: table.php");
 
-         $stmt->close();
-         $mysqli->close();
+     $stmt->close();
+     $mysqli->close();
 
     }
 
