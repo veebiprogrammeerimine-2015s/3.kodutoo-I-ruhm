@@ -16,7 +16,7 @@
 
       $mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["username"], $GLOBALS["password"], $GLOBALS["database"]);
 
-      $stmt = $mysqli->prepare("SELECT id, user_id, todo, date FROM todos WHERE todo LIKE ".$search);
+      $stmt = $mysqli->prepare("SELECT id, user_id, todo, date FROM todos WHERE deleted IS NULL AND todo LIKE ".$search);
       $stmt->bind_result($id_from_db, $user_id_from_db, $todo_from_db, $date_from_db);
       $stmt->execute();
 
@@ -41,6 +41,35 @@
 
       $stmt->close();
       $mysqli->close();
+    }
+
+    function getTodoData($id){
+      $mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["username"], $GLOBALS["password"], $GLOBALS["database"]);
+
+      $stmt = $mysqli->prepare("SELECT todo, date FROM todos WHERE id=? AND deleted IS NULL");
+      $stmt->bind_param("i", $id);
+      $stmt->bind_result($todo, $date);
+      $stmt->execute();
+
+      $todo = new StdClass();
+
+      // kas sain rea andmeid
+      if($stmt->fetch()){
+
+        $todo->todo = $todo;
+        $todo->date = $date;
+             
+      }else{
+         // ei tulnud
+         // kui id ei olnud (vale id)
+         // või on kustutatud (deleted ei ole null)
+         header("Location: table.php");
+      }
+
+         $stmt->close();
+         $mysqli->close();
+
+         return $todo;
     }
 
     function deleteTodoData($todo_id){
